@@ -1,4 +1,4 @@
-import { Settings, defaultSettings } from "./Settings";
+import { Settings, defaultSettings } from "./Settings"
 
 // FIXME share model definition files with front end
 

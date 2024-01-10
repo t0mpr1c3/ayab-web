@@ -1,0 +1,12 @@
+.mirror-icon {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  top: -1.5rem;
+}
+.disabled {
+  opacity: .38;
+}
+.enabled {
+  opacity: .87;
+}

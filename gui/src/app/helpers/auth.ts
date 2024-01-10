@@ -4,6 +4,10 @@ export function isLoggedOut(): boolean {
   return !localStorage.getItem('userData');
 }
 
+export function isLoggedIn(): boolean {
+  return !!localStorage.getItem('userData');
+}
+
 export function getToken(): string|null {
   return localStorage.getItem('jwt');
 }

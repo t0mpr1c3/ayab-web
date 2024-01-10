@@ -1,0 +1,9 @@
+input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+.button {
+  width: 100%;
+  height: 100%;
+}

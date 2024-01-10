@@ -8,7 +8,7 @@ export interface AuthContext {
   errors: string;
 }
 
-export const defaultContext: AuthContext = {
+export const defaultAuthContext: AuthContext = {
   userData: defaultUserData,
   errors: ''
 };
@@ -23,7 +23,7 @@ export const authMachineConfig: MachineConfig<
   string
 > = {
   id: 'login',
-  context: defaultContext,
+  context: defaultAuthContext,
   initial: 'boot',
   states: {
     boot: {

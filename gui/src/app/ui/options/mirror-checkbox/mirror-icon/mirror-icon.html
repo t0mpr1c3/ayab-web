@@ -1,0 +1,25 @@
+<ng-container *ngIf="disabled; then mirrorIconDisabled else mirrorIconEnabled"></ng-container>
+
+<ng-template #mirrorIconEnabled>
+  <ng-container *ngIf="knitSide; then knitSideIconEnabled else purlSideIconEnabled"></ng-container>
+</ng-template>
+
+<ng-template #mirrorIconDisabled>
+  <ng-container *ngIf="knitSide; then knitSideIconDisabled else purlSideIconDisabled"></ng-container>
+</ng-template>
+
+<ng-template #knitSideIconEnabled>
+  <img id="mirror" class="mirror-icon enabled" src="../../../../assets/img/garamond-lowercase-e.png">
+</ng-template>
+
+<ng-template #purlSideIconEnabled>
+  <img id="mirror" class="mirror-icon enabled" src="../../../../assets/img/garamond-lowercase-e-reversed.png">
+</ng-template>
+
+<ng-template #knitSideIconDisabled>
+  <img id="mirror" class="mirror-icon disabled" src="../../../../assets/img/garamond-lowercase-e.png">
+</ng-template>
+
+<ng-template #purlSideIconDisabled>
+  <img id="mirror" class="mirror-icon disabled" src="../../../../assets/img/garamond-lowercase-e-reversed.png">
+</ng-template>

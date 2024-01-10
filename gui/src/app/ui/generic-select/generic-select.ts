@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
+import { TSetting } from '../../models/Settings';
+
 /** 
  * @title Generic select
  **/
@@ -31,7 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
 export class GenericSelect implements OnInit {
   @Input({ required: true }) name: string;
   @Input({ required: true }) enum: string[];
-  @Input() control: FormControl;
+  @Input({ required: true }) control: FormControl<TSetting>;
+  @Input() disabled: boolean = false;
   @Input({ transform: numberAttribute }) defaultValue: number = 0;
 
   public selection: number;

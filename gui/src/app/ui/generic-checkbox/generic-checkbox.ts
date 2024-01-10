@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output, booleanAttribute, forwardRef } 
 import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 
+import { TSetting } from '../../models/Settings';
+
 /**
  * @title Generic checkbox
  */
@@ -24,14 +26,13 @@ import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox
 })
 export class GenericCheckbox {
   @Input({ required: true }) name: string;
-  @Input() control: FormControl;
+  @Input({ required: true }) control: FormControl<TSetting>;
+  @Input() disabled: boolean = false;
   @Input({ transform: booleanAttribute }) defaultValue: boolean = false;
 
-  @Output() clicked: EventEmitter<Boolean> = new EventEmitter();
+  @Output() clicked: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(
-
-  ) {}
+  constructor() {}
 
   public onClick(event: MatCheckboxChange) {
     this.clicked.emit(event.checked);

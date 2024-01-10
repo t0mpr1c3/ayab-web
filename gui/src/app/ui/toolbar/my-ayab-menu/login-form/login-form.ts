@@ -27,9 +27,9 @@ import { LoginSubmit } from '../../../../services/auth-machine/auth-machine.even
   ],
 })
 export class LoginForm extends Validation implements OnInit {
-  private _canceled = false;
   public form: FormGroup;
   public loading$: Observable<boolean>;
+  private _canceled = false;
 
   constructor(
     private _formBuilder: FormBuilder,

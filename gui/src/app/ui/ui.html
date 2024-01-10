@@ -1,0 +1,25 @@
+<div class="container">
+  <toolbar>toolbar</toolbar>
+  <div class="grid">
+    <div class="canvas">
+      <h4 id="imageTitle">Image goes here</h4>
+      <canvas id="canvas"></canvas>
+      <pre></pre>
+      <h4>Image data</h4>
+      <div id="content" class="content"></div>
+    </div>
+  <ng-container *ngIf="(visible$ | async); then shown else hidden"></ng-container>
+  </div>
+</div>
+
+<ng-template #shown>
+  <options-panel></options-panel>
+</ng-template>
+
+<ng-template #hidden>
+  <div class="options hidden">
+    <button mat-mini-fab title="Show options" (click)="show()" class="hidden">
+      <mat-icon class="hidden">chevron_left</mat-icon>
+    </button>
+  </div>
+</ng-template>

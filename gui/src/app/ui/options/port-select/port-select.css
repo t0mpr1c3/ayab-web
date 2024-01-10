@@ -1,7 +1,8 @@
 button {
   float: right;
 }
-.mdc-fab--mini {
+.mdc-fab--mini,
+.mat-mdc-mini-fab {
   width:  1.5rem;
   height: 1.5rem;
 }

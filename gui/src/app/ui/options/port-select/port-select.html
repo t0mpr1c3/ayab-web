@@ -1,7 +1,10 @@
 <mat-form-field appearance="outline" class="wide">
-    <mat-label>Port</mat-label>
-    <button mat-mini-fab title="Refresh"><mat-icon>refresh</mat-icon></button>
-    <mat-select [(value)]="port">
+  <mat-label>Port</mat-label>
+  <div class="bar">
+    <mat-select [(value)]="port" [disabled]="disabled">
       <mat-option value="simulation">Simulation</mat-option>
     </mat-select>
+    <span class="space"></span>
+    <button mat-mini-fab title="Refresh" [disabled]="disabled"><mat-icon>refresh</mat-icon></button>
+  </div>
 </mat-form-field>

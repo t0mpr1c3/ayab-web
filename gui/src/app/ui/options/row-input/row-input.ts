@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+
+import { TSetting } from '../../../models/Settings';
 
 /** 
  * @title Row Start input
@@ -15,4 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
   ]
 })
-export class RowInput {}
+export class RowInput {
+  @Input({ required: true }) control: FormControl<TSetting>;
+  @Input() disabled: boolean;
+}

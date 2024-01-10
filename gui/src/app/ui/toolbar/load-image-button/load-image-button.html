@@ -1,0 +1,4 @@
+<button mat-raised-button title="Open image file" class="mat-accent" 
+  (click)="imageUpload.click()">Load Image</button>
+<input #imageUpload id="imageUpload" name="imageUpload" accept="image/png" type="file" title=""
+  (change)="onFileChanged($event)">

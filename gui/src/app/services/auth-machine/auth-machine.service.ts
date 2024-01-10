@@ -125,6 +125,6 @@ export class AuthMachineService {
   }
 
   public loggedIn(): Observable<boolean> {
-    return this.user().pipe( map<UserData|null, boolean>(user => (user !== null)));
+    return this.user().pipe( map<UserData|null, boolean>(user => !!user));
   }
 }

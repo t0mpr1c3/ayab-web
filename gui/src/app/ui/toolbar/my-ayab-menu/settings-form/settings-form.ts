@@ -8,18 +8,18 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { Subscription } from 'rxjs';
 
 import { mapSettings, reduce } from '../../../../helpers/reduce';
-import { UserData } from '../../../../models/UserData';
-import { Settings, TSetting } from '../../../../models/Settings';
 import { UserService } from '../../../../services/user.service';
 import { CancelService } from '../../../../services/cancel.service';
+import { UserData } from '../../../../models/UserData';
+import { Settings, TSetting } from '../../../../models/Settings';
 import { GenericButton } from '../../../generic-button/generic-button';
 import { GenericCheckbox } from '../../../generic-checkbox/generic-checkbox';
 import { GenericSelect } from '../../../generic-select/generic-select';
 import { SettingTemplateDirective } from './settings-template.directive';
 import { SettingsList } from './settings-list/settings-list';
-import { Subscription } from 'rxjs';
 import { setToken } from '../../../../helpers/auth';
 
 /** 
