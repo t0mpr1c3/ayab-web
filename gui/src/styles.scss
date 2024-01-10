@@ -1,0 +1,99 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$typography-config: mat.define-typography-config(
+  $font-family: '"Familjen Grotesk", sans-serif',
+  $headline-1: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+  $headline-2: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+  $headline-3: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+  $headline-4: mat.define-typography-level(34px, 40px, 400),
+  $headline-5: mat.define-typography-level(24px, 32px, 400),
+  $headline-6: mat.define-typography-level(20px, 32px, 400),
+  $subtitle-1: mat.define-typography-level(16px, 28px, 400),
+  $body-1: mat.define-typography-level(14px, 20px, 400),
+  $body-2: mat.define-typography-level(14px, 20px, 400),
+  $subtitle-2: mat.define-typography-level(16px, 28px, 400),
+  $caption: mat.define-typography-level(12px, 20px, 400),
+  $button: mat.define-typography-level(14px, 14px, 500),
+);
+@include mat.typography-hierarchy($typography-config);
+
+:root {
+  --mat-menu-item-label-text-font: 'Familjen Grotesk', sans-serif;
+  --mat-menu-item-label-text-weight: 400;
+  --mat-menu-item-label-text-size: 14px;
+  --mat-menu-item-label-text-line-height: 20px;
+  --mat-option-label-text-font: 'Familjen Grotesk', sans-serif;
+  --mat-option-label-text-size: 14px;
+  --mat-option-label-text-line-height: 20px;
+  --mat-form-field-container-text-font: 'Familjen Grotesk', sans-serif;
+  --mat-form-field-container-text-size: 14px;
+  --mat-form-field-container-text-line-height: 20px;
+  --mat-select-trigger-text-font: 'Familjen Grotesk', sans-serif;
+  --mat-select-trigger-text-size: 14px;
+  --mat-select-trigger-text-line-height: 20px;
+  --mdc-outlined-text-field-label-text-font: 'Familjen Grotesk', sans-serif;
+  --mdc-outlined-text-field-label-text-size: 14px;
+  --mdc-outlined-text-field-label-text-line-height: 20px;
+  --mdc-text-button-label-text-font: 'Familjen Grotesk', sans-serif;
+  --mdc-text-button-label-text-weight: 500;
+  --mdc-typography-font-family: 'Familjen Grotesk', sans-serif;
+  --mdc-protected-button-label-text-font: 'Familjen Grotesk', sans-serif;
+  --mdc-protected-button-label-text-size: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body { 
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.block {
+  display: block;
+}
+.inline-flex {
+  display: inline-flex;
+}
+
+.dialog-container {
+  padding: 1rem;
+}
+p.dialog-block {
+  margin: 0;
+}
+.bar {
+  display: flex;
+  flex-wrap: row wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-header {
+  width: 15rem;
+  padding: 1rem 1rem 0 1rem;
+  background-color: #DDD;
+  border-bottom: 1px solid #888;
+}
+.card-body {
+  padding: 1rem;
+  max-width: 15rem;
+  margin: auto;
+}
+.icon {
+  opacity: 75%;
+  position: relative;
+}
+.card-header .icon {
+  top: -1rem;
+}
+
+.wide {
+  width: 100%;
+}
+
+/* Importing Bootstrap SCSS file. */
+//@import 'bootstrap/scss/bootstrap';

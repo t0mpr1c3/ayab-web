@@ -1,0 +1,15 @@
+<div class="options">
+  <options-form></options-form>
+  <port-select></port-select>
+  <mat-divider></mat-divider>
+  <generic-select name="Knitting Mode" [enum]="modeEnum"></generic-select>
+  <colors-input></colors-input>
+  <row-input></row-input>
+  <needle-input></needle-input>
+  <generic-select name="Alignment" [enum]="alignmentEnum"></generic-select>
+  <div class="bar">
+    <generic-checkbox name="Knit Side Image"
+      (clicked)="knitSideImageCheckboxClicked($event)"></generic-checkbox>
+    <button mat-mini-fab title="Minimize"><mat-icon>remove_circle_outline</mat-icon></button>
+  </div>
+</div>

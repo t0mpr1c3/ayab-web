@@ -1,0 +1,13 @@
+.options {
+  width: 100%;
+  position: relative;
+  top: 0.75rem;
+}
+button {
+  position: relative;
+  top: -1.5rem;
+}
+.mdc-fab--mini {
+  width:  1.5rem;
+  height: 1.5rem;
+}

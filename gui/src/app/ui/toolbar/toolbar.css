@@ -1,0 +1,27 @@
+.title {
+  font-family: 'Rancho';
+  font-size: xx-large;
+}
+.mat-toolbar {
+  justify-content: space-between;
+  overflow: hidden;
+}
+.left {
+  display: flex;
+  flex-wrap: row wrap;
+}
+.logo {
+  transform: scale(0.1);
+  width: 240px;
+  position: relative;
+  top: 0.25rem;
+}
+.space {
+  width: 1rem;
+}
+.icon {
+  top: 6px;
+}
+.grey {
+  opacity: 25%;
+}

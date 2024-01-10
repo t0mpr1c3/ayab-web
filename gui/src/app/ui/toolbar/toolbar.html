@@ -1,0 +1,42 @@
+<mat-toolbar>
+  <div class="left">
+    <span class="title"><a href="https://ayab-knitting.com/">All Yarns Are Beautiful</a></span>
+    <span class="space"></span>
+    <ng-container *ngIf="loggedIn$ | async">          
+      <span class="icon">
+        <mat-icon>person</mat-icon>
+      </span>
+    </ng-container>
+    <ng-container *ngIf="!(loggedIn$ | async)">        
+      <span class="icon grey">
+        <mat-icon>person_outline</mat-icon>
+      </span>
+    </ng-container>
+    <span>
+      <my-ayab-menu></my-ayab-menu>
+    </span>
+    <span class="space"></span>
+    <span>
+      <tools-menu></tools-menu>
+    </span>
+    <span class="space"></span>    
+    <span>
+      <help-menu></help-menu>
+    </span>
+    <span class="space"></span>
+    <span>
+      <open-file-button></open-file-button>
+    </span>
+    <span class="space"></span>
+    <span>
+      <knit-button></knit-button>
+    </span>
+    <span class="space"></span>
+    <span>
+      <cancel-button></cancel-button>
+    </span>
+  </div>
+  <div class="logo">
+    <img src="../../assets/img/AYAB.png" alt="AYAB"/>
+  </div>
+</mat-toolbar>

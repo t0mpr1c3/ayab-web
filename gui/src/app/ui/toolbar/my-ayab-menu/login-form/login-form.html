@@ -1,0 +1,25 @@
+<div class="card-header">
+  <span class="bar">
+    <h3>Sign In</h3>
+    <mat-icon class="icon">person</mat-icon>
+  </span>
+</div>
+<div class="card-body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
+      <mat-label for="username">User name</mat-label>
+      <input id="username" matInput type="text" formControlName="username">
+      <mat-error *ngIf="f.username?.errors">{{getUsernameError(f.username?.errors)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
+      <mat-label for="password">Password</mat-label>
+      <input id="password" matInput type="password" formControlName="password">
+      <mat-error *ngIf="f.password?.errors">{{getPasswordError("Password", f.password?.errors)}}</mat-error>
+    </mat-form-field>
+    <div class="bar">
+      <generic-button name="Sign in" (clicked)="onSubmit()"
+        [disabled]="f.username?.invalid || f.password?.invalid || (loading$ | async)!"></generic-button>
+      <generic-button name="Cancel" (clicked)="onCancel()"></generic-button>
+    </div>
+  </form>
+</div>

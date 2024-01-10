@@ -1,0 +1,17 @@
+<button mat-button [matMenuTriggerFor]="myAYABMenu">My AYAB</button>
+<mat-menu #myAYABMenu="matMenu">
+  <!-- register and login buttons disabled when user is logged in -->
+  <!-- settings and logout buttons disabled when when user is logged out-->
+  <ng-container *ngIf="loggedIn$ | async">
+    <button mat-menu-item disabled (click)="openLoginDialog()">Sign in</button>
+    <button mat-menu-item disabled (click)="openRegistrationDialog()">Register</button>
+    <button mat-menu-item (click)="openSettingsDialog()">Settings</button>
+    <button mat-menu-item (click)="logout()">Sign out</button>
+  </ng-container>
+  <ng-container *ngIf="!(loggedIn$ | async)">
+    <button mat-menu-item (click)="openLoginDialog()">Sign in</button>
+    <button mat-menu-item (click)="openRegistrationDialog()">Register</button>
+    <button mat-menu-item disabled (click)="openSettingsDialog()">Settings</button>
+    <button mat-menu-item disabled (click)="logout()">Sign out</button>
+  </ng-container>
+</mat-menu>

@@ -1,0 +1,3 @@
+<div *ngFor="let setting of data">
+  <ng-container *ngTemplateOutlet="settingTemplate; context: { $implicit: setting }"></ng-container>
+</div>
