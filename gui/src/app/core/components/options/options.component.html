@@ -1,0 +1,13 @@
+<div class="options shown">
+  <div class="margin"></div>
+    <!--port-select [disabled]="!(enableOptions$ | async)"></port-select-->
+    <form [formGroup]="form">
+      <generic-select name="Knitting Mode" [control]="formControls.mode!" [enum]="modeEnum"></generic-select>
+      <colors-input [disabled]="!(enableOptions$ | async)" [control]="formControls.colors!"></colors-input>
+      <row-input [disabled]="!(enableOptions$ | async)" [control]="formControls.row!"></row-input>
+      <needle-input [disabled]="!(enableOptions$ | async)" title="Start Needle" [control]="formControls.start!" color="orange"></needle-input>
+      <needle-input [disabled]="!(enableOptions$ | async)" title="Stop Needle" [control]="formControls.stop!" color="green"></needle-input>
+      <generic-select name="Alignment" [control]="formControls.alignment!" [enum]="alignmentEnum"></generic-select>
+      <mirror-checkbox #mirrorCheckbox [control]="formControls.mirror!"></mirror-checkbox>
+    </form>
+</div>

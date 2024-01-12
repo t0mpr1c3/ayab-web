@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" class="wide">
+  <mat-label>{{name}}</mat-label>
+  <mat-select [(value)]="selection" [disabled]="disabled" [formControl]="control">
+    <mat-option *ngFor="let element of enum; index as i" [value]="i">
+      {{ element }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
