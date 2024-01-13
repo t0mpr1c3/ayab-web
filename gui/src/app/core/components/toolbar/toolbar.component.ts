@@ -4,7 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 
-import { AuthMachineService } from '../../services/auth-machine/auth-machine.service';
+import { AuthMachineService } from '../../services/auth-xstate-machine/auth-machine.service';
 import { ToolsMenu } from './tools-menu/tools-menu.component';
 import { MyAYABMenu } from './my-ayab-menu/my-ayab-menu.component';
 import { HelpMenu } from './help-menu/help-menu.component';

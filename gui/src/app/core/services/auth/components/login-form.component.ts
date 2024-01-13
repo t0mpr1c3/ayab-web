@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { Credentials } from '../models/credentials.model';
+import { LoginCredentials } from '../../../../../../../shared/src/models/credentials.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -23,7 +23,7 @@ export class LoginFormComponent {
 
   @Input() errorMessage!: string | null;
 
-  @Output() submitted = new EventEmitter<Credentials>();
+  @Output() submitted = new EventEmitter<LoginCredentials>();
 
   public form: FormGroup = new FormGroup({
     username: new FormControl('ngrx'),

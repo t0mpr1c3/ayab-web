@@ -9,8 +9,8 @@ import { RegistrationForm } from './registration-form/registration-form.componen
 import { LoginForm } from './login-form/login-form.component';
 import { SettingsForm } from './settings-form/settings-form.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthMachineService } from '../../../services/auth-machine/auth-machine.service';
-import { Logout } from '../../../services/auth-machine/auth-machine.events';
+import { AuthMachineService } from '../../../services/auth-xstate-machine/auth-machine.service';
+import { Logout } from '../../../services/auth-xstate-machine/auth-machine.events';
 
 /**
  * @title My AYAB menu

@@ -10,7 +10,7 @@ import {
 import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 
-import { TSetting } from '../../models/settings.model';
+import { TSetting } from '../../../../../../shared/src/models/settings.model';
 
 /**
  * @title Generic checkbox

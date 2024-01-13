@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-import { TSetting } from '../../../models/settings.model';
+import { TSetting } from '../../../../../../../shared/src/models/settings.model';
 
 /** 
  * @title Row Start input

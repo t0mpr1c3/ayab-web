@@ -11,16 +11,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 
 import { mapSettings, reduce } from '../../../../helpers/reduce';
-import { UserService } from '../../../../services/user.service';
+import { UserApiService } from '../../../../services/user-api.service';
+import { getUser, setToken } from '../../../../services/auth/helpers/auth';
 import { CancelService } from '../../../../services/cancel.service';
-import { UserData } from '../../../../models/user-data.model';
-import { Settings, TSetting } from '../../../../models/settings.model';
+import { Settings, TSetting } from '../../../../../../../../shared/src/models/settings.model';
+import { User } from '../../../../../../../../shared/src/models/user.model';
 import { GenericButton } from '../../../generic-button/generic-button.component';
 import { GenericCheckbox } from '../../../generic-checkbox/generic-checkbox.component';
 import { GenericSelect } from '../../../generic-select/generic-select.component';
 import { SettingTemplateDirective } from './settings-template.directive';
 import { SettingsList } from './settings-list/settings-list.component';
-import { setToken } from '../../../../helpers/auth';
 
 /** 
  * @title Settings form 
@@ -53,21 +53,21 @@ export class SettingsForm implements OnInit, OnDestroy {
     enum?: string[], 
     control: FormControl<TSetting>,
   }[];
-  private _userData: UserData;
+  private _user: User;
   private _userSettings: Settings;
   private _userServiceSubscription: Subscription;
   private _inhibit: Boolean = false;
 
   public constructor(
     private _formBuilder: FormBuilder,
-    private _userService: UserService,
+    private _userApiService: UserApiService,
     private _cancelService: CancelService,
   ) {}
 
   ngOnInit(): void {
     // Get user settings
-    this._userData = JSON.parse(localStorage.getItem('userData')!);
-    this._userSettings = this._userData.settings;
+    this._user = getUser()!;
+    this._userSettings = this._user.settings;
     console.log('_userSettings on init')
     console.log(this._userSettings)
 
@@ -110,17 +110,17 @@ export class SettingsForm implements OnInit, OnDestroy {
     this._inhibit = true;
 
     // Update user settings
-    this._userData.settings = reduce(
+    this._user.settings = reduce(
       mapSettings(setting => ({
         key: setting.key,
         value: this.formControls[setting.key]!.value,
       }))
     );
-    localStorage.setItem('userData', JSON.stringify(this._userData));
+    localStorage.setItem('userData', JSON.stringify(this._user));
     
     // POST update to backend
-    this._userServiceSubscription = this._userService
-      .update$(this._userData)
+    this._userServiceSubscription = this._userApiService
+      .update$(this._user)
       .subscribe(res => {
         setToken(res.access_token); // Save returned authentication token
         this.onCancel();

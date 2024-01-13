@@ -2,22 +2,22 @@ import { createReducer, on } from '@ngrx/store';
 
 import { loginSuccess } from '../actions/auth-api.actions';
 import { logout } from '../actions/auth.actions';
-import { User } from '../models/user.model';
+import { User } from '../../../../../../../shared/src/models/user.model';
 
-export const statusFeatureKey = 'status';
+export const featureKey = 'status';
 
-export interface AuthUserState {
+export interface State {
   user: User | null;
 }
 
-export const initialState: AuthUserState = {
+export const initialState: State = {
   user: null,
 };
 
-export const authUserReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(loginSuccess, (state, { user }) => ({ ...state, user })),
   on(logout, () => initialState)
 );
 
-export const getUser = (state: AuthUserState) => state.user;
+export const getUser = (state: State) => state.user;

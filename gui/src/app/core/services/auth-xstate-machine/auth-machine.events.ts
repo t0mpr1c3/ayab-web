@@ -1,5 +1,5 @@
-import { Status } from '../../models/status.model';
-import { UserData } from '../../models/user-data.model';
+import { User } from "../../../../../../shared/src/models/user.model";
+import { Status } from "../../../../../../shared/src/models/status.model";
 
 export class Init {
   readonly type = 'INIT';
@@ -19,7 +19,7 @@ export class LoginFail {
 export class LoginSuccess {
   readonly type = 'SUCCESS';
   constructor(
-    public userData: UserData,
+    public userData: User,
     public token: string,
   ) {}
 }

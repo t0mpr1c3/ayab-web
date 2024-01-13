@@ -7,19 +7,19 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
 import { loginFailure, loginRedirect, loginSuccess } from '../actions/auth-api.actions';
 import { logout, logoutConfirmation, logoutConfirmationDismiss } from '../actions/auth.actions';
-import { login } from '../actions/login-page.actions';
-import { Credentials } from '../models/credentials.model';
+import { loginSubmit } from '../actions/login-page.actions';
+import { idleTimeout } from '../../../actions/user.actions';
 import { AuthService } from '../services/auth.service';
+import { LoginCredentials } from '../../../../../../../shared/src/models/credentials.model';
 import { LogoutConfirmationDialogComponent } from '../components/logout-confirmation-dialog.component';
-import { UserActions } from '@example-app/core/actions';
 
 @Injectable()
 export class AuthEffects {
   login$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(login),
+      ofType(loginSubmit),
       map((action) => action.credentials),
-      exhaustMap((auth: Credentials) =>
+      exhaustMap((auth: LoginCredentials) =>
         this._authService.login(auth).pipe(
           map((user) => loginSuccess({ user })),
           catchError((error) => of(loginFailure({ error })))
@@ -68,7 +68,7 @@ export class AuthEffects {
 
   logoutIdleUser$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(UserActions.idleTimeout),
+      ofType(idleTimeout),
       map(() => logout())
     )
   );

@@ -1,4 +1,4 @@
-import { Setting, settings } from "../models/settings.model";
+import { Setting, settings } from "../../../../../shared/src/models/settings.model";
 
 type KV<T> = {
   key: string;

@@ -1,6 +1,6 @@
 <div class="bar checkbox">
-  <mat-checkbox #checkbox (change)="clicked($event)" [checked]="defaultValue" [formControl]="control"
+  <mat-checkbox #checkbox (change)="clicked($event)" [(ngModel)]="checked" [formControl]="control"
     class="checkbox">Knit Side Image</mat-checkbox>
   <span class="space"></span>
-  <mirror-icon #icon [knitSide]="checked$ | async"></mirror-icon>
+  <mirror-icon #icon [knitSide]="defaultValue"></mirror-icon>
 </div>

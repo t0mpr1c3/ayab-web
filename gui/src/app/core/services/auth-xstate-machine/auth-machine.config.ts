@@ -1,15 +1,15 @@
 import { MachineConfig, ParameterizedObject, ProvidedActor } from "xstate";
 
-import { UserData, defaultUserData } from "../../models/user-data.model";
 import { AuthEvent, LoginSubmit } from "./auth-machine.events";
+import { User, defaultUserData } from "../../../../../../shared/src/models/user.model";
 
 export interface AuthContext {
-  userData: UserData;
+  user: User;
   errors: string;
 }
 
 export const defaultAuthContext: AuthContext = {
-  userData: defaultUserData,
+  user: defaultUserData,
   errors: ''
 };
 

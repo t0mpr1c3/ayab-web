@@ -7,15 +7,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { setToken } from '../../../../helpers/auth';
+import { setToken } from '../../../../services/auth/helpers/auth';
 import { MustMatch } from '../../../../helpers/must-match'; // custom validator
 import { Validation } from '../../../../models/validation.model';
-import { RegistrationCredentials } from '../../../../models/credentials.model';
-import { UserService } from '../../../../services/user.service';
+import { UserApiService } from '../../../../services/user-api.service';
 import { CancelService } from '../../../../services/cancel.service';
 import { DebounceClickDirective } from '../../../../directives/debounce.directive';
 import { GenericButton } from '../../../generic-button/generic-button.component';
 import { RegistrationConfirmationDialog } from './registration-confirmation/registration-confirmation.component';
+import { RegistrationCredentials } from '../../../../../../../../shared/src/models/credentials.model';
 
 @Component({
   standalone: true,
@@ -41,7 +41,7 @@ export class RegistrationForm extends Validation implements OnInit {
   
   constructor(
     private _formBuilder: FormBuilder,
-    private _userService: UserService,
+    private _userApiService: UserApiService,
     private _cancelService: CancelService,
     private _dialog: MatDialog,
   ) {
@@ -92,7 +92,7 @@ export class RegistrationForm extends Validation implements OnInit {
     );
     
     // POST form inputs to backend
-    this._userService.register$(credentials).subscribe(res => {
+    this._userApiService.register$(credentials).subscribe(res => {
       this._succeeded = res.statusCode >= 200 && res.statusCode < 300;
       this._confirmationDialogRef = this._dialog.open(
         RegistrationConfirmationDialog, 

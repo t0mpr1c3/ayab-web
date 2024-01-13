@@ -6,11 +6,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 
+import { CancelService } from '../../../../services/cancel.service';
+import { AuthService } from '../../../../services/auth/services/auth.service';
+//import { AuthMachineService } from '../../../../services/auth-xstate-machine/auth-machine.service';
+import { LoginSubmit } from '../../../../services/auth-xstate-machine/auth-machine.events';
+import { getUser } from '../../../../services/auth/helpers/auth';
 import { Validation } from '../../../../models/validation.model';
 import { GenericButton } from '../../../generic-button/generic-button.component';
-import { CancelService } from '../../../../services/cancel.service';
-import { AuthMachineService } from '../../../../services/auth-machine/auth-machine.service';
-import { LoginSubmit } from '../../../../services/auth-machine/auth-machine.events';
 
 @Component({
   standalone: true,
@@ -28,30 +30,30 @@ import { LoginSubmit } from '../../../../services/auth-machine/auth-machine.even
 })
 export class LoginForm extends Validation implements OnInit {
   public form: FormGroup;
-  public loading$: Observable<boolean>;
+  public pending$: Observable<boolean>;
   private _canceled = false;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _authMachineService: AuthMachineService,
+    private _authService: AuthService,
     private _cancelService: CancelService,
   ) {
     super();
 
+    /*
     // Close dialog when logged in
-    this._authMachineService.service.subscribe(state => {
+    this._authService.service.subscribe(state => {
       console.log(`state: ${state.value}`);
       if (state.value === 'loggedIn') {
         this.onCancel();
-        console.log('UserData:');
-        console.log(localStorage.getItem('userData'));
+        console.log('User:');
+        console.log(getUser());
       }
-      /*
       if (state.value === 'requestErr') {
         // display errors
       }
-      */
     });
+    */
   }
 
   ngOnInit() {
@@ -79,8 +81,7 @@ export class LoginForm extends Validation implements OnInit {
     }
       
     // Send authentication details to backend
-    this._authMachineService.service
-      .send(new LoginSubmit(this.f.username?.value, this.f.password?.value));
+    //this._authService.service.send(new LoginSubmit(this.f.username?.value, this.f.password?.value));
   }  
 
   public onCancel(): void {

@@ -11,10 +11,10 @@ import * as root from '../../../reducers';
 
 import { ImageLoadedService } from '../../../core/services/image-loaded.service';
 import { enumArray } from "../../helpers/enum";
-import { isLoggedIn } from "../../helpers/auth";
-import { ModeEnum } from "../../models/mode-enum.model";
-import { AlignmentEnum } from "../../models/alignment-enum.model";
-import { TSetting } from "../../models/settings.model";
+import { isLoggedIn } from "../../services/auth/helpers/auth";
+import { ModeEnum } from "../../../../../../shared/src/models/mode-enum.model";
+import { AlignmentEnum } from "../../../../../../shared/src/models/alignment-enum.model";
+import { TSetting } from "../../../../../../shared/src/models/settings.model";
 import { GenericSelect } from "../generic-select/generic-select.component";
 import { PortSelect } from "./port-select/port-select.component";
 import { RowInput } from "./row-input/row-input.component";
@@ -83,31 +83,24 @@ export class OptionsPanel implements OnInit, AfterViewInit {
       this.formControls
     );
     this._imageLoadedService.imageLoaded$.subscribe(() => {
-      this.enable();
+      this.disable(false);
     })
   }
 
   ngAfterViewInit(): void {
-    if (this._enableOptions.getValue()) {
-      this.enable();
-    } else {
-      this.disable();
-    }
+    this.disable(!this._enableOptions.getValue());
   }
 
   // Convenience getter to access form fields
   public get f() { return this.form.controls; }
-
-  public enable() {
-    Object.values(this.formControls).map((control: FormControl<TSetting>) =>
-      control.enable());
-    this._mirrorCheckbox.isDisabled(false);
-  }
   
-  public disable() {
-    Object.values(this.formControls).map((control: FormControl<TSetting>) =>
-      control.disable());
-    this._mirrorCheckbox.isDisabled(true);
+  public disable(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+    this._mirrorCheckbox.disable(isDisabled);
   }
 
   public reset() {

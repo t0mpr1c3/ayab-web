@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { LoginCredentials } from '../models/credentials.model';
+import { LoginCredentials } from '../../../../../shared/src/models/credentials.model';
 import { LoginResponse } from '../models/login-response.model';
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class AuthApiService {
   constructor(private _apiService: ApiService) {}
 
   public login$(credentials: LoginCredentials): Observable<LoginResponse> {

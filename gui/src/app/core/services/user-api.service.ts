@@ -3,16 +3,16 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
-import { UserData } from '../models/user-data.model';
-import { defaultSettings } from '../models/settings.model';
-import { RegistrationCredentials } from '../models/credentials.model';
+import { User } from '../../../../../shared/src/models/user.model';
+import { defaultSettings } from '../../../../../shared/src/models/settings.model';
+import { RegistrationCredentials } from '../../../../../shared/src/models/credentials.model';
 import { ServerResponse } from '../models/server-response.model';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class UserApiService {
   constructor(private _apiService: ApiService) {}
 
-  public update$(userData: Partial<UserData>): Observable<ServerResponse> {
+  public update$(userData: Partial<User>): Observable<ServerResponse> {
     return this._apiService
       .patch( `/user/update/${userData.id}`, userData)
       .pipe( catchError(err => of({ ...err.error })));

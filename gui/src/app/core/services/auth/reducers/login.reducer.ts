@@ -1,23 +1,23 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { login } from '../actions/login-page.actions';
+import { loginSubmit } from '../actions/login-page.actions';
 import { loginFailure, loginSuccess } from '../actions/auth-api.actions';
 
-export const loginPageFeatureKey = 'loginPage';
+export const featureKey = 'loginPage';
 
-export interface LoginPageState {
+export interface State {
   error: string | null;
   pending: boolean;
 }
 
-export const initialState: LoginPageState = {
+export const initialState: State = {
   error: null,
   pending: false,
 };
 
-export const loginPageReducer = createReducer(
+export const reducer = createReducer(
   initialState,
-  on(login, (state) => ({
+  on(loginSubmit, (state) => ({
     ...state,
     error: null,
     pending: true,
@@ -34,5 +34,5 @@ export const loginPageReducer = createReducer(
   }))
 );
 
-export const getError = (state: LoginPageState) => state.error;
-export const getPending = (state: LoginPageState) => state.pending;
+export const getError = (state: State) => state.error;
+export const getPending = (state: State) => state.pending;

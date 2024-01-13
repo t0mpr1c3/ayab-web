@@ -18,7 +18,7 @@
     </mat-form-field>
     <div class="bar">
       <generic-button name="Sign in" (clicked)="onSubmit()"
-        [disabled]="f.username?.invalid || f.password?.invalid || (loading$ | async)!"></generic-button>
+        [disabled]="f.username?.invalid || f.password?.invalid || (pending$ | async)!"></generic-button>
       <generic-button name="Cancel" (clicked)="onCancel()"></generic-button>
     </div>
   </form>

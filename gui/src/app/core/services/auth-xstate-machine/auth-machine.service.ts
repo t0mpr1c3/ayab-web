@@ -15,13 +15,13 @@ import {
   TypegenDisabled,
 } from 'xstate';
 
-import { AuthService } from '../auth.service';
+import { AuthApiService } from '../auth-api.service';
 import { AuthContext, authMachineConfig } from './auth-machine.config';
 import { AuthEvent, Init, LoginSubmit, LoginSuccess, LoginFail } from './auth-machine.events';
-import { UserData, defaultUserData } from '../../models/user-data.model';
-import { LoginCredentials } from '../../models/credentials.model';
+import { User, defaultUserData } from '../../../../../../shared/src/models/user.model';
+import { LoginCredentials } from '../../../../../../shared/src/models/credentials.model';
 import { LoginResponse } from '../../models/login-response.model';
-import { isLoggedOut, removeUserData, setToken, setUserData } from '../../helpers/auth';
+import { getUser, isLoggedOut, removeUser, setToken, setUser } from '../auth/helpers/auth';
 import { formatStatus } from '../../helpers/status';
 
 @Injectable({ providedIn: 'root' })
@@ -31,7 +31,7 @@ export class AuthMachineService {
       requestLogin:
         fromObservable<LoginSuccess|LoginFail, LoginSubmit>(
           ({ input }) => 
-            this._authService
+            this._authApiService
               .login$(new LoginCredentials(input.username, input.password))
               .pipe(
                 map<LoginResponse, LoginSuccess>(res => {
@@ -45,11 +45,11 @@ export class AuthMachineService {
     actions: {
       assignUser: 
         assign({
-          userData: ({ event }) => {   
+          user: ({ event }) => {   
             let _event = event as LoginSuccess;
             setToken(_event.token);
-            setUserData(_event.userData);
-            this._user.next(<UserData>_event.userData);
+            setUser(_event.userData);
+            this._user.next(<User>_event.userData);
             return _event.userData;
           }
         }),
@@ -64,8 +64,8 @@ export class AuthMachineService {
         }),
       releaseUser: 
         assign({
-          userData: () => {
-            removeUserData();
+          user: () => {
+            removeUser();
             this._user.next(null);
             return defaultUserData;
           }
@@ -106,25 +106,23 @@ export class AuthMachineService {
     this.service.send(event);
   }
 
-  private _user: BehaviorSubject<UserData|null>;
-  public user$: Observable<UserData|null>;
+  private _user: BehaviorSubject<User|null>;
+  public user$: Observable<User|null>;
   public loggedIn$: Observable<boolean>;
   
   constructor(
-    private _authService: AuthService,
+    private _authApiService: AuthApiService,
   ) {
     this.service = createActor(this._authMachine).start();
     this.service.send(new Init(isLoggedOut()));
-    this._user = new BehaviorSubject<UserData|null>(
-      JSON.parse(localStorage.getItem('userData')!)
-    );
+    this._user = new BehaviorSubject<User|null>(getUser());
   }
 
-  public user(): Observable<UserData|null> {
+  public user(): Observable<User|null> {
     return this._user.asObservable();
   }
 
   public loggedIn(): Observable<boolean> {
-    return this.user().pipe( map<UserData|null, boolean>(user => !!user));
+    return this.user().pipe( map<User|null, boolean>(user => !!user));
   }
 }
