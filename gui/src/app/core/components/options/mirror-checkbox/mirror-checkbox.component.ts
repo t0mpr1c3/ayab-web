@@ -13,10 +13,9 @@ import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/fo
 import { MatCheckbox, MatCheckboxChange, MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { Observable, of } from "rxjs";
 
 import { TSetting } from "../../../../../../../shared/src/models/settings.model";
-import { MirrorIcon } from "./mirror-icon/mirror-icon.component";
+import { MirrorIconComponent } from "./mirror-icon.component";
 
 /**
  * @title Mirror checkbox
@@ -33,22 +32,22 @@ import { MirrorIcon } from "./mirror-icon/mirror-icon.component";
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
-    MirrorIcon,
+    MirrorIconComponent,
   ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MirrorCheckbox),
+      useExisting: forwardRef(() => MirrorCheckboxComponent),
       multi: true
     }
   ]
 })
-export class MirrorCheckbox implements AfterViewInit {
+export class MirrorCheckboxComponent implements AfterViewInit {
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input({ transform: booleanAttribute }) disabled: boolean;
   @Input({ transform: booleanAttribute }) defaultValue: boolean = false;
   @ViewChild('checkbox') private _checkbox: MatCheckbox;
-  @ViewChild('icon') private _icon: MirrorIcon;
+  @ViewChild('icon') private _icon: MirrorIconComponent;
 
   public checked: boolean = this.defaultValue;
 

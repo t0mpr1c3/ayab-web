@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { GenericButton } from '../../../../generic-button/generic-button.component';
+import { GenericButtonComponent } from '../../../../generic-button/generic-button.component';
 
 @Component({
   standalone: true,
@@ -13,7 +13,7 @@ import { GenericButton } from '../../../../generic-button/generic-button.compone
   imports: [
     CommonModule,
     MatIconModule,
-    GenericButton,
+    GenericButtonComponent,
   ],
 })
 export class RegistrationConfirmationDialog {

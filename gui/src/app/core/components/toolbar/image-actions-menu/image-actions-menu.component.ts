@@ -15,4 +15,4 @@ import { MatMenuModule } from '@angular/material/menu';
     MatMenuModule,
   ],
 })
-export class ImageActionsMenu {}
+export class ImageActionsMenuComponent {}

@@ -17,7 +17,7 @@ import { ImageLoadedService } from '../../../services/image-loaded.service';
     MatButtonModule,
   ]
 })
-export class LoadImageButton {
+export class LoadImageButtonComponent {
   public imageFile: File;
   private _checkUpload: Subscription;
 

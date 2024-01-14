@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { AuthMachineService } from '../../services/auth-xstate-machine/auth-machine.service';
 

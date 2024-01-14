@@ -1,5 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, booleanAttribute } from "@angular/core";
+import { 
+  AfterViewChecked, 
+  ChangeDetectionStrategy, 
+  Component, 
+  ElementRef, 
+  Input, 
+  ViewChild, 
+  booleanAttribute 
+} from "@angular/core";
 
 /**
  * @title Mirror icon
@@ -8,13 +16,20 @@ import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, Input
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mirror-icon',
-  templateUrl: 'mirror-icon.component.html',
-  styleUrls: ['mirror-icon.component.css'],
+  template: `<img #img class="mirror-icon" src="">`,
+  styles: [`
+    .mirror-icon {
+      width: 18px;
+      height: 18px;
+      position: relative;
+      top: -1rem;
+    }
+  `],
   imports: [CommonModule],
 })
-export class MirrorIcon implements AfterViewChecked {
+export class MirrorIconComponent implements AfterViewChecked {
   @Input({ required: true, transform: booleanAttribute }) knitSide: boolean;
-  @Input({transform: booleanAttribute }) disabled: boolean = true;
+  @Input({ transform: booleanAttribute }) disabled: boolean = true;
   @ViewChild('img', { read: ElementRef }) private _img: ElementRef;
 
   ngAfterViewChecked(): void {

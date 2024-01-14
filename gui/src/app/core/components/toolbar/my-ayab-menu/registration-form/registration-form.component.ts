@@ -11,9 +11,10 @@ import { setToken } from '../../../../services/auth/helpers/auth';
 import { MustMatch } from '../../../../helpers/must-match'; // custom validator
 import { Validation } from '../../../../models/validation.model';
 import { UserApiService } from '../../../../services/user-api.service';
+import { SubmitService } from '../../../../services/submit.service';
 import { CancelService } from '../../../../services/cancel.service';
 import { DebounceClickDirective } from '../../../../directives/debounce.directive';
-import { GenericButton } from '../../../generic-button/generic-button.component';
+import { GenericButtonComponent } from '../../../generic-button/generic-button.component';
 import { RegistrationConfirmationDialog } from './registration-confirmation/registration-confirmation.component';
 import { RegistrationCredentials } from '../../../../../../../../shared/src/models/credentials.model';
 
@@ -27,12 +28,12 @@ import { RegistrationCredentials } from '../../../../../../../../shared/src/mode
     MatFormFieldModule, 
     CommonModule, 
     ReactiveFormsModule, 
-    GenericButton,
     MatIconModule,
     DebounceClickDirective,
+    GenericButtonComponent,
   ],
 })
-export class RegistrationForm extends Validation implements OnInit {
+export class RegistrationFormComponent extends Validation implements OnInit {
   public form!: FormGroup;
   private _confirmationDialogRef: MatDialogRef<RegistrationConfirmationDialog>;
   private _confirmationDialogSubscription: Subscription;
@@ -42,6 +43,7 @@ export class RegistrationForm extends Validation implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _userApiService: UserApiService,
+    private _submitService: SubmitService,
     private _cancelService: CancelService,
     private _dialog: MatDialog,
   ) {
@@ -84,12 +86,24 @@ export class RegistrationForm extends Validation implements OnInit {
       return;
     }
     this._inhibit = true;
-    
-    let credentials = new RegistrationCredentials(
-      this.f.username?.value,
-      this.f.email?.value,
-      this.f.password?.value,
-    );
+      
+    // Return credentials
+    this._submitService.emit({
+      form: RegistrationFormComponent,
+      credentials: {
+        username: this.f.username?.value,
+        email:    this.f.email?.value,
+        password: this.f.password?.value,
+        role:     'USER',
+      }
+    });
+
+    let credentials = {
+      username: this.f.username?.value,
+      email:    this.f.email?.value,
+      password: this.f.password?.value,
+      role:     'USER',
+    } as RegistrationCredentials;
     
     // POST form inputs to backend
     this._userApiService.register$(credentials).subscribe(res => {

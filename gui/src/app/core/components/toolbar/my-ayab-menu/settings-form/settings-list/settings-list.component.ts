@@ -15,7 +15,7 @@ import { SettingTemplateDirective } from "../settings-template.directive";
     SettingTemplateDirective,
   ],
 })
-export class SettingsList<T extends object> {
+export class SettingsListComponent<T extends object> {
   @Input() data!: T[];
   @ContentChild(SettingTemplateDirective, { read: TemplateRef }) settingTemplate!: TemplateRef<any>;
 }

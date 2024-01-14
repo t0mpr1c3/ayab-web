@@ -9,15 +9,17 @@ import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 //import { routes } from './app/root/router';
-import { AppComponent } from './app/containers/app/app.component';
+import { AppComponent } from './app/containers/app.component';
 import * as layout from './app/core/reducers/layout.reducer';
 import * as test from './app/core/reducers/test.reducer';
 import * as knit from './app/core/reducers/knit.reducer';
 import { ApiService } from './app/core/services/api.service';
-import { AuthService } from './app/core/services/auth.service';
-import { UserService } from './app/core/services/user.service';
-import { AuthMachineService } from './app/core/services/auth-machine/auth-machine.service';
+import { AuthApiService } from './app/core/services/auth-api.service';
+import { UserApiService } from './app/core/services/user-api.service';
+import { AuthService } from './app/core/services/auth/services/auth.service';
+//import { AuthMachineService } from './app/core/services/auth-xstate-machine/auth-machine.service';
 import { ImageLoadedService } from './app/core/services/image-loaded.service';
+import { SubmitService } from './app/core/services/submit.service';
 import { CancelService } from './app/core/services/cancel.service';
 
 bootstrapApplication(AppComponent, {
@@ -66,10 +68,12 @@ bootstrapApplication(AppComponent, {
     // provideEffects([RouterEffects, AuthEffects]),
 
     ApiService,
+    AuthApiService,
+    UserApiService,
     AuthService,
-    UserService,
-    AuthMachineService,
+    //AuthMachineService,
     ImageLoadedService,
+    SubmitService,
     CancelService,
   ],
 }).catch(err => console.error(err));

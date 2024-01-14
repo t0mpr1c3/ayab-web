@@ -16,11 +16,11 @@ import { getUser, setToken } from '../../../../services/auth/helpers/auth';
 import { CancelService } from '../../../../services/cancel.service';
 import { Settings, TSetting } from '../../../../../../../../shared/src/models/settings.model';
 import { User } from '../../../../../../../../shared/src/models/user.model';
-import { GenericButton } from '../../../generic-button/generic-button.component';
-import { GenericCheckbox } from '../../../generic-checkbox/generic-checkbox.component';
-import { GenericSelect } from '../../../generic-select/generic-select.component';
+import { GenericButtonComponent } from '../../../generic-button/generic-button.component';
+import { GenericCheckboxComponent } from '../../../generic-checkbox/generic-checkbox.component';
+import { GenericSelectComponent } from '../../../generic-select/generic-select.component';
 import { SettingTemplateDirective } from './settings-template.directive';
-import { SettingsList } from './settings-list/settings-list.component';
+import { SettingsListComponent } from './settings-list/settings-list.component';
 
 /** 
  * @title Settings form 
@@ -36,14 +36,14 @@ import { SettingsList } from './settings-list/settings-list.component';
     MatInputModule, 
     MatFormFieldModule, 
     MatIconModule,
-    GenericButton,
-    GenericCheckbox,
-    GenericSelect,
-    SettingsList,
+    GenericButtonComponent,
+    GenericCheckboxComponent,
+    GenericSelectComponent,
+    SettingsListComponent,
     SettingTemplateDirective,
   ],
 })
-export class SettingsForm implements OnInit, OnDestroy {
+export class SettingsFormComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   public formControls: Record<string, FormControl<TSetting>>;
   public settingsData: { 

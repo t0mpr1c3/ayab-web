@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -15,16 +16,15 @@ import { isLoggedIn } from "../../services/auth/helpers/auth";
 import { ModeEnum } from "../../../../../../shared/src/models/mode-enum.model";
 import { AlignmentEnum } from "../../../../../../shared/src/models/alignment-enum.model";
 import { TSetting } from "../../../../../../shared/src/models/settings.model";
-import { GenericSelect } from "../generic-select/generic-select.component";
-import { PortSelect } from "./port-select/port-select.component";
-import { RowInput } from "./row-input/row-input.component";
-import { ColorsInput } from "./colors-input/colors-input.component";
-import { NeedleInput } from "./needle-input/needle-input.component";
-import { MirrorCheckbox } from "./mirror-checkbox/mirror-checkbox.component";
-import { MatSelectModule } from "@angular/material/select";
+import { GenericSelectComponent } from "../generic-select/generic-select.component";
+import { PortSelectComponent } from "./port-select/port-select.component";
+import { RowInputComponent } from "./row-input/row-input.component";
+import { ColorsInputComponent } from "./colors-input/colors-input.component";
+import { NeedleInputComponent } from "./needle-input/needle-input.component";
+import { MirrorCheckboxComponent } from "./mirror-checkbox/mirror-checkbox.component";
 
 /**
- * @title Options panel
+ * @title Options panel component
  */
 @Component({
   standalone: true,
@@ -36,20 +36,19 @@ import { MatSelectModule } from "@angular/material/select";
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    CommonModule,
-    PortSelect,
-    RowInput, 
-    ColorsInput, 
-    NeedleInput, 
-    GenericSelect, 
-    MirrorCheckbox,
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    PortSelectComponent,
+    RowInputComponent, 
+    ColorsInputComponent, 
+    NeedleInputComponent, 
+    GenericSelectComponent, 
+    MirrorCheckboxComponent,
   ]
 })
-export class OptionsPanel implements OnInit, AfterViewInit {  
-  @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckbox;
+export class OptionsPanelComponent implements OnInit, AfterViewInit {  
+  @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckboxComponent;
 
   public form: FormGroup;
   public formControls: Record<string, FormControl<TSetting>>;

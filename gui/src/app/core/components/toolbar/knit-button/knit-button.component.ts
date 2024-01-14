@@ -13,7 +13,7 @@ import { Subscription } from 'xstate';
   styleUrls: ['knit-button.component.css'],
   imports: [MatButtonModule]
 })
-export class KnitButton implements OnInit, OnDestroy {
+export class KnitButtonComponent implements OnInit, OnDestroy {
   public enabled: boolean = false;
 
   constructor() {}

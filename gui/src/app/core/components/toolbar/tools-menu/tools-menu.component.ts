@@ -15,4 +15,4 @@ imports: [
   MatMenuModule,
 ],
 })
-export class ToolsMenu {}
+export class ToolsMenuComponent {}

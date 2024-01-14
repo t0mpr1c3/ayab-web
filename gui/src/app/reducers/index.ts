@@ -52,6 +52,7 @@ import { combineReducers } from '@ngrx/store';
 import * as layout from '../core/reducers/layout.reducer';
 import * as test from '../core/reducers/test.reducer';
 import * as knit from '../core/reducers/knit.reducer';
+import * as auth from '../core/services/auth/reducers/auth.reducer';
 import { InjectionToken, isDevMode } from '@angular/core';
 
 /**
@@ -62,6 +63,7 @@ export interface State {
   [layout.featureKey]: layout.State;
   [test.featureKey]: test.State;
   [knit.featureKey]: knit.State;
+  [auth.featureKey]: auth.State;
   //router: RouterReducerState<any>;
 }
 
@@ -76,6 +78,7 @@ const reducers = {
   layout: layout.reducer,
   test: test.reducer,
   knit: knit.reducer,
+  auth: auth.reducer,
   //router: fromRouter.routerReducer,
 };
 
@@ -103,6 +106,7 @@ export const ROOT_REDUCERS = new InjectionToken<
     [layout.featureKey]: layout.reducer,
     [test.featureKey]: test.reducer,
     [knit.featureKey]: knit.reducer,
+    [auth.featureKey]: auth.reducer,
     //router: routerReducer,
   }),
 });

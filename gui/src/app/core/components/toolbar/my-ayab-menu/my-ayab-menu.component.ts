@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { Observable } from 'rxjs';
 
-import { FormDialog } from '../../form-dialog/form-dialog.component';
-import { RegistrationForm } from './registration-form/registration-form.component';
-import { LoginForm } from './login-form/login-form.component';
-import { SettingsForm } from './settings-form/settings-form.component';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthMachineService } from '../../../services/auth-xstate-machine/auth-machine.service';
 import { Logout } from '../../../services/auth-xstate-machine/auth-machine.events';
+import { AuthService } from '../../../services/auth/services/auth.service';
+import { FormDialogComponent } from '../../form-dialog/form-dialog.component';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { SettingsFormComponent } from './settings-form/settings-form.component';
 
 /**
  * @title My AYAB menu
@@ -26,35 +26,37 @@ import { Logout } from '../../../services/auth-xstate-machine/auth-machine.event
     CommonModule,
   ],
 })
-export class MyAYABMenu {
+export class MyAYABMenuComponent {
   public loggedIn$: Observable<boolean>;
 
   public constructor(
     private _dialog: MatDialog,
-    private _authMachineService: AuthMachineService,
+    private _authService: AuthService,
+    //private _authMachineService: AuthMachineService,
   ) {
-    this.loggedIn$ = this._authMachineService.loggedIn();
+    //this.loggedIn$ = this._authMachineService.loggedIn();
   }   
 
   public openRegistrationDialog(): void {
     this._dialog.open(
-      FormDialog,  
-      {data: {formType: RegistrationForm}});
+      FormDialogComponent,  
+      { data: { formType: RegistrationFormComponent }});
   }
 
   public openLoginDialog(): void {
     this._dialog.open(
-      FormDialog, 
-      {data: {formType: LoginForm}});
+      FormDialogComponent, 
+      { data: { formType: LoginFormComponent }});
   }
 
   public openSettingsDialog(): void {
     this._dialog.open(
-      FormDialog,  
-      {data: {formType: SettingsForm}});
+      FormDialogComponent,  
+      { data: { formType: SettingsFormComponent }});
   }
 
   public logout(): void {
-    this._authMachineService.service.send(new Logout());
+    this._authService.logout();
+    //this._authMachineService.service.send(new Logout());
   }
 }

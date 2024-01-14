@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, numberAttribute } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -8,7 +8,7 @@ import { debounceTime } from 'rxjs/operators';
   standalone: true
 })
 export class DebounceClickDirective implements OnInit, OnDestroy {
-  @Input() debounceTime = 500;
+  @Input({ transform: numberAttribute }) debounceTime = 500;
 
   @Output() debouncedClick = new EventEmitter();
 

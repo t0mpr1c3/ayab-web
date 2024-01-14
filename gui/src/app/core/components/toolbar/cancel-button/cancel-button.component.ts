@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 /** 
- * @title Cancel button
+ * @title Cancel button component
  **/
 @Component({
   standalone: true,
@@ -11,4 +11,4 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['cancel-button.component.css'],
   imports: [MatButtonModule]
 })
-export class CancelButton {}
+export class CancelButtonComponent {}

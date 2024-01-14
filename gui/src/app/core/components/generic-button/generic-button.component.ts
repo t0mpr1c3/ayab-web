@@ -18,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
 })
-export class GenericButton {
+export class GenericButtonComponent {
   @Input({ required: true }) name: string;
   @Input() formControlName: string;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;

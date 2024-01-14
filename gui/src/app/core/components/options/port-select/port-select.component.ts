@@ -22,7 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
   ],
 })
-export class PortSelect {
+export class PortSelectComponent {
   @Input() disabled: boolean = false;
 
   public port = "simulation";

@@ -26,12 +26,12 @@ import { TSetting } from '../../../../../../shared/src/models/settings.model';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => GenericSelect),
+      useExisting: forwardRef(() => GenericSelectComponent),
       multi: true,
     }
   ]
 })
-export class GenericSelect implements OnInit {
+export class GenericSelectComponent implements OnInit {
   @Input({ required: true }) name: string;
   @Input({ required: true }) enum: string[];
   @Input({ required: true }) control: FormControl<TSetting>;

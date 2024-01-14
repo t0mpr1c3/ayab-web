@@ -32,7 +32,7 @@ export class AuthMachineService {
         fromObservable<LoginSuccess|LoginFail, LoginSubmit>(
           ({ input }) => 
             this._authApiService
-              .login$(new LoginCredentials(input.username, input.password))
+              .login$({ username: input.username, password: input.password })
               .pipe(
                 map<LoginResponse, LoginSuccess>(res => {
                   let output = new LoginSuccess(res.user, res.access_token);

@@ -15,7 +15,7 @@
 <ng-template #shown>
   <div>
     <div class="top">
-      <button mat-mini-fab title="Hide options" class="shown" (click)="hideOptions()">
+      <button mat-mini-fab title="Hide options" class="shown" (click)="hideOptions.emit()">
         <mat-icon>chevron_right</mat-icon>
       </button>
     </div>
@@ -27,7 +27,7 @@
 
 <ng-template #hidden>
   <div class="options hidden">
-    <button mat-mini-fab title="Show options" (click)="showOptions()" class="hidden">
+    <button mat-mini-fab title="Show options" class="hidden" (click)="showOptions.emit()">
       <mat-icon class="hidden">chevron_left</mat-icon>
     </button>
   </div>

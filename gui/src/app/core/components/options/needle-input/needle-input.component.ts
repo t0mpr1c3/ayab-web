@@ -30,7 +30,7 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
   ]
   */
 })
-export class NeedleInput {
+export class NeedleInputComponent {
   @Input({ required: true }) title: string;
   @Input({ required: true }) color: string;
   @Input({ required: true }) control: FormControl<TSetting>;

@@ -28,22 +28,22 @@ import { TSetting } from '../../../../../../shared/src/models/settings.model';
     providers: [
       {
         provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => GenericCheckbox),
+        useExisting: forwardRef(() => GenericCheckboxComponent),
         multi: true,
       }
     ]
 })
-export class GenericCheckbox {
+export class GenericCheckboxComponent {
   @Input({ required: true }) name: string;
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input() disabled: boolean = false;
   @Input({ transform: booleanAttribute }) defaultValue: boolean = false;
 
-  @Output() clicked: EventEmitter<boolean> = new EventEmitter();
+  @Output() checked: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {}
 
   public onClick(event: MatCheckboxChange) {
-    this.clicked.emit(event.checked);
+    this.checked.emit(event.checked);
   }
 }

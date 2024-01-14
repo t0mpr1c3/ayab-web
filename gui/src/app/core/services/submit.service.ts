@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-// sends message when cancel button is pressed
+// emits event with untyped payload
 @Injectable({ providedIn: 'root' })
 export class SubmitService {
-  public submit$ = new Subject<void>();
+  public submit$ = new Subject();
 
-  public emit() {
-    this.submit$.next();
+  public emit(payload: any) {
+    this.submit$.next(payload);
   }
 }

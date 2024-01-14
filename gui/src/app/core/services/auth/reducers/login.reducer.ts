@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { loginSubmit } from '../actions/login-page.actions';
+import { loginSubmit } from '../actions/login.actions';
 import { loginFailure, loginSuccess } from '../actions/auth-api.actions';
 
-export const featureKey = 'loginPage';
+export const featureKey = 'login';
 
 export interface State {
   error: string | null;

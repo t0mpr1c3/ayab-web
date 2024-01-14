@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
 
+import { Store } from '@ngrx/store';
+import * as root from '../../../../../reducers';
+import * as auth from '../../../../services/auth/reducers/auth.reducer';
+
+import { SubmitService } from '../../../../services/submit.service';
 import { CancelService } from '../../../../services/cancel.service';
-import { AuthService } from '../../../../services/auth/services/auth.service';
-//import { AuthMachineService } from '../../../../services/auth-xstate-machine/auth-machine.service';
-import { LoginSubmit } from '../../../../services/auth-xstate-machine/auth-machine.events';
-import { getUser } from '../../../../services/auth/helpers/auth';
 import { Validation } from '../../../../models/validation.model';
-import { GenericButton } from '../../../generic-button/generic-button.component';
+import { GenericButtonComponent } from '../../../generic-button/generic-button.component';
 
 @Component({
   standalone: true,
@@ -25,35 +25,23 @@ import { GenericButton } from '../../../generic-button/generic-button.component'
     CommonModule,
     MatFormFieldModule,
     MatIconModule,
-    GenericButton,
+    GenericButtonComponent,
   ],
 })
-export class LoginForm extends Validation implements OnInit {
+export class LoginFormComponent extends Validation implements OnInit {
+  pending$ = this._store.select(auth.selectLoginPending);
+  error$ = this._store.select(auth.selectLoginError);
+
   public form: FormGroup;
-  public pending$: Observable<boolean>;
   private _canceled = false;
 
   constructor(
+    private _store: Store<root.State>,
     private _formBuilder: FormBuilder,
-    private _authService: AuthService,
+    private _submitService: SubmitService,
     private _cancelService: CancelService,
   ) {
     super();
-
-    /*
-    // Close dialog when logged in
-    this._authService.service.subscribe(state => {
-      console.log(`state: ${state.value}`);
-      if (state.value === 'loggedIn') {
-        this.onCancel();
-        console.log('User:');
-        console.log(getUser());
-      }
-      if (state.value === 'requestErr') {
-        // display errors
-      }
-    });
-    */
   }
 
   ngOnInit() {
@@ -80,8 +68,14 @@ export class LoginForm extends Validation implements OnInit {
       return;
     }
       
-    // Send authentication details to backend
-    //this._authService.service.send(new LoginSubmit(this.f.username?.value, this.f.password?.value));
+    // Return credentials
+    this._submitService.emit({
+      form: LoginFormComponent,
+      credentials: {
+        username: this.f.username?.value, 
+        password: this.f.password?.value,
+      }
+    });
   }  
 
   public onCancel(): void {

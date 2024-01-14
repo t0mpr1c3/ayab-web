@@ -4,10 +4,11 @@ import { BehaviorSubject, Observable, map, of, throwError } from 'rxjs';
 import { getUser, isLoggedOut } from '../helpers/auth';
 import { LoginCredentials } from '../../../../../../../shared/src/models/credentials.model';
 import { User, defaultUserData } from '../../../../../../../shared/src/models/user.model';
+import { AuthApiService } from '../../auth-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  login({ username, password }: LoginCredentials): Observable<User> {
+  public loginSubmit({ username, password }: LoginCredentials): Observable<User> {
     /**
      * Simulate a failed login to display the error
      * message for the login form.
@@ -19,7 +20,7 @@ export class AuthService {
     return of(defaultUserData);
   }
 
-  logout() {
+  public logout() {
     return of(true);
   }
 
@@ -34,7 +35,7 @@ export class AuthService {
   public loggedIn$: Observable<boolean>;
   
   constructor(
-    private _authService: AuthService,
+    private _authApiService: AuthApiService,
   ) {
     /*
     this.service = createActor(this._authMachine).start();

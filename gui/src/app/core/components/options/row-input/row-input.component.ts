@@ -19,7 +19,7 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
     MatInputModule,
   ]
 })
-export class RowInput {
+export class RowInputComponent {
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input({ transform: booleanAttribute }) disabled: boolean;
 }

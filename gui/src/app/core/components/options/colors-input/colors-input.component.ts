@@ -19,7 +19,7 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
     MatInputModule,
   ]
 })
-export class ColorsInput {
+export class ColorsInputComponent {
   @Input() disabled: boolean = false;
   @Input({ required: true }) control: FormControl<TSetting>;
 }

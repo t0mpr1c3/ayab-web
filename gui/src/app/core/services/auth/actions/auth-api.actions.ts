@@ -1,5 +1,4 @@
 import { props, createAction } from '@ngrx/store';
-
 import { User } from '../../../../../../../shared/src/models/user.model';
 
 export const loginSuccess = createAction(
@@ -10,8 +9,4 @@ export const loginSuccess = createAction(
 export const loginFailure = createAction(
   '[Auth/API] Login Failure',
   props<{ error: any }>()
-);
-
-export const loginRedirect = createAction(
-  '[Auth/API] Login Redirect'
 );

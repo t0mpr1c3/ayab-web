@@ -1,13 +1,14 @@
-import { createAction } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
+import { User } from '../../../../../../../shared/src/models/user.model';
+
+export const isLoggedIn = createAction(
+  '[Auth] IsLoggedIn',
+  props<{ user: User }>()
+);
+export const isLoggedOut = createAction(
+  '[Auth] IsLoggedOut'
+);
 
 export const logout = createAction(
   '[Auth] Logout'
-);
-
-export const logoutConfirmation = createAction(
-  '[Auth] Logout Confirmation'
-);
-
-export const logoutConfirmationDismiss = createAction(
-  '[Auth] Logout Confirmation Dismiss'
 );

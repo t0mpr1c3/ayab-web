@@ -7,7 +7,7 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
 import { loginFailure, loginRedirect, loginSuccess } from '../actions/auth-api.actions';
 import { logout, logoutConfirmation, logoutConfirmationDismiss } from '../actions/auth.actions';
-import { loginSubmit } from '../actions/login-page.actions';
+import { loginSubmit } from '../actions/login.actions';
 import { idleTimeout } from '../../../actions/user.actions';
 import { AuthService } from '../services/auth.service';
 import { LoginCredentials } from '../../../../../../../shared/src/models/credentials.model';
