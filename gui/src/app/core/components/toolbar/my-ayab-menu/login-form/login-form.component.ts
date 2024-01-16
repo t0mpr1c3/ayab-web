@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,12 +6,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
 import { Store } from '@ngrx/store';
-import * as root from '../../../../../reducers';
-import * as auth from '../../../../services/auth/reducers/auth.reducer';
+import * as fromRoot from '../../../../../reducers';
+import * as fromLogin from '../../../../../auth/actions/login.actions';
 
 import { SubmitService } from '../../../../services/submit.service';
 import { CancelService } from '../../../../services/cancel.service';
 import { Validation } from '../../../../models/validation.model';
+import { LoginCredentials } from '../../../../../../../../shared/src/models/credentials.model';
 import { GenericButtonComponent } from '../../../generic-button/generic-button.component';
 
 @Component({
@@ -20,23 +21,23 @@ import { GenericButtonComponent } from '../../../generic-button/generic-button.c
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css'],
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatInputModule,
-    CommonModule,
     MatFormFieldModule,
     MatIconModule,
     GenericButtonComponent,
   ],
 })
 export class LoginFormComponent extends Validation implements OnInit {
-  pending$ = this._store.select(auth.selectLoginPending);
-  error$ = this._store.select(auth.selectLoginError);
+  public pending$ = this._store.select(fromRoot.selectLoginPending);
+  public error$ = this._store.select(fromRoot.selectLoginError);
 
   public form: FormGroup;
-  private _canceled = false;
+  private _debounce = false;
 
   constructor(
-    private _store: Store<root.State>,
+    private _store: Store<fromRoot.State>,
     private _formBuilder: FormBuilder,
     private _submitService: SubmitService,
     private _cancelService: CancelService,
@@ -64,22 +65,28 @@ export class LoginFormComponent extends Validation implements OnInit {
   public get f() { return this.form.controls; }
 
   public onSubmit(): void {
-    if (this.form.invalid || this._canceled) {
+    if (this.form.invalid || this._debounce) {
       return;
     }
+    this._debounce = true;
       
     // Return credentials
     this._submitService.emit({
-      form: LoginFormComponent,
-      credentials: {
-        username: this.f.username?.value, 
-        password: this.f.password?.value,
+      action: fromLogin.loginSubmit,
+      payload: {
+        credentials: {
+          username: this.f.username?.value, 
+          password: this.f.password?.value,
+        } as LoginCredentials
       }
     });
+
+    // Close dialog
+    this._cancelService.emit();
   }  
 
   public onCancel(): void {
-    this._canceled = true;
+    this._debounce = true;
     this._cancelService.emit();
   }
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormControl } from '@angular/forms';
 
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
 
@@ -15,11 +15,12 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
   templateUrl: 'colors-input.component.html',
   styleUrls: ['colors-input.component.css'],
   imports: [
+    ReactiveFormsModule,
     MatFormFieldModule, 
     MatInputModule,
   ]
 })
 export class ColorsInputComponent {
-  @Input() disabled: boolean = false;
   @Input({ required: true }) control: FormControl<TSetting>;
+  @Input() disabled: boolean = false;
 }

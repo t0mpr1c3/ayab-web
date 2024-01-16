@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { checkJwt } from '../middlewares/checkJwt';
-import AuthController from '../controllers/AuthController';
+import { checkJwt } from '../middlewares/check-jwt';
+import AuthController from '../controllers/auth.controller';
 
 const router = Router();
 

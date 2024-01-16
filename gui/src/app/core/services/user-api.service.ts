@@ -6,19 +6,19 @@ import { ApiService } from './api.service';
 import { User } from '../../../../../shared/src/models/user.model';
 import { defaultSettings } from '../../../../../shared/src/models/settings.model';
 import { RegistrationCredentials } from '../../../../../shared/src/models/credentials.model';
-import { ServerResponse } from '../models/server-response.model';
+import { StatusMaybeWithToken } from '../../../../../shared/src/models/status.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserApiService {
   constructor(private _apiService: ApiService) {}
 
-  public update$(userData: Partial<User>): Observable<ServerResponse> {
+  public update(user: Partial<User>): Observable<StatusMaybeWithToken> {
     return this._apiService
-      .patch( `/user/update/${userData.id}`, userData)
+      .patch( `/user/update/${user.id}`, user)
       .pipe( catchError(err => of({ ...err.error })));
   }
 
-  public register$(credentials: RegistrationCredentials): Observable<ServerResponse> {
+  public register(credentials: RegistrationCredentials): Observable<StatusMaybeWithToken> {
     return this._apiService
       .post( '/user/register', {
         username: credentials.username,

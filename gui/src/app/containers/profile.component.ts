@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 
 import { Store } from '@ngrx/store';
-import * as root from '../reducers';
-import * as authApi from '../core/services/auth/actions/auth-api.actions';
-import * as login from '../core/services/auth/actions/login.actions';
-import * as auth from '../core/services/auth/actions/auth.actions';
+import * as fromRoot from '../reducers';
+import * as fromAuthApi from '../auth/actions/auth-api.actions';
+import * as fromLogin from '../auth/actions/login.actions';
+import * as fromAuth from '../auth/actions/auth.actions';
+import * as fromUser from '../core/actions/user.actions'
 
+import { SubmitService } from "../core/services/submit.service";
 import { User } from "../../../../shared/src/models/user.model";
-import { LoginCredentials } from "../../../../shared/src/models/credentials.model";
+import { LoginCredentials, RegistrationCredentials } from "../../../../shared/src/models/credentials.model";
 import { MyAYABMenuComponent } from "../core/components/toolbar/my-ayab-menu/my-ayab-menu.component";
 
 /**
@@ -20,7 +22,29 @@ import { MyAYABMenuComponent } from "../core/components/toolbar/my-ayab-menu/my-
   imports: [MyAYABMenuComponent],
 })
 export class ProfileComponent {
-  constructor(private _store: Store<root.State>) {}
+  constructor(
+    private _store: Store<fromRoot.State>,
+    private _submitService: SubmitService,
+  ) {
+    this._submitService.submit.subscribe(signal => {
+      switch(signal.action) {
+        case fromUser.registration:
+          this.registration(signal.payload.credentials);
+          break;
+        case fromLogin.loginSubmit:
+          this.loginSubmit(signal.payload.credentials);
+          break;
+        case fromUser.update:
+          this.update(signal.payload.user);
+          break;
+        case fromAuth.logout:
+          this.logout();
+          break;
+        default:
+          break;
+      }
+    })
+  }
 
   /**
    * All state updates are handled through dispatched actions in 'container'
@@ -30,18 +54,30 @@ export class ProfileComponent {
    */
   
   loginSuccess(user: User): void {
-    this._store.dispatch(authApi.loginSuccess({ user }));
+    this._store.dispatch(fromAuthApi.loginSuccess({ user }));
   }
   
   loginFailure(error: any): void {
-    this._store.dispatch(authApi.loginFailure({ error }));
+    this._store.dispatch(fromAuthApi.loginFailure({ error }));
   }
   
   loginSubmit(credentials: LoginCredentials): void {
-    this._store.dispatch(login.loginSubmit({ credentials }));
+    this._store.dispatch(fromLogin.loginSubmit({ credentials }));
   }
   
   logout(): void {
-    this._store.dispatch(auth.logout());
+    this._store.dispatch(fromAuth.logout());
+  }
+  
+  registration(credentials: RegistrationCredentials): void {
+    this._store.dispatch(fromUser.registration({ credentials }));
+  }
+  
+  update(user: User): void {
+    this._store.dispatch(fromUser.update({ user }));
+  }
+  
+  idleTimeout(): void {
+    this._store.dispatch(fromUser.idleTimeout());
   }
 }

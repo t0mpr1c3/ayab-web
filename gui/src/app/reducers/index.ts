@@ -13,6 +13,7 @@ import {
   RouterReducerState,
 } from '@ngrx/router-store';
 */
+import { InjectionToken, isDevMode } from '@angular/core';
 
 import { environment } from '../environments/environment';
 
@@ -49,21 +50,22 @@ import { combineReducers } from '@ngrx/store';
  * the state of the reducer plus any selector functions. The `* as`
  * notation packages up all of the exports into a single object.
  */
-import * as layout from '../core/reducers/layout.reducer';
-import * as test from '../core/reducers/test.reducer';
-import * as knit from '../core/reducers/knit.reducer';
-import * as auth from '../core/services/auth/reducers/auth.reducer';
-import { InjectionToken, isDevMode } from '@angular/core';
+import * as fromLayout from '../core/reducers/layout.reducer';
+import * as fromTest from '../core/reducers/test.reducer';
+import * as fromKnit from '../core/reducers/knit.reducer';
+import * as fromAuth from '../auth/reducers/auth.reducer';
+import * as fromUser from '../auth/reducers/user.reducer';
+import * as fromLogin from '../auth/reducers/login.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  [layout.featureKey]: layout.State;
-  [test.featureKey]: test.State;
-  [knit.featureKey]: knit.State;
-  [auth.featureKey]: auth.State;
+  [fromLayout.featureKey]: fromLayout.State;
+  [fromTest.featureKey]: fromTest.State;
+  [fromKnit.featureKey]: fromKnit.State;
+  [fromAuth.featureKey]: fromAuth.State;
   //router: RouterReducerState<any>;
 }
 
@@ -75,10 +77,10 @@ export interface State {
  * the result from right to left.
  */
 const reducers = {
-  layout: layout.reducer,
-  test: test.reducer,
-  knit: knit.reducer,
-  auth: auth.reducer,
+  [fromLayout.featureKey]: fromLayout.reducer,
+  [fromTest.featureKey]: fromTest.reducer,
+  [fromKnit.featureKey]: fromKnit.reducer,
+  [fromAuth.featureKey]: fromAuth.reducer,
   //router: fromRouter.routerReducer,
 };
 
@@ -103,10 +105,10 @@ export const ROOT_REDUCERS = new InjectionToken<
   ActionReducerMap<State, Action>
 >('Root reducers token', {
   factory: () => ({
-    [layout.featureKey]: layout.reducer,
-    [test.featureKey]: test.reducer,
-    [knit.featureKey]: knit.reducer,
-    [auth.featureKey]: auth.reducer,
+    [fromLayout.featureKey]: fromLayout.reducer,
+    [fromTest.featureKey]: fromTest.reducer,
+    [fromKnit.featureKey]: fromKnit.reducer,
+    [fromAuth.featureKey]: fromAuth.reducer,
     //router: routerReducer,
   }),
 });
@@ -185,42 +187,42 @@ export const metaReducers: MetaReducer<State>[] = isDevMode() ? [logger] : [];
 /**
  * Layout Selectors
  */
-export const selectLayoutState = createFeatureSelector<layout.State>(
-  layout.featureKey
+export const selectLayoutState = createFeatureSelector<fromLayout.State>(
+  fromLayout.featureKey
 );
 
 export const selectShowOptions = createSelector(
   selectLayoutState,
-  layout.selectShowOptions,
+  fromLayout.selectShowOptions,
 );
 
 /**
  * Test Selectors
  */
-export const selectTestState = createFeatureSelector<test.State>(
-  test.featureKey
+export const selectTestState = createFeatureSelector<fromTest.State>(
+  fromTest.featureKey
 );
 
 export const selectTesting = createSelector(
   selectTestState,
-  test.selectTesting
+  fromTest.selectTesting
 );
 
 /**
  * Knitting Selectors
  */
-export const selectKnitState = createFeatureSelector<knit.State>(
-  knit.featureKey
+export const selectKnitState = createFeatureSelector<fromKnit.State>(
+  fromKnit.featureKey
 );
 
 export const selectImageLoaded = createSelector(
   selectKnitState,
-  knit.selectImageLoaded
+  fromKnit.selectImageLoaded
 );
 
 export const selectKnitting = createSelector(
   selectKnitState,
-  knit.selectKnitting
+  fromKnit.selectKnitting
 );
 
 /**
@@ -236,3 +238,40 @@ export const selectEnableOptions = createSelector(
  * Router Selectors
  */
 //export const { selectRouteData } = getRouterSelectors();
+
+/**
+ * Authentication Selectors
+ */
+export const selectAuthState = createFeatureSelector<fromAuth.State>(
+  fromAuth.featureKey
+);
+
+export const selectUserState = createSelector(
+  selectAuthState,
+  state => state[fromUser.featureKey]
+);
+
+export const selectUser = createSelector(
+  selectUserState,
+  fromUser.getUser
+);
+
+export const selectLoggedIn = createSelector(
+  selectUser, 
+  (user) => (user !== null)
+);
+
+export const selectLoginState = createSelector(
+  selectAuthState,
+  state => state[fromLogin.featureKey]
+);
+
+export const selectLoginError = createSelector(
+  selectLoginState,
+  fromLogin.getError
+);
+
+export const selectLoginPending = createSelector(
+  selectLoginState,
+  fromLogin.getPending
+);

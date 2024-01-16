@@ -2,11 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
 
 import { Store } from '@ngrx/store';
-import * as root from '../../../reducers';
-import { selectLoggedIn } from '../../services/auth/reducers/auth.reducer';
+import * as fromRoot from '../../../reducers';
 
 import { ProfileComponent } from '../../../containers/profile.component';
 import { ToolsMenuComponent } from './tools-menu/tools-menu.component';
@@ -16,7 +14,7 @@ import { KnitButtonComponent } from './knit-button/knit-button.component';
 import { CancelButtonComponent } from './cancel-button/cancel-button.component';
 
 /**
- * @title Toolbar
+ * @title Toolbar component
  */
 @Component({
   standalone: true,
@@ -38,9 +36,8 @@ import { CancelButtonComponent } from './cancel-button/cancel-button.component';
 })
 export class ToolbarComponent {
   constructor(
-    private _store: Store<root.State>,
-    private _dialog: MatDialog,
+    private _store: Store<fromRoot.State>,
   ) {}
 
-  public loggedIn$ = this._store.select(selectLoggedIn);
+  public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
 }

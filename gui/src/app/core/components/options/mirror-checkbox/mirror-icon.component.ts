@@ -2,12 +2,13 @@ import { CommonModule } from "@angular/common";
 import { 
   AfterViewChecked, 
   ChangeDetectionStrategy, 
-  Component, 
-  ElementRef, 
-  Input, 
+  Component,
+  Input,
   ViewChild, 
   booleanAttribute 
 } from "@angular/core";
+
+import { MirrorImgDirective } from "./mirror-img.directive";
 
 /**
  * @title Mirror icon
@@ -16,7 +17,7 @@ import {
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mirror-icon',
-  template: `<img #img class="mirror-icon" src="">`,
+  template: `<img #img class="mirror-icon">`,
   styles: [`
     .mirror-icon {
       width: 18px;
@@ -25,29 +26,28 @@ import {
       top: -1rem;
     }
   `],
-  imports: [CommonModule],
+  imports: [
+    CommonModule, 
+    MirrorImgDirective,
+  ],
 })
 export class MirrorIconComponent implements AfterViewChecked {
   @Input({ required: true, transform: booleanAttribute }) knitSide: boolean;
   @Input({ transform: booleanAttribute }) disabled: boolean = true;
-  @ViewChild('img', { read: ElementRef }) private _img: ElementRef;
-
+  @ViewChild(MirrorImgDirective) img!: MirrorImgDirective;
+  
   ngAfterViewChecked(): void {
-    this.disable(this.disabled);
     this.mirror(this.knitSide);
+    this.disable(this.disabled);
   }
 
-  public mirror(knitSide: boolean): void {
-    this.knitSide = knitSide;
-    this._img.nativeElement.src = knitSide ?
-      "../../../../assets/img/garamond-lowercase-e.png" :
-      "../../../../assets/img/garamond-lowercase-e-reversed.png";
+  public mirror(isKnitSide: boolean): void {
+    this.knitSide = isKnitSide;
+    this.img.knitSide = isKnitSide;
   }
   
   public disable(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    this._img.nativeElement.style.opacity = isDisabled ?
-      '0.38' :
-      '0.87';
+    this.img.disabled = isDisabled;
   }
 }

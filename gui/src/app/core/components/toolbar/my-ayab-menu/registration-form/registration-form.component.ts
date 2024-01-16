@@ -4,19 +4,16 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 
-import { setToken } from '../../../../services/auth/helpers/auth';
+import * as fromUser from '../../../../actions/user.actions';
+
 import { MustMatch } from '../../../../helpers/must-match'; // custom validator
-import { Validation } from '../../../../models/validation.model';
-import { UserApiService } from '../../../../services/user-api.service';
 import { SubmitService } from '../../../../services/submit.service';
 import { CancelService } from '../../../../services/cancel.service';
 import { DebounceClickDirective } from '../../../../directives/debounce.directive';
-import { GenericButtonComponent } from '../../../generic-button/generic-button.component';
-import { RegistrationConfirmationDialog } from './registration-confirmation/registration-confirmation.component';
+import { Validation } from '../../../../models/validation.model';
 import { RegistrationCredentials } from '../../../../../../../../shared/src/models/credentials.model';
+import { GenericButtonComponent } from '../../../generic-button/generic-button.component';
 
 @Component({
   standalone: true,
@@ -35,17 +32,11 @@ import { RegistrationCredentials } from '../../../../../../../../shared/src/mode
 })
 export class RegistrationFormComponent extends Validation implements OnInit {
   public form!: FormGroup;
-  private _confirmationDialogRef: MatDialogRef<RegistrationConfirmationDialog>;
-  private _confirmationDialogSubscription: Subscription;
-  private _succeeded = false;
-  private _inhibit = false;
   
   constructor(
     private _formBuilder: FormBuilder,
-    private _userApiService: UserApiService,
     private _submitService: SubmitService,
     private _cancelService: CancelService,
-    private _dialog: MatDialog,
   ) {
     super();
   }
@@ -78,25 +69,12 @@ export class RegistrationFormComponent extends Validation implements OnInit {
     }, { 
       validators: MustMatch('password', 'confirm') 
     });
-    this._succeeded = false;
   }
 
   public onSubmit() {
-    if (this.form.invalid || this._inhibit) {
+    if (this.form.invalid) {
       return;
     }
-    this._inhibit = true;
-      
-    // Return credentials
-    this._submitService.emit({
-      form: RegistrationFormComponent,
-      credentials: {
-        username: this.f.username?.value,
-        email:    this.f.email?.value,
-        password: this.f.password?.value,
-        role:     'USER',
-      }
-    });
 
     let credentials = {
       username: this.f.username?.value,
@@ -104,35 +82,12 @@ export class RegistrationFormComponent extends Validation implements OnInit {
       password: this.f.password?.value,
       role:     'USER',
     } as RegistrationCredentials;
-    
-    // POST form inputs to backend
-    this._userApiService.register$(credentials).subscribe(res => {
-      this._succeeded = res.statusCode >= 200 && res.statusCode < 300;
-      this._confirmationDialogRef = this._dialog.open(
-        RegistrationConfirmationDialog, 
-        { 
-          data: {
-            message: res.statusMessage,
-            success: this._succeeded,
-          } 
-        }
-      );
-      this._confirmationDialogSubscription = this._confirmationDialogRef
-        .afterClosed()
-        .subscribe(res => {
-          setToken(res.access_token); // Save returned authentication token
-          this.onCancel();
-        });
-    });
-  }
-
-  public onConfirm() {
-    this._confirmationDialogSubscription.unsubscribe();
-    if (this._succeeded) {
-      // Close dialog
-      this.onCancel();
-    }
-    this._inhibit = false;
+      
+    // Return credentials
+    this._submitService.emit({
+      action: fromUser.registration,
+      payload: { credentials: credentials }
+    });    
   }
 /*
   public onReset() {
@@ -140,7 +95,6 @@ export class RegistrationFormComponent extends Validation implements OnInit {
   }
 */
   public onCancel() {
-    this._inhibit = true;
     this._cancelService.emit();
   }
 }

@@ -4,8 +4,8 @@ import { debounceTime } from 'rxjs/operators';
 
 // https://coryrylan.com/blog/creating-a-custom-debounce-click-directive-in-angular
 @Directive({
+  standalone: true,
   selector: '[debounce]',
-  standalone: true
 })
 export class DebounceClickDirective implements OnInit, OnDestroy {
   @Input({ transform: numberAttribute }) debounceTime = 500;

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { getToken } from './auth/helpers/auth';
+import { getToken } from '../../auth/helpers/auth';
 
 @Injectable()
 export class ApiService {
@@ -19,8 +19,8 @@ export class ApiService {
 
   post(url: string, data: Object = {}): Observable<any> {
     return this._http.post(
-      `${environment.api_url}${url}`, 
-      JSON.stringify(data), 
+      `${environment.api_url}${url}`,
+      JSON.stringify(data),
       { headers: this.headers });
   }
 

@@ -54,6 +54,7 @@ export class MirrorCheckboxComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
+    this._checkbox.checked = this.checked;
     this.disable(this.disabled);
   }
   

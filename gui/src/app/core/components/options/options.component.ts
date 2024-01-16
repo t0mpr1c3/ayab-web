@@ -8,20 +8,22 @@ import { MatIconModule } from "@angular/material/icon";
 import { BehaviorSubject, Observable } from "rxjs";
 
 import { Store } from "@ngrx/store";
-import * as root from '../../../reducers';
+import * as fromRoot from '../../../reducers'
 
 import { ImageLoadedService } from '../../../core/services/image-loaded.service';
 import { enumArray } from "../../helpers/enum";
-import { isLoggedIn } from "../../services/auth/helpers/auth";
+import { getUser, isLoggedIn } from "../../../auth/helpers/auth";
 import { ModeEnum } from "../../../../../../shared/src/models/mode-enum.model";
 import { AlignmentEnum } from "../../../../../../shared/src/models/alignment-enum.model";
-import { TSetting } from "../../../../../../shared/src/models/settings.model";
+import { TSetting, defaultSettings } from "../../../../../../shared/src/models/settings.model";
 import { GenericSelectComponent } from "../generic-select/generic-select.component";
 import { PortSelectComponent } from "./port-select/port-select.component";
 import { RowInputComponent } from "./row-input/row-input.component";
 import { ColorsInputComponent } from "./colors-input/colors-input.component";
 import { NeedleInputComponent } from "./needle-input/needle-input.component";
 import { MirrorCheckboxComponent } from "./mirror-checkbox/mirror-checkbox.component";
+
+// FIXME options panel is missing infinite repeat checkbox
 
 /**
  * @title Options panel component
@@ -47,7 +49,7 @@ import { MirrorCheckboxComponent } from "./mirror-checkbox/mirror-checkbox.compo
     MirrorCheckboxComponent,
   ]
 })
-export class OptionsPanelComponent implements OnInit, AfterViewInit {  
+export class OptionsPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckboxComponent;
 
   public form: FormGroup;
@@ -56,32 +58,34 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
   public alignmentEnum = enumArray(AlignmentEnum);
   private _enableOptions = new BehaviorSubject<boolean>(false);
   public enableOptions$: Observable<boolean>;
+  public disabled: boolean;
 
   public mode: number;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _store: Store<root.State>,
     private _imageLoadedService: ImageLoadedService,
+    private _store: Store<fromRoot.State>,
   ) {
-    this.enableOptions$ = this._store.select(root.selectEnableOptions);
+    this.enableOptions$ = this._store.select(fromRoot.selectEnableOptions);
     this.enableOptions$.subscribe(this._enableOptions);
   }
 
   ngOnInit(): void {
     this.formControls = {
-      mode: new FormControl<ModeEnum>({ value: 0, disabled: true }, { nonNullable: true }),
-      colors: new FormControl<number>({ value: 1, disabled: true }, { nonNullable: true }),
-      row: new FormControl<number>({ value: 1, disabled: true }, { nonNullable: true }),
-      start: new FormControl<number>({ value: -1, disabled: true }, { nonNullable: true }),
-      stop: new FormControl<number>({ value: 1, disabled: true }, { nonNullable: true }),
-      alignment: new FormControl<AlignmentEnum>({ value: 0, disabled: true }, { nonNullable: true }),
-      mirror: new FormControl<boolean>({ value: false, disabled: true }, { nonNullable: true }),
+      mode: new FormControl<ModeEnum>(0, { nonNullable: true }),
+      colors: new FormControl<number>(2, { nonNullable: true }),
+      row: new FormControl<number>(1, { nonNullable: true }),
+      start: new FormControl<number>(-1, { nonNullable: true }),
+      stop: new FormControl<number>(1, { nonNullable: true }),
+      alignment: new FormControl<AlignmentEnum>(0, { nonNullable: true }),
+      mirror: new FormControl<boolean>(false, { nonNullable: true }),
     };
     this.form = this._formBuilder.group(
       this.formControls
     );
     this._imageLoadedService.imageLoaded$.subscribe(() => {
+      this.reset();
       this.disable(false);
     })
   }
@@ -94,19 +98,19 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
   public get f() { return this.form.controls; }
   
   public disable(isDisabled: boolean): void {
-    if (isDisabled) {
-      this.form.disable();
-    } else {
+    (isDisabled) ? 
+      this.form.disable() : 
       this.form.enable();
-    }
     this._mirrorCheckbox.disable(isDisabled);
   }
 
   public reset() {
-    if (isLoggedIn()) {
-      // Set form defaults to preferences
-    } else {
-      // Set form defaults to defaultSettings
-    }
+    let s = (isLoggedIn()) ? 
+      getUser()!.settings as any :
+      defaultSettings as any;
+    this.formControls.mode!.setValue(s.mode);
+    //this.formControls.infRepeat!.setValue(s.infRepeat);
+    this.formControls.alignment!.setValue(s.alignment);
+    this.formControls.mirror!.setValue(s.knitSide);
   }
 }

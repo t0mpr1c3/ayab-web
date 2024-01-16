@@ -1,4 +1,4 @@
-import UserController from './controllers/userController';
+import UserController from './controllers/user.controller';
 
 export const Routes = [{
   method: 'get',

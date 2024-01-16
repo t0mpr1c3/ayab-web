@@ -9,7 +9,7 @@ import { LoginResponse } from '../models/login-response.model';
 export class AuthApiService {
   constructor(private _apiService: ApiService) {}
 
-  public login$(credentials: LoginCredentials): Observable<LoginResponse> {
+  public login(credentials: LoginCredentials): Observable<LoginResponse> {
     return this._apiService
       .post( '/auth/login', credentials);
   }

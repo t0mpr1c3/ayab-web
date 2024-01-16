@@ -1,7 +1,7 @@
 import { 
   ChangeDetectionStrategy, 
   Component, 
-  EventEmitter, 
+  EventEmitter,
   Input, 
   Output, 
   booleanAttribute, 

@@ -20,8 +20,8 @@
       </ng-template>
     </settings-list>
     <div class="bar">
-      <generic-button name="Submit" (clicked)="onSubmit()"></generic-button>
-      <!--generic-button name="Clear" (clicked)="onReset()"></generic-button-->
+      <generic-button name="Submit" (clicked)="onSubmit()" debounce></generic-button>
+      <!--generic-button name="Reset" (clicked)="onReset()"></generic-button-->
       <generic-button name="Cancel" (clicked)="onCancel()"></generic-button>
     </div>
   </form>

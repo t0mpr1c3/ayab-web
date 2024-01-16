@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, booleanAttribute } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -15,6 +15,7 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
   templateUrl: 'row-input.component.html',
   styleUrls: ['row-input.component.css'],
   imports: [
+    ReactiveFormsModule,
     MatFormFieldModule, 
     MatInputModule,
   ]

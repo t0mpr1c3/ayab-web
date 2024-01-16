@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import * as root from '../reducers';
-import * as layout from '../core/actions/layout.actions';
-import * as test from '../core/actions/test.actions';
-import * as knit from '../core/actions/knit.actions';
-import * as auth from '../core/services/auth/actions/auth.actions';
+import * as fromRoot from '../reducers';
+import * as fromLayout from '../core/actions/layout.actions';
+import * as fromTest from '../core/actions/test.actions';
+import * as fromKnit from '../core/actions/knit.actions';
+import * as fromAuth from '../auth/actions/auth.actions';
 
 import { ImageLoadedService } from '../core/services/image-loaded.service';
 import { LayoutComponent } from '../core/components/layout.component';
-import { getUser, isLoggedIn } from '../core/services/auth/helpers/auth';
 import { User } from '../../../../shared/src/models/user.model';
 
 /**
@@ -23,20 +22,14 @@ import { User } from '../../../../shared/src/models/user.model';
 })
 export class AppComponent {
   constructor(
-    private _store: Store<root.State>,
+    private _store: Store<fromRoot.State>,
     private _imageLoadedService: ImageLoadedService,
-  ) {    
+  ) {
     this._imageLoadedService.imageLoaded$.subscribe(() => {
       this.showOptions();
       this.imageLoaded();
     })
-
-    // boot authorization state
-    if (!isLoggedIn()) {
-      this.isLoggedOut();
-    } else {
-      this.isLoggedIn(getUser()!);
-    }
+    this.boot();
   }
 
   /**
@@ -47,38 +40,42 @@ export class AppComponent {
    */
   
   hideOptions(): void {
-    this._store.dispatch(layout.hideOptions());
+    this._store.dispatch(fromLayout.hideOptions());
   }
 
   showOptions(): void {
-    this._store.dispatch(layout.showOptions());
+    this._store.dispatch(fromLayout.showOptions());
   }
 
   startTesting(): void {
-    this._store.dispatch(test.startTesting());
+    this._store.dispatch(fromTest.startTesting());
   }
 
   stopTesting(): void {
-    this._store.dispatch(test.stopTesting());
+    this._store.dispatch(fromTest.stopTesting());
   }
 
   startKnitting(): void {
-    this._store.dispatch(knit.startKnitting());
+    this._store.dispatch(fromKnit.startKnitting());
   }
 
   stopKnitting(): void {
-    this._store.dispatch(knit.stopKnitting());
+    this._store.dispatch(fromKnit.stopKnitting());
   }
 
   imageLoaded(): void {
-    this._store.dispatch(knit.imageLoaded());
+    this._store.dispatch(fromKnit.imageLoaded());
+  }
+
+  boot(): void {
+    this._store.dispatch(fromAuth.boot());
   }
 
   isLoggedIn(user: User): void {
-    this._store.dispatch(auth.isLoggedIn({ user }));
+    this._store.dispatch(fromAuth.isLoggedIn({ user }));
   }
 
   isLoggedOut(): void {
-    this._store.dispatch(auth.isLoggedOut());
+    this._store.dispatch(fromAuth.isLoggedOut());
   }
 }
