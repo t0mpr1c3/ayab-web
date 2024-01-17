@@ -6,11 +6,11 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import * as fromAuthApi from '../actions/auth-api.actions';
 import * as fromAuth from '../actions/auth.actions';
 import * as fromLogin from '../actions/login.actions';
-import * as fromUser from '../../core/actions/user.actions';
+import * as fromUser from '../../profile/actions/user.actions';
 
-import { AuthService } from '../services/auth.service';
+import { AuthApiService } from '../services/auth-api.service';
+import { getUser, isLoggedOut, removeToken, removeUser, setToken, setUser } from '../helpers/local-storage';
 import { LoginCredentials } from '../../../../../shared/src/models/credentials.model';
-import { getUser, isLoggedOut } from '../helpers/auth';
 
 /*
  * In a service-based Angular application, components are responsible for interacting with 
@@ -35,7 +35,7 @@ import { getUser, isLoggedOut } from '../helpers/auth';
 export class AuthEffects {
   constructor(
     private _actions$: Actions,
-    private _authService: AuthService,
+    private _authApiService: AuthApiService,
   ) {}
 
   public boot$ = createEffect(() =>
@@ -46,19 +46,29 @@ export class AuthEffects {
         fromAuth.isLoggedIn({ user: getUser()! })
       )),
     )
-  )
+  );
 
   public loginSubmit$ = createEffect(() =>
     this._actions$.pipe(
       ofType(fromLogin.loginSubmit),
       map(action => action.credentials),
-      exhaustMap((auth: LoginCredentials) =>
-        this._authService.loginSubmit(auth).pipe(
-          map(user => fromAuthApi.loginSuccess({ user })),
+      exhaustMap((credentials: LoginCredentials) =>
+        this._authApiService.login(credentials).pipe(  
+          tap(loginResponse => setUser(loginResponse.user)),
+          tap(loginResponse => setToken(loginResponse.access_token)),
+          map(loginResponse => fromAuthApi.loginSuccess({ user: loginResponse.user })),
           catchError(error => of(fromAuthApi.loginFailure({ error })))
         )
       )
     )
+  );
+
+  public loginFailure$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(fromAuthApi.loginFailure),
+      tap(action => alert(action.error.statusText)) // FIXME
+    ),
+    { dispatch: false } // side effects only
   );
 
   public idleTimeout$ = createEffect(() =>
@@ -71,7 +81,10 @@ export class AuthEffects {
   public logout$ = createEffect(() =>
     this._actions$.pipe(
       ofType(fromAuth.logout),
-      tap(() => this._authService.logout())
+      tap(() => {
+        removeUser();
+        removeToken();
+      })
     ),
     { dispatch: false } // side effects only
   );

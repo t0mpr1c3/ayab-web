@@ -24,6 +24,7 @@ import { MirrorImgDirective } from "./mirror-img.directive";
       height: 18px;
       position: relative;
       top: -1rem;
+      left: -10px;
     }
   `],
   imports: [

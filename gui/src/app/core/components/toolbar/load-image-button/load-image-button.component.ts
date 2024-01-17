@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription, timer } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../../reducers';
 
 import { drawCanvas } from '../../../helpers/canvas';
 import { ImageLoadedService } from '../../../services/image-loaded.service';
@@ -14,14 +18,19 @@ import { ImageLoadedService } from '../../../services/image-loaded.service';
   templateUrl: 'load-image-button.component.html',
   styleUrls: ['load-image-button.component.css'],
   imports: [
+    CommonModule,
     MatButtonModule,
   ]
 })
 export class LoadImageButtonComponent {
   public imageFile: File;
   private _checkUpload: Subscription;
+  public enabled$ = this._store.select(fromRoot.selectMenuEnabled);
 
-  constructor(private _imageLoadedService: ImageLoadedService) {}
+  constructor(
+    private _store: Store<fromRoot.State>,
+    private _imageLoadedService: ImageLoadedService,
+  ) {}
 
   public onFileChanged(event: Event): void {
     const target = event.target as HTMLInputElement;

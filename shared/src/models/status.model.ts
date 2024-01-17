@@ -1,4 +1,4 @@
-import { AccessToken } from "../../../gui/src/app/core/models/access-token.model";
+import { AccessToken } from "./access-token.model";
 
 export interface Status {
   statusCode: number;

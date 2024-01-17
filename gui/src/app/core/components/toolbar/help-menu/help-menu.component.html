@@ -1,4 +1,4 @@
-<button mat-button [matMenuTriggerFor]="helpMenu">Help</button>
+<button mat-button [matMenuTriggerFor]="helpMenu" [disabled]="!(enabled$ | async)">Help</button>
 <mat-menu #helpMenu="matMenu">
   <button mat-menu-item (click)="openAboutDialog()">About</button>
 </mat-menu>

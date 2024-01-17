@@ -3,14 +3,13 @@
   <div class="bar">
     <span class="number">
       <!-- FIXME max number of needles depends on the machine (less for KH270) -->
-      <input matInput #needleNumber type="number" value="1" min="1" max="100" 
-        [formControl]="control">
+      <input matInput #needleNumber type="number" min="1" max="100" [formControl]="needleControl">
     </span>
     <span class="space"></span>
     <span class="color">
-      <mat-select #needleColor [(value)]="color">
-        <mat-option value="orange">orange</mat-option>
-        <mat-option value="green">green</mat-option>
+      <mat-select #needleColor [formControl]="colorControl">
+        <mat-option [value]="0">orange</mat-option>
+        <mat-option [value]="1">green</mat-option>
       </mat-select>
     </span>
   </div>

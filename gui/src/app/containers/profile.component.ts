@@ -5,7 +5,7 @@ import * as fromRoot from '../reducers';
 import * as fromAuthApi from '../auth/actions/auth-api.actions';
 import * as fromLogin from '../auth/actions/login.actions';
 import * as fromAuth from '../auth/actions/auth.actions';
-import * as fromUser from '../core/actions/user.actions'
+import * as fromUser from '../profile/actions/user.actions'
 
 import { SubmitService } from "../core/services/submit.service";
 import { User } from "../../../../shared/src/models/user.model";
@@ -13,7 +13,7 @@ import { LoginCredentials, RegistrationCredentials } from "../../../../shared/sr
 import { MyAYABMenuComponent } from "../core/components/toolbar/my-ayab-menu/my-ayab-menu.component";
 
 /**
- * @title Profile component
+ * @title Profile container component
  */
 @Component({
   standalone: true,
@@ -53,31 +53,31 @@ export class ProfileComponent {
    * application.
    */
   
-  loginSuccess(user: User): void {
+  public loginSuccess(user: User): void {
     this._store.dispatch(fromAuthApi.loginSuccess({ user }));
   }
   
-  loginFailure(error: any): void {
+  public loginFailure(error: any): void {
     this._store.dispatch(fromAuthApi.loginFailure({ error }));
   }
   
-  loginSubmit(credentials: LoginCredentials): void {
+  public loginSubmit(credentials: LoginCredentials): void {
     this._store.dispatch(fromLogin.loginSubmit({ credentials }));
   }
   
-  logout(): void {
+  public logout(): void {
     this._store.dispatch(fromAuth.logout());
   }
   
-  registration(credentials: RegistrationCredentials): void {
+  public registration(credentials: RegistrationCredentials): void {
     this._store.dispatch(fromUser.registration({ credentials }));
   }
   
-  update(user: User): void {
+  public update(user: User): void {
     this._store.dispatch(fromUser.update({ user }));
   }
   
-  idleTimeout(): void {
+  public idleTimeout(): void {
     this._store.dispatch(fromUser.idleTimeout());
   }
 }

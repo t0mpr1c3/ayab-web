@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { Observable } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
@@ -11,9 +10,9 @@ import * as fromAuth from '../../../../auth/actions/auth.actions';
 
 import { SubmitService } from '../../../services/submit.service';
 import { FormDialogComponent } from './form-dialog/form-dialog.component';
-import { RegistrationFormComponent } from './registration-form/registration-form.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { SettingsFormComponent } from './settings-form/settings-form.component';
+import { RegistrationFormComponent } from '../../../../profile/components/registration-form/registration-form.component';
+import { LoginFormComponent } from '../../../../auth/components/login-form/login-form.component';
+import { SettingsFormComponent } from '../../../../profile/components/settings-form/settings-form.component';
 
 /**
  * @title My AYAB menu
@@ -30,15 +29,14 @@ import { SettingsFormComponent } from './settings-form/settings-form.component';
   ],
 })
 export class MyAYABMenuComponent {
-  public loggedIn$: Observable<boolean>;
+  public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
+  public enabled$ = this._store.select(fromRoot.selectMenuEnabled);
 
   public constructor(
-    private _dialog: MatDialog,    
     private _store: Store<fromRoot.State>,
+    private _dialog: MatDialog,
     private _submitService: SubmitService,
-  ) {
-    this.loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
-  }
+  ) {}
 
   public openRegistrationDialog(): void {
     this._dialog.open(

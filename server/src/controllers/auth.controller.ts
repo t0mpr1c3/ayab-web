@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import { UserEntity } from '../entity/user.entity';
+import { accessToken } from '../helpers/access-token';
 import { dataSource } from '../models/data-source.model';
 import {
   StatusMaybeWithToken, 
@@ -9,7 +10,7 @@ import {
   error404 
 } from '../../../shared/src/models/status.model';
 import { User } from '../../../shared/src/models/user.model';
-import { accessToken } from '../helpers/access-token';
+import { LoginResponse } from '../../../shared/src/models/login-response.model';
 
 class AuthController {
   static login = async (req: Request, res: Response): Promise<StatusMaybeWithToken> => {
@@ -56,10 +57,11 @@ class AuthController {
           role: user.role,
         } as User,
         ...accessToken(user.id, username)
-      });
+      } as LoginResponse);
   };
 
-////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************/
+
 /*
   static changePassword = async (req: Request, res: Response) => {
     // Get user ID from JWT

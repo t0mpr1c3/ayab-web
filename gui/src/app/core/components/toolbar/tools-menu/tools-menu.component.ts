@@ -1,6 +1,17 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { Subscription } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../../reducers';
+
 import { MatMenuModule } from '@angular/material/menu';
+import { StartTestingService } from '../../../../test/services/start-testing.service';
+import { CancelService } from '../../../services/cancel.service';
+import { FormDialogComponent } from '../my-ayab-menu/form-dialog/form-dialog.component';
+import { TestDialogComponent } from '../../../../test/components/test-dialog/test-dialog.component';
 
 /**
  * @title Tools menu
@@ -11,8 +22,35 @@ import { MatMenuModule } from '@angular/material/menu';
   templateUrl: 'tools-menu.component.html',
   styleUrls: ['tools-menu.component.css'],
 imports: [
+  CommonModule,
+  MatDialogModule,
   MatButtonModule, 
   MatMenuModule,
 ],
 })
-export class ToolsMenuComponent {}
+export class ToolsMenuComponent implements OnDestroy {
+  public enabled$ = this._store.select(fromRoot.selectMenuEnabled);
+  private _dialogRef: MatDialogRef<FormDialogComponent>;
+  private _subscription: Subscription;
+
+  constructor(
+    private _store: Store<fromRoot.State>,
+    private _startTestingService: StartTestingService,
+    private _dialog: MatDialog,
+    private _cancelService: CancelService,
+  ) {}
+
+  public startTesting(): void {
+    this._startTestingService.emit();
+    this._dialogRef = this._dialog.open(
+      FormDialogComponent,  
+      { data: { formType: TestDialogComponent }}
+    );
+    this._subscription = this._dialogRef.afterClosed()
+      .subscribe(() => this._cancelService.emit());
+  }
+
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
+  }
+}

@@ -1,1 +1,2 @@
-<button mat-raised-button title="Cancel knitting" class="mat-accent" disabled>Cancel</button>
+<button mat-raised-button title="Cancel knitting" class="mat-accent"
+  [disabled]="!(enabled$ | async)" (click)="cancel()">Cancel</button>

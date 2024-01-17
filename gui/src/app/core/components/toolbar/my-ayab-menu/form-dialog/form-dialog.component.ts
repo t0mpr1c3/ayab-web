@@ -5,9 +5,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { SubmitService } from '../../../../services/submit.service';
 import { CancelService } from '../../../../services/cancel.service';
-import { RegistrationFormComponent } from '../registration-form/registration-form.component';
-import { LoginFormComponent } from '../login-form/login-form.component';
-import { SettingsFormComponent } from '../settings-form/settings-form.component';
+import { RegistrationFormComponent } from '../../../../../profile/components/registration-form/registration-form.component';
+import { LoginFormComponent } from '../../../../../auth/components/login-form/login-form.component';
+import { SettingsFormComponent } from '../../../../../profile/components/settings-form/settings-form.component';
 import { Subscription } from 'rxjs';
 
 // permissable types of Form that can be used in Dialog

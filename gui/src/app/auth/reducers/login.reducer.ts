@@ -17,18 +17,15 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(loginSubmit, (state) => ({
-    ...state,
+  on(loginSubmit, () => ({
     error: null,
     pending: true,
   })),
-  on(loginSuccess, (state) => ({
-    ...state,
+  on(loginSuccess, () => ({
     error: null,
     pending: false,
   })),
-  on(loginFailure, (state, { error }) => ({
-    ...state,
+  on(loginFailure, (_, { error }) => ({
     error,
     pending: false,
   }))

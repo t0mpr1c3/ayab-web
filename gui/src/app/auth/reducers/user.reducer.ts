@@ -14,10 +14,12 @@ export const initialState: State = {
   user: null,
 };
 
+/*
 export const reducer = createReducer(
   initialState,
-  on(loginSuccess, (_, { user }) => ({ user: user } as State)),
+  on(loginSuccess, (_, { user }) => ({ user: user })),
   on(logout, () => initialState)
 );
+*/
 
 export const getUser = (state: State) => state.user;

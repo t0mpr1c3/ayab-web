@@ -11,7 +11,7 @@ import { ToolsMenuComponent } from './tools-menu/tools-menu.component';
 import { HelpMenuComponent } from './help-menu/help-menu.component';
 import { LoadImageButtonComponent } from './load-image-button/load-image-button.component';
 import { KnitButtonComponent } from './knit-button/knit-button.component';
-import { CancelButtonComponent } from './cancel-button/cancel-button.component';
+import { CancelKnittingButtonComponent } from './cancel-button/cancel-button.component';
 
 /**
  * @title Toolbar component
@@ -23,21 +23,20 @@ import { CancelButtonComponent } from './cancel-button/cancel-button.component';
   templateUrl: 'toolbar.component.html',
   styleUrls: ['toolbar.component.css'],
   imports: [
-    MatToolbarModule, 
     CommonModule,
+    MatToolbarModule, 
     MatIconModule,
     ProfileComponent,
     ToolsMenuComponent,
     HelpMenuComponent,
     LoadImageButtonComponent,
     KnitButtonComponent,
-    CancelButtonComponent,
+    CancelKnittingButtonComponent,
   ],
 })
 export class ToolbarComponent {
-  constructor(
-    private _store: Store<fromRoot.State>,
-  ) {}
-
   public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
+  public enabled$ = this._store.select(fromRoot.selectMenuEnabled);
+
+  constructor(private _store: Store<fromRoot.State>) {}
 }

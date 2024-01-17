@@ -1,11 +1,12 @@
-import { enumArray } from '../../../gui/src/app/core/helpers/enum';
-import { reduce } from '../../../gui/src/app/core/helpers/reduce';
+import { enumArray } from '../helpers/enum';
+import { reduce } from '../helpers/reduce';
 import { AlignmentEnum } from './alignment-enum.model';
 import { MachineEnum } from './machine-enum.model';
 import { ModeEnum } from './mode-enum.model';
+import { ColorEnum } from './color-enum.model';
 
 // Type of generic setting value
-export type TSetting = MachineEnum | ModeEnum | AlignmentEnum | boolean;
+export type TSetting = MachineEnum | ModeEnum | AlignmentEnum | ColorEnum | boolean;
 
 export interface Setting {
   key: string;

@@ -3,13 +3,16 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import * as fromLayout from '../core/actions/layout.actions';
-import * as fromTest from '../core/actions/test.actions';
-import * as fromKnit from '../core/actions/knit.actions';
+import * as fromImage from '../core/actions/image.actions';
+import * as fromTest from '../test/actions/test.actions';
+import * as fromKnit from '../knit/actions/knit.actions';
 import * as fromAuth from '../auth/actions/auth.actions';
 
 import { ImageLoadedService } from '../core/services/image-loaded.service';
 import { LayoutComponent } from '../core/components/layout.component';
 import { User } from '../../../../shared/src/models/user.model';
+import { TestComponent } from './test.components';
+import { KnitComponent } from './knit.component';
 
 /**
  * @title App component
@@ -17,15 +20,23 @@ import { User } from '../../../../shared/src/models/user.model';
 @Component({
   standalone: true,
   selector: 'app',
-  template: `<layout (showOptions)="showOptions()" (hideOptions)="hideOptions()"></layout>`,
-  imports: [LayoutComponent]
+  template: `
+    <knit></knit>
+    <test></test>
+    <layout (showOptions)="showOptions()" (hideOptions)="hideOptions()"></layout>
+    `,
+  imports: [
+    LayoutComponent,
+    KnitComponent,
+    TestComponent,
+  ]
 })
 export class AppComponent {
   constructor(
     private _store: Store<fromRoot.State>,
     private _imageLoadedService: ImageLoadedService,
   ) {
-    this._imageLoadedService.imageLoaded$.subscribe(() => {
+    this._imageLoadedService.imageLoaded.subscribe(() => {
       this.showOptions();
       this.imageLoaded();
     })
@@ -39,43 +50,43 @@ export class AppComponent {
    * application.
    */
   
-  hideOptions(): void {
+  public hideOptions(): void {
     this._store.dispatch(fromLayout.hideOptions());
   }
 
-  showOptions(): void {
+  public showOptions(): void {
     this._store.dispatch(fromLayout.showOptions());
   }
 
-  startTesting(): void {
+  public startTesting(): void {
     this._store.dispatch(fromTest.startTesting());
   }
 
-  stopTesting(): void {
+  public stopTesting(): void {
     this._store.dispatch(fromTest.stopTesting());
   }
 
-  startKnitting(): void {
+  public startKnitting(): void {
     this._store.dispatch(fromKnit.startKnitting());
   }
 
-  stopKnitting(): void {
+  public stopKnitting(): void {
     this._store.dispatch(fromKnit.stopKnitting());
   }
 
-  imageLoaded(): void {
-    this._store.dispatch(fromKnit.imageLoaded());
+  public imageLoaded(): void {
+    this._store.dispatch(fromImage.imageLoaded());
   }
 
-  boot(): void {
+  public boot(): void {
     this._store.dispatch(fromAuth.boot());
   }
 
-  isLoggedIn(user: User): void {
+  public isLoggedIn(user: User): void {
     this._store.dispatch(fromAuth.isLoggedIn({ user }));
   }
 
-  isLoggedOut(): void {
+  public isLoggedOut(): void {
     this._store.dispatch(fromAuth.isLoggedOut());
   }
 }

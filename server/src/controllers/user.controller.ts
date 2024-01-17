@@ -44,7 +44,8 @@ class UserController {
     }
   };
   */
-////////////////////////////////////////////////////////////////////////////////
+ 
+/******************************************************************************/
 
   static newUser = async (req: Request, res: Response): Promise<StatusMaybeWithToken> => {
     // Get parameters from request body
@@ -101,7 +102,7 @@ class UserController {
       });
   };
 
-////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************/
 
   static updateUser = async (req: Request, res: Response): Promise<StatusMaybeWithToken> => {
     // Get ID from URL
@@ -193,7 +194,8 @@ class UserController {
     });
   };
 
-////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************/
+
 /*
   static deleteUser = async (req: Request, res: Response) => {
     // Get ID from URL

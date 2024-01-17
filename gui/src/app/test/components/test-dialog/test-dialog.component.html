@@ -1,0 +1,29 @@
+<div class="card-header">
+  <span class="bar">
+    <h3>Hardware Test</h3>
+    <ng-container *ngTemplateOutlet="icon; context: data"></ng-container>
+  </span>
+</div>
+<div class="card-body wide">
+  <div class="card-body bar">
+    <span>
+      <ng-container *ngTemplateOutlet="msg; context: data"></ng-container>
+    </span>
+  </div>
+  <div><br/></div>
+  <div class="card-body bar">
+    <span></span>
+    <span>
+      <generic-button name="OK" (click)="onClick()"></generic-button>
+    </span>
+  </div>
+</div>
+<ng-template #msg let-msg="message">
+  <span style>{{ msg }}</span>
+</ng-template>
+<ng-template #icon let-success="success">
+  <mat-icon class="icon">
+    <ng-container *ngIf="success">check_circle_outline</ng-container>
+    <ng-container *ngIf="!success">error_outline</ng-container>
+  </mat-icon>
+</ng-template>

@@ -1,2 +1,2 @@
 <button mat-raised-button title="Start knitting" class="mat-accent" 
-  [disabled]="!enabled" (click)="knit()">Knit</button>
+  [disabled]="!(enabled$ | async)" (click)="knit()">Knit</button>

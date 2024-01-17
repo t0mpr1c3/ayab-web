@@ -8,23 +8,23 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import * as layout from './app/core/reducers/layout.reducer';
-import * as test from './app/core/reducers/test.reducer';
-import * as knit from './app/core/reducers/knit.reducer';
-import * as auth from './app/auth/reducers/auth.reducer';
+import * as fromAuth from './app/auth/reducers/auth.reducer';
+import * as fromLayout from './app/core/reducers/layout.reducer';
+import * as fromCombo from './app/core/reducers/combined.reducer';
 import { AuthEffects } from './app/auth/effects/auth.effects';
+import { UserEffects } from './app/profile/effects/user.effects';
+import { ImageEffects } from './app/core/effects/image.effects';
 
 //import { routes } from './app/root/router';
 import { AppComponent } from './app/containers/app.component';
-import { ApiService } from './app/core/services/api.service';
-import { AuthApiService } from './app/core/services/auth-api.service';
-import { UserApiService } from './app/core/services/user-api.service';
-import { AuthService } from './app/auth/services/auth.service';
-//import { AuthMachineService } from './app/core/services/auth-xstate-machine/auth-machine.service';
+import { ApiService } from './app/services/api.service';
+import { AuthApiService } from './app/auth/services/auth-api.service';
+import { UserApiService } from './app/profile/services/user-api.service';
 import { ImageLoadedService } from './app/core/services/image-loaded.service';
+import { StartKnittingService } from './app/knit/services/start-knitting.service';
+import { StartTestingService } from './app/test/services/start-testing.service';
 import { SubmitService } from './app/core/services/submit.service';
 import { CancelService } from './app/core/services/cancel.service';
-import { UserEffects } from './app/core/effects/user.effects';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -33,17 +33,16 @@ bootstrapApplication(AppComponent, {
     //provideRouter(routes),
 
     /**
-     * StoreModule.provideStore is imported once in the root module, accepting a reducer
+     * provideStore is imported once in the root module, accepting a reducer
      * function or object map of reducer functions. If passed an object of
      * reducers, combineReducers will be run creating your application
-     * meta-reducer. This returns all providers for an @ngrx/store
-     * based application.
+     * meta-reducer. This returns all providers for an @ngrx/store based 
+     * application.
      */
-    provideStore({ 
-      [layout.featureKey]: layout.reducer,
-      [test.featureKey]: test.reducer,
-      [knit.featureKey]: knit.reducer, 
-      [auth.featureKey]: auth.reducer, 
+    provideStore({
+      [fromAuth.featureKey]: fromAuth.reducer,
+      [fromLayout.featureKey]: fromLayout.reducer,
+      [fromCombo.featureKey]: fromCombo.reducer,
      }),
 
     /**
@@ -53,31 +52,29 @@ bootstrapApplication(AppComponent, {
     // provideRouterStore(),
 
     /**
-     * Store devtools instrument the store retaining past versions of state
-     * and recalculating new states. This enables powerful time-travel
-     * debugging.
-     *
-     * To use the debugger, install the Redux Devtools extension for either
-     * Chrome or Firefox
+     * Enables debugging using Redux Devtools extension for Chrome or Firefox.
      *
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
     provideStoreDevtools(),
 
     /**
-     * EffectsModule.run() sets up the effects class to be initialized
-     * immediately when the application starts.
+     * Registers effects using standalone API.
      *
-     * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
+     * See: https://ngrx.io/guide/effects#using-the-standalone-api
      */
-    provideEffects([AuthEffects, UserEffects]),
+    provideEffects([
+      AuthEffects, 
+      UserEffects,
+      //ImageEffects,
+    ]),
 
     ApiService,
     AuthApiService,
     UserApiService,
-    AuthService,
-    //AuthMachineService,
     ImageLoadedService,
+    StartKnittingService,
+    StartTestingService,
     SubmitService,
     CancelService,
   ],

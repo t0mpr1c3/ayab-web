@@ -42,6 +42,8 @@ $typography-config: mat.define-typography-config(
   --mdc-protected-button-label-text-size: 14px;
 }
 
+@include mat.form-field-density(-2);
+
 * {
   box-sizing: border-box;
 }

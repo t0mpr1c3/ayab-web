@@ -1,6 +1,6 @@
 import * as fromLogin from '../../auth/actions/login.actions';
 import * as fromAuth from '../../auth/actions/auth.actions';
-import * as fromUser from '../actions/user.actions'
+import * as fromUser from '../../profile/actions/user.actions'
 
 type SubmitAction = 
     typeof fromUser.registration

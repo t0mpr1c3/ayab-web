@@ -1,29 +1,39 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { Subscription } from 'xstate';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../../../../reducers';
+
+import { StartKnittingService } from '../../../../knit/services/start-knitting.service';
 
 /** 
- * @title Knit button
+ * @title Knit button component
  **/
 @Component({
   standalone: true,
   selector: 'knit-button',
   templateUrl: 'knit-button.component.html',
   styleUrls: ['knit-button.component.css'],
-  imports: [MatButtonModule]
+  imports: [
+    CommonModule,
+    MatButtonModule,
+  ]
 })
-export class KnitButtonComponent implements OnInit, OnDestroy {
-  public enabled: boolean = false;
+export class KnitButtonComponent {
+  public enabled$ = this._store.select(fromRoot.selectConfiguring);
 
-  constructor() {}
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-  }
+  constructor(
+    private _store: Store<fromRoot.State>,
+    private _startKnittingService: StartKnittingService,
+  ) {}
 
   public knit(): void {
+    this._startKnittingService.emit();
+    alert('Knitting has started') // FIXME
+    const htmlContent = document.getElementById('content');
+    if (htmlContent) {
+      htmlContent.innerText = 'I am knitting!';
+    }
   }
 }

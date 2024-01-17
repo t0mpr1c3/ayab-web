@@ -1,4 +1,4 @@
-<button mat-button [matMenuTriggerFor]="myAYABMenu">My AYAB</button>
+<button mat-button [matMenuTriggerFor]="myAYABMenu" [disabled]="!(enabled$ | async)">My AYAB</button>
 <mat-menu #myAYABMenu="matMenu">
   <!-- register and login buttons disabled when user is logged in -->
   <!-- settings and logout buttons disabled when when user is logged out-->
