@@ -17,11 +17,11 @@ import { AuthEffects } from './app/auth/effects/auth.effects';
 import { UserEffects } from './app/profile/effects/user.effects';
 
 //import { routes } from './app/root/router';
-import { AppComponent } from './app/containers/app.component';
 import { ApiService } from './app/services/api.service';
 import { AuthApiService } from './app/auth/services/auth-api.service';
 import { UserApiService } from './app/profile/services/user-api.service';
 import { CancelService } from './app/core/services/cancel.service';
+import { AppComponent } from './app/containers/app.component';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -51,14 +51,14 @@ bootstrapApplication(AppComponent, {
     // provideRouterStore(),
 
     /**
-     * Enables debugging using Redux Devtools extension for Chrome or Firefox.
+     * Enable debugging using Redux Devtools extension for Chrome or Firefox.
      *
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
     provideStoreDevtools(),
 
     /**
-     * Registers effects using standalone API.
+     * Register effects using standalone API.
      *
      * See: https://ngrx.io/guide/effects#using-the-standalone-api
      */
@@ -67,6 +67,9 @@ bootstrapApplication(AppComponent, {
       UserEffects,
     ]),
 
+    /**
+     * Register services.
+     */
     ApiService,
     AuthApiService,
     UserApiService,

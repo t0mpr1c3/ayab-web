@@ -58,9 +58,9 @@ export class MirrorCheckboxComponent implements AfterViewInit {
     this.disable(this.disabled);
   }
   
-  public clicked(event: MatCheckboxChange): void {
-    this.checked = event.checked;
-    this._icon.mirror(this.checked);
+  public clicked(checked: boolean): void {
+    this.checked = checked;
+    this._icon.mirror(checked);
   }
 
   public disable(isDisabled: boolean): void {

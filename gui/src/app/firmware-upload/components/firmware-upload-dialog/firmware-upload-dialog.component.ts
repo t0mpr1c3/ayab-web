@@ -8,8 +8,8 @@ import { GenericButtonComponent } from '../../../core/components/generic-button/
 
 @Component({
   standalone: true,
-  templateUrl: 'firmware-dialog.component.html',
-  styleUrls: ['firmware-dialog.component.css'],
+  templateUrl: 'firmware-upload-dialog.component.html',
+  styleUrls: ['firmware-upload-dialog.component.css'],
   imports: [
     CommonModule,
     MatIconModule,

@@ -5,13 +5,11 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { BehaviorSubject, Observable } from "rxjs";
-
-import { Store } from "@ngrx/store";
-import * as fromRoot from '../../../reducers'
+import { BehaviorSubject } from "rxjs";
 
 import { enumArray } from "../../../../../../shared/src/helpers/enum";
-import { getUser, isLoggedIn } from "../../../auth/helpers/local-storage";
+import { CoreFacade } from "../../facade/core.facade";
+import { getUser } from "../../../auth/helpers/local-storage";
 import { ModeEnum } from "../../../../../../shared/src/models/mode-enum.model";
 import { AlignmentEnum } from "../../../../../../shared/src/models/alignment-enum.model";
 import { ColorEnum } from "../../../../../../shared/src/models/color-enum.model";
@@ -22,6 +20,7 @@ import { RowInputComponent } from "./row-input/row-input.component";
 import { ColorsInputComponent } from "./colors-input/colors-input.component";
 import { NeedleInputComponent } from "./needle-input/needle-input.component";
 import { MirrorCheckboxComponent } from "./mirror-checkbox/mirror-checkbox.component";
+import { GenericCheckboxComponent } from "../generic-checkbox/generic-checkbox.component";
 
 // FIXME options panel is missing infinite repeat checkbox
 
@@ -46,8 +45,10 @@ import { MirrorCheckboxComponent } from "./mirror-checkbox/mirror-checkbox.compo
     ColorsInputComponent, 
     NeedleInputComponent, 
     GenericSelectComponent, 
+    GenericCheckboxComponent,
     MirrorCheckboxComponent,
-  ]
+  ],
+  providers: [CoreFacade],
 })
 export class OptionsPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckboxComponent;
@@ -57,16 +58,14 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
   public modeEnum = enumArray(ModeEnum);
   public alignmentEnum = enumArray(AlignmentEnum);
   private _enableOptions = new BehaviorSubject<boolean>(false);
-  public enableOptions$: Observable<boolean>;
+  public enableOptions$ = this._facade.enableOptions$;
+  public loggedIn$ = this._facade.loggedIn$;
   public disabled: boolean;
-
-  public mode: number;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _store: Store<fromRoot.State>,
+    private _facade: CoreFacade,
   ) {
-    this.enableOptions$ = this._store.select(fromRoot.selectConfiguring);
     this.enableOptions$.subscribe(this._enableOptions);
   }
 
@@ -75,6 +74,7 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
       mode: new FormControl<ModeEnum>(ModeEnum.Single_Bed, { nonNullable: true }),
       colors: new FormControl<number>(2, { nonNullable: true }),
       row: new FormControl<number>(1, { nonNullable: true }),
+      infRepeat: new FormControl<boolean>(false, { nonNullable: true }),
       startNeedle: new FormControl<number>(1, { nonNullable: true }),
       startColor: new FormControl<ColorEnum>(0, { nonNullable: true }),
       stopNeedle: new FormControl<number>(1, { nonNullable: true }),
@@ -89,6 +89,7 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this._enableOptions.subscribe(enable => this.disable(!enable));
+    this.loggedIn$.subscribe(loggedIn => this.reset(loggedIn));
   }
 
   // Convenience getter to access form fields
@@ -98,16 +99,19 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
     (isDisabled) ? 
       this.form.disable() : 
       this.form.enable();
-    this._mirrorCheckbox.disable(isDisabled);
+    this._mirrorCheckbox.disable(isDisabled); // disable mirror icon
   }
 
-  public reset() {
-    let s = (isLoggedIn()) ? 
+  // Resets options to user settings on login,
+  // resets options to defaults on logout
+  public reset(isLoggedIn: boolean): void {
+    let s = isLoggedIn ? 
       getUser()!.settings as any :
       defaultSettings as any;
     this.formControls.mode!.setValue(s.mode);
-    //this.formControls.infRepeat!.setValue(s.infRepeat);
+    this.formControls.infRepeat!.setValue(s.infRepeat);
     this.formControls.alignment!.setValue(s.alignment);
     this.formControls.mirror!.setValue(s.knitSide);
+    this._mirrorCheckbox.clicked(s.knitSide); // reset mirror icon
   }
 }

@@ -6,7 +6,7 @@ import { exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as fromUser from '../actions/user.actions';
 
-import { maybeSetToken, setUser } from '../../auth/helpers/local-storage';
+import { getUser, maybeSetToken, setUser } from '../../auth/helpers/local-storage';
 import { UserApiService } from '../services/user-api.service';
 import { CancelService } from '../../core/services/cancel.service';
 import { RegistrationConfirmationDialog } from '../components/registration-form/registration-confirmation/registration-confirmation.component';
@@ -48,13 +48,17 @@ export class UserEffects {
     { dispatch: false } // side effects only
   )
 
-  public update$ = createEffect(() => 
+  public updateSettings$ = createEffect(() => 
     this._actions$.pipe(
-      ofType(fromUser.update),
-      map(action => action.user),
-      tap(user => setUser(user)),
-      exhaustMap(user =>
-        this._userApiService.update(user)
+      ofType(fromUser.updateSettings),
+      map(action => action.settings),
+      tap(settings => {
+        let user = getUser()!;
+        user.settings = settings;
+        setUser(user);
+      }),
+      exhaustMap(settings =>
+        this._userApiService.update(settings)
       ),
       tap(res => maybeSetToken(res.access_token)),
     ),
@@ -63,8 +67,8 @@ export class UserEffects {
 
   public idle$ = createEffect(() =>
     merge(this._clicks$, this._keys$, this._mouse$).pipe(
-      // 15 minute inactivity timeout
-      switchMap(() => timer(15 * 60 * 1000)),
+      // 120 minute inactivity timeout
+      switchMap(() => timer(120 * 60 * 1000)),
       map(() => fromUser.idleTimeout())
     )
   );

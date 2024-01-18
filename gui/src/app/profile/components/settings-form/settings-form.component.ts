@@ -107,7 +107,7 @@ export class SettingsFormComponent implements OnInit {
     );
       
     // Return updated user data
-    this._facade.update(this._user);
+    this._facade.updateSettings(this._user.settings);
 
     // Close dialog
     this._cancelService.emit();

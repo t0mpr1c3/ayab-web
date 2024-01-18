@@ -58,8 +58,8 @@ import * as fromLayout from '../core/reducers/layout.reducer';
 import * as fromImage from '../core/reducers/image.reducer';
 import * as fromKnitting from '../knit/reducers/knitting.reducer';
 import * as fromKnittable from '../knit/reducers/knittable.reducer';
-import * as fromTest from '../test/reducers/test.reducer';
-import * as fromFirmware from '../firmware/reducers/firmware.reducer';
+import * as fromTest from '../test-device/reducers/test.reducer';
+import * as fromFirmware from '../firmware-upload/reducers/firmware.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -266,6 +266,20 @@ export const selectFirmware = createSelector(
 );
 
 /**
+ * Menu enabled selector
+ */
+export const selectMenuEnabled = createSelector(
+  selectKnittingState,
+  selectTestState,
+  selectFirmwareState,
+  (knitting, test, firmware) => ( 
+    !knitting.knitting && 
+    !test.testing && 
+    !firmware.uploading
+  )
+);
+
+/**
  * Options panel enabled selector (AKA configuring state)
  */
 export const selectConfiguring = createSelector(
@@ -275,20 +289,6 @@ export const selectConfiguring = createSelector(
   selectFirmwareState,
   (image, knitting, test, firmware) => ( 
     image.loaded && 
-    !knitting.knitting && 
-    !test.testing && 
-    !firmware.uploading
-  )
-);
-
-/**
- * Menu enabled selector
- */
-export const selectMenuEnabled = createSelector(
-  selectKnittingState,
-  selectTestState,
-  selectFirmwareState,
-  (knitting, test, firmware) => ( 
     !knitting.knitting && 
     !test.testing && 
     !firmware.uploading

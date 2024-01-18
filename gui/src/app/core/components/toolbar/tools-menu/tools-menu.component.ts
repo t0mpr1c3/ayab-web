@@ -8,8 +8,8 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
 
 import { FormDialogComponent } from '../my-ayab-menu/form-dialog/form-dialog.component';
-import { TestDialogComponent } from '../../../../test/components/test-dialog/test-dialog.component';
-import { FirmwareDialogComponent } from '../../../../firmware/components/firmware-dialog/firmware-dialog.component';
+import { TestDialogComponent } from '../../../../test-device/components/test-dialog/test-dialog.component';
+import { FirmwareDialogComponent } from '../../../../firmware-upload/components/firmware-upload-dialog/firmware-upload-dialog.component';
 
 /**
  * @title Tools menu

@@ -12,8 +12,10 @@ import * as fromLayout from '../actions/layout.actions';
 export class CoreFacade {
   constructor(private _store: Store<fromRoot.State>) {}
 
-  public showOptions$ = this._store.select(fromRoot.selectShowOptions);
+  public showOptions$ = this._store.select(fromRoot.selectShowOptions);  
+  public enableOptions$ = this._store.select(fromRoot.selectConfiguring);
   public menuEnabled$ = this._store.select(fromRoot.selectMenuEnabled);
+  public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
 
   public imageLoaded(): void {
     this._store.dispatch(fromImage.imageLoaded());
