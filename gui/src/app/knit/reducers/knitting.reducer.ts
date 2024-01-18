@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import * as fromKnit from '../actions/knit.actions';
 
-export const featureKey = 'knit';
+export const featureKey = 'knitting';
 
 export interface State {
   knitting: boolean;

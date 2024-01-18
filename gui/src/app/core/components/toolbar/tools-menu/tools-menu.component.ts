@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
@@ -7,11 +8,12 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
 
-import { MatMenuModule } from '@angular/material/menu';
 import { StartTestingService } from '../../../../test/services/start-testing.service';
+import { StartFirmwareService } from '../../../../firmware/services/start-firmware.service';
 import { CancelService } from '../../../services/cancel.service';
 import { FormDialogComponent } from '../my-ayab-menu/form-dialog/form-dialog.component';
 import { TestDialogComponent } from '../../../../test/components/test-dialog/test-dialog.component';
+import { FirmwareDialogComponent } from '../../../../firmware/components/firmware-dialog/firmware-dialog.component';
 
 /**
  * @title Tools menu
@@ -21,14 +23,14 @@ import { TestDialogComponent } from '../../../../test/components/test-dialog/tes
   selector: 'tools-menu',
   templateUrl: 'tools-menu.component.html',
   styleUrls: ['tools-menu.component.css'],
-imports: [
-  CommonModule,
-  MatDialogModule,
-  MatButtonModule, 
-  MatMenuModule,
-],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule, 
+    MatMenuModule,
+  ],
 })
-export class ToolsMenuComponent implements OnDestroy {
+export class ToolsMenuComponent {
   public enabled$ = this._store.select(fromRoot.selectMenuEnabled);
   private _dialogRef: MatDialogRef<FormDialogComponent>;
   private _subscription: Subscription;
@@ -36,6 +38,7 @@ export class ToolsMenuComponent implements OnDestroy {
   constructor(
     private _store: Store<fromRoot.State>,
     private _startTestingService: StartTestingService,
+    private _startFirmwareService: StartFirmwareService,
     private _dialog: MatDialog,
     private _cancelService: CancelService,
   ) {}
@@ -46,11 +49,23 @@ export class ToolsMenuComponent implements OnDestroy {
       FormDialogComponent,  
       { data: { formType: TestDialogComponent }}
     );
-    this._subscription = this._dialogRef.afterClosed()
-      .subscribe(() => this._cancelService.emit());
+    this.cancelAfterClosed();
   }
 
-  ngOnDestroy(): void {
-    this._subscription.unsubscribe();
+  public startFirmware(): void {
+    this._startFirmwareService.emit();
+    this._dialogRef = this._dialog.open(
+      FormDialogComponent,  
+      { data: { formType: FirmwareDialogComponent }}
+    );
+    this.cancelAfterClosed();
+  }
+
+  public cancelAfterClosed() {
+    this._subscription = this._dialogRef.afterClosed()
+      .subscribe(() => {
+        this._subscription.unsubscribe();
+        this._cancelService.emit();
+    });
   }
 }

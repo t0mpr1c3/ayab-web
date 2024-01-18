@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { Store } from "@ngrx/store";
 import * as fromRoot from '../reducers';
@@ -6,7 +7,6 @@ import * as fromKnit from '../knit/actions/knit.actions'
 
 import { StartKnittingService } from "../knit/services/start-knitting.service";
 import { CancelService } from "../core/services/cancel.service";
-import { MatDialogModule } from "@angular/material/dialog";
 
 /**
  * @title Knit container component

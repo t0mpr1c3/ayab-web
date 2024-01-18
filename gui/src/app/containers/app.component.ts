@@ -9,10 +9,12 @@ import * as fromKnit from '../knit/actions/knit.actions';
 import * as fromAuth from '../auth/actions/auth.actions';
 
 import { ImageLoadedService } from '../core/services/image-loaded.service';
-import { LayoutComponent } from '../core/components/layout.component';
 import { User } from '../../../../shared/src/models/user.model';
+import { LayoutComponent } from '../core/components/layout.component';
 import { TestComponent } from './test.components';
 import { KnitComponent } from './knit.component';
+import { FirmwareComponent } from './firmware.component';
+import { ProfileComponent } from './profile.component';
 
 /**
  * @title App component
@@ -20,15 +22,19 @@ import { KnitComponent } from './knit.component';
 @Component({
   standalone: true,
   selector: 'app',
-  template: `
+  template: `  
+    <profile></profile>
     <knit></knit>
     <test></test>
+    <firmware></firmware>
     <layout (showOptions)="showOptions()" (hideOptions)="hideOptions()"></layout>
     `,
   imports: [
-    LayoutComponent,
+    LayoutComponent,    
+    ProfileComponent,
     KnitComponent,
     TestComponent,
+    FirmwareComponent,
   ]
 })
 export class AppComponent {

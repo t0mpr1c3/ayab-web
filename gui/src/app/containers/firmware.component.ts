@@ -3,47 +3,47 @@ import { MatDialogModule } from "@angular/material/dialog";
 
 import { Store } from "@ngrx/store";
 import * as fromRoot from '../reducers';
-import * as fromTest from '../test/actions/test.actions'
+import * as fromFirmware from '../firmware/actions/firmware.actions'
 
-import { StartTestingService } from "../test/services/start-testing.service";
+import { StartFirmwareService } from "../firmware/services/start-firmware.service";
 import { CancelService } from "../core/services/cancel.service";
 import { Subscription } from "rxjs";
 
 /**
- * @title Test container component
+ * @title Firmware upload container component
  */
 @Component({
   standalone: true,
-  selector: 'test',
+  selector: 'firmware',
   template: ``,
   imports: [MatDialogModule],
 })
-export class TestComponent implements OnDestroy {
-  private _testing = false;
-  private _startTestingSubscription: Subscription;
+export class FirmwareComponent implements OnDestroy {
+  private _firmware = false;
+  private _startFirmwareSubscription: Subscription;
   private _cancelSubscription: Subscription;
 
   constructor(
     private _store: Store<fromRoot.State>,
-    private _startTestingService: StartTestingService,
+    private _startFirmwareService: StartFirmwareService,
     private _cancelService: CancelService,
   ) {
-    this._startTestingSubscription = this._startTestingService.startTesting
+    this._startFirmwareSubscription = this._startFirmwareService.startFirmware
       .subscribe(() => {
-        this._testing = true;
-        this.startTesting();
+        this._firmware = true;
+        this.startFirmware();
       });
     this._cancelSubscription = this._cancelService.cancel
       .subscribe(() => {
-        if (this._testing) {
-          this._testing = false;
-          this.stopTesting();
+        if (this._firmware) {
+          this._firmware = false;
+          this.stopFirmware();
         }
       });
   }
 
   ngOnDestroy(): void {
-    this._startTestingSubscription.unsubscribe();
+    this._startFirmwareSubscription.unsubscribe();
     this._cancelSubscription.unsubscribe();
   }
 
@@ -54,11 +54,11 @@ export class TestComponent implements OnDestroy {
    * application.
    */
 
-  public startTesting(): void {
-    this._store.dispatch(fromTest.startTesting());
+  public startFirmware(): void {
+    this._store.dispatch(fromFirmware.startFirmware());
   }
 
-  public stopTesting(): void {
-    this._store.dispatch(fromTest.stopTesting());
+  public stopFirmware(): void {
+    this._store.dispatch(fromFirmware.stopFirmware());
   }
 }

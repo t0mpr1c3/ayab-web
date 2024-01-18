@@ -30,7 +30,7 @@ export class KnitButtonComponent {
 
   public knit(): void {
     this._startKnittingService.emit();
-    alert('Knitting has started') // FIXME
+    alert('Knitting is about to start') // FIXME
     const htmlContent = document.getElementById('content');
     if (htmlContent) {
       htmlContent.innerText = 'I am knitting!';

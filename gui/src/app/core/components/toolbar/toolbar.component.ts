@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 
-import { ProfileComponent } from '../../../containers/profile.component';
+import { MyAYABMenuComponent } from './my-ayab-menu/my-ayab-menu.component';
 import { ToolsMenuComponent } from './tools-menu/tools-menu.component';
 import { HelpMenuComponent } from './help-menu/help-menu.component';
 import { LoadImageButtonComponent } from './load-image-button/load-image-button.component';
@@ -26,7 +26,7 @@ import { CancelKnittingButtonComponent } from './cancel-button/cancel-button.com
     CommonModule,
     MatToolbarModule, 
     MatIconModule,
-    ProfileComponent,
+    MyAYABMenuComponent,
     ToolsMenuComponent,
     HelpMenuComponent,
     LoadImageButtonComponent,

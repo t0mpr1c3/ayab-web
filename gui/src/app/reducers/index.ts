@@ -56,9 +56,10 @@ import * as fromLogin from '../auth/reducers/login.reducer';
 import * as fromUser from '../auth/reducers/user.reducer';
 import * as fromLayout from '../core/reducers/layout.reducer';
 import * as fromImage from '../core/reducers/image.reducer';
+import * as fromKnitting from '../knit/reducers/knitting.reducer';
+import * as fromKnittable from '../knit/reducers/knittable.reducer';
 import * as fromTest from '../test/reducers/test.reducer';
-import * as fromKnit from '../knit/reducers/knit.reducer';
-import * as fromCombo from '../core/reducers/combined.reducer';
+import * as fromFirmware from '../firmware/reducers/firmware.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -66,9 +67,10 @@ import * as fromCombo from '../core/reducers/combined.reducer';
  */
 export interface State {
   [fromAuth.featureKey]: fromAuth.State;
-  //[fromLogin.featureKey]: fromLogin.State,
   [fromLayout.featureKey]: fromLayout.State;
-  [fromCombo.featureKey]: fromCombo.State;
+  [fromKnittable.featureKey]: fromKnittable.State;
+  [fromTest.featureKey]: fromTest.State;
+  [fromFirmware.featureKey]: fromFirmware.State;
   //router: RouterReducerState<any>;
 }
 
@@ -81,9 +83,10 @@ export interface State {
  */
 const reducers = {
   [fromAuth.featureKey]: fromAuth.reducer,
-  //[fromLogin.featureKey]: fromLogin.reducer,
   [fromLayout.featureKey]: fromLayout.reducer,
-  [fromCombo.featureKey]: fromCombo.reducer,
+  [fromKnittable.featureKey]: fromKnittable.reducer,
+  [fromTest.featureKey]: fromTest.reducer,
+  [fromFirmware.featureKey]: fromFirmware.reducer,
   //router: fromRouter.routerReducer,
 };
 
@@ -108,9 +111,10 @@ export const ROOT_REDUCERS = new InjectionToken<
 >('Root reducers token', {
   factory: () => ({
     [fromAuth.featureKey]: fromAuth.reducer,
-    //[fromLogin.featureKey]: fromLogin.reducer,
     [fromLayout.featureKey]: fromLayout.reducer,
-    [fromCombo.featureKey]: fromCombo.reducer,
+    [fromKnittable.featureKey]: fromKnittable.reducer,
+    [fromTest.featureKey]: fromTest.reducer,
+    [fromFirmware.featureKey]: fromFirmware.reducer,
     //router: routerReducer,
   }),
 });
@@ -210,13 +214,13 @@ export const selectShowOptions = createSelector(
 /**
  * Image Selectors
  */
-export const selectCombinedState = createFeatureSelector<fromCombo.State>(
-  fromCombo.featureKey
+export const selectCombinedState = createFeatureSelector<fromKnittable.State>(
+  fromKnittable.featureKey
 );
 
 export const selectImageState = createSelector(
   selectCombinedState,
-  fromCombo.selectImage
+  fromKnittable.selectImage
 );
 
 export const selectImageLoaded = createSelector(
@@ -227,22 +231,21 @@ export const selectImageLoaded = createSelector(
 /**
  * Knitting Selectors
  */
-export const selectKnitState = createSelector(
+export const selectKnittingState = createSelector(
   selectCombinedState,
-  fromCombo.selectKnit
+  fromKnittable.selectKnitting
 );
 
 export const selectKnitting = createSelector(
-  selectKnitState,
-  fromKnit.selectKnitting
+  selectKnittingState,
+  fromKnitting.selectKnitting
 );
 
 /**
  * Test Selectors
  */
-export const selectTestState = createSelector(
-  selectCombinedState,
-  fromCombo.selectTest
+export const selectTestState = createFeatureSelector<fromTest.State>(
+  fromTest.featureKey
 );
 
 export const selectTesting = createSelector(
@@ -251,22 +254,45 @@ export const selectTesting = createSelector(
 );
 
 /**
+ * Firmware Selectors
+ */
+export const selectFirmwareState = createFeatureSelector<fromFirmware.State>(
+  fromFirmware.featureKey
+);
+
+export const selectFirmware = createSelector(
+  selectFirmwareState,
+  fromFirmware.selectFirmware
+);
+
+/**
  * Options panel enabled selector (AKA configuring state)
  */
 export const selectConfiguring = createSelector(
   selectImageState,
-  selectKnitState,
+  selectKnittingState,
   selectTestState,
-  (image, knit, test) => ( image.loaded && !knit.knitting && !test.testing )
+  selectFirmwareState,
+  (image, knitting, test, firmware) => ( 
+    image.loaded && 
+    !knitting.knitting && 
+    !test.testing && 
+    !firmware.uploading
+  )
 );
 
 /**
  * Menu enabled selector
  */
 export const selectMenuEnabled = createSelector(
-  selectKnitState,
+  selectKnittingState,
   selectTestState,
-  (knit, test) => ( !knit.knitting && !test.testing )
+  selectFirmwareState,
+  (knitting, test, firmware) => ( 
+    !knitting.knitting && 
+    !test.testing && 
+    !firmware.uploading
+  )
 );
 
 /**

@@ -10,7 +10,9 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import * as fromAuth from './app/auth/reducers/auth.reducer';
 import * as fromLayout from './app/core/reducers/layout.reducer';
-import * as fromCombo from './app/core/reducers/combined.reducer';
+import * as fromKnittable from './app/knit/reducers/knittable.reducer';
+import * as fromTest from './app/test/reducers/test.reducer';
+import * as fromFirmware from './app/firmware/reducers/firmware.reducer';
 import { AuthEffects } from './app/auth/effects/auth.effects';
 import { UserEffects } from './app/profile/effects/user.effects';
 import { ImageEffects } from './app/core/effects/image.effects';
@@ -23,6 +25,7 @@ import { UserApiService } from './app/profile/services/user-api.service';
 import { ImageLoadedService } from './app/core/services/image-loaded.service';
 import { StartKnittingService } from './app/knit/services/start-knitting.service';
 import { StartTestingService } from './app/test/services/start-testing.service';
+import { StartFirmwareService } from './app/firmware/services/start-firmware.service';
 import { SubmitService } from './app/core/services/submit.service';
 import { CancelService } from './app/core/services/cancel.service';
 
@@ -42,7 +45,9 @@ bootstrapApplication(AppComponent, {
     provideStore({
       [fromAuth.featureKey]: fromAuth.reducer,
       [fromLayout.featureKey]: fromLayout.reducer,
-      [fromCombo.featureKey]: fromCombo.reducer,
+      [fromKnittable.featureKey]: fromKnittable.reducer,
+      [fromTest.featureKey]: fromTest.reducer,
+      [fromFirmware.featureKey]: fromFirmware.reducer,
      }),
 
     /**
@@ -75,6 +80,7 @@ bootstrapApplication(AppComponent, {
     ImageLoadedService,
     StartKnittingService,
     StartTestingService,
+    StartFirmwareService,
     SubmitService,
     CancelService,
   ],

@@ -10,7 +10,6 @@ import * as fromUser from '../profile/actions/user.actions'
 import { SubmitService } from "../core/services/submit.service";
 import { User } from "../../../../shared/src/models/user.model";
 import { LoginCredentials, RegistrationCredentials } from "../../../../shared/src/models/credentials.model";
-import { MyAYABMenuComponent } from "../core/components/toolbar/my-ayab-menu/my-ayab-menu.component";
 
 /**
  * @title Profile container component
@@ -18,8 +17,7 @@ import { MyAYABMenuComponent } from "../core/components/toolbar/my-ayab-menu/my-
 @Component({
   standalone: true,
   selector: 'profile',
-  template: `<my-ayab-menu></my-ayab-menu>`,
-  imports: [MyAYABMenuComponent],
+  template: ``,
 })
 export class ProfileComponent {
   constructor(
