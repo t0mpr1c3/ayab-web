@@ -5,15 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../reducers';
-import * as fromLogin from '../../actions/login.actions';
-
-import { SubmitService } from '../../../core/services/submit.service';
 import { CancelService } from '../../../core/services/cancel.service';
 import { Validation } from '../../../../../../shared/src/models/validation.model';
-import { LoginCredentials } from '../../../../../../shared/src/models/credentials.model';
 import { GenericButtonComponent } from '../../../core/components/generic-button/generic-button.component';
+import { AuthFacade } from '../../facade/auth.facade';
 
 @Component({
   standalone: true,
@@ -28,19 +23,18 @@ import { GenericButtonComponent } from '../../../core/components/generic-button/
     MatIconModule,
     GenericButtonComponent,
   ],
+  providers: [AuthFacade],
 })
 export class LoginFormComponent extends Validation implements OnInit {
-  public pending$ = this._store.select(fromRoot.selectLoginPending);
-  public error$ = this._store.select(fromRoot.selectLoginError);
-
   public form: FormGroup;
   private _debounce = false;
+  public pending$ = this._facade.loginPending$;
+  public error$ = this._facade.loginError$;
 
   constructor(
-    private _store: Store<fromRoot.State>,
     private _formBuilder: FormBuilder,
-    private _submitService: SubmitService,
     private _cancelService: CancelService,
+    private _facade: AuthFacade,
   ) {
     super();
   }
@@ -70,15 +64,10 @@ export class LoginFormComponent extends Validation implements OnInit {
     }
     this._debounce = true;
       
-    // Return credentials
-    this._submitService.emit({
-      action: fromLogin.loginSubmit,
-      payload: {
-        credentials: {
-          username: this.f.username?.value, 
-          password: this.f.password?.value,
-        } as LoginCredentials
-      }
+    // Submit credentials
+    this._facade.loginSubmit({
+      username: this.f.username?.value, 
+      password: this.f.password?.value,
     });
 
     // Close dialog

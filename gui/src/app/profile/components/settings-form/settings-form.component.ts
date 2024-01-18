@@ -1,19 +1,14 @@
-import { 
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 
-import * as fromUser from '../../actions/user.actions';
-
 import { mapSettings, reduce } from '../../../../../../shared/src/helpers/reduce';
 import { getUser } from '../../../auth/helpers/local-storage';
 import { CancelService } from '../../../core/services/cancel.service';
-import { SubmitService } from '../../../core/services/submit.service';
+import { ProfileFacade } from '../../facade/profile.facade';
 import { Settings, TSetting } from '../../../../../../shared/src/models/settings.model';
 import { User } from '../../../../../../shared/src/models/user.model';
 import { GenericButtonComponent } from '../../../core/components/generic-button/generic-button.component';
@@ -42,6 +37,7 @@ import { SettingsListComponent } from './settings-list/settings-list.component';
     SettingsListComponent,
     SettingTemplateDirective,
   ],
+  providers: [ProfileFacade],
 })
 export class SettingsFormComponent implements OnInit {
   public form!: FormGroup;
@@ -59,8 +55,8 @@ export class SettingsFormComponent implements OnInit {
 
   public constructor(
     private _formBuilder: FormBuilder,
-    private _submitService: SubmitService,
     private _cancelService: CancelService,
+    private _facade: ProfileFacade,
   ) {}
 
   ngOnInit(): void {
@@ -111,10 +107,7 @@ export class SettingsFormComponent implements OnInit {
     );
       
     // Return updated user data
-    this._submitService.emit({
-      action: fromUser.update,
-      payload: { user: this._user },
-    });
+    this._facade.update(this._user);
 
     // Close dialog
     this._cancelService.emit();

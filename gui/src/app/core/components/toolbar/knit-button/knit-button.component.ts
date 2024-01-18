@@ -2,10 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../../reducers';
-
-import { StartKnittingService } from '../../../../knit/services/start-knitting.service';
+import { KnitFacade } from '../../../../knit/facade/knit.facade';
 
 /** 
  * @title Knit button component
@@ -18,18 +15,16 @@ import { StartKnittingService } from '../../../../knit/services/start-knitting.s
   imports: [
     CommonModule,
     MatButtonModule,
-  ]
+  ],
+  providers: [KnitFacade],
 })
 export class KnitButtonComponent {
-  public enabled$ = this._store.select(fromRoot.selectConfiguring);
+  constructor(private _facade: KnitFacade) {}
 
-  constructor(
-    private _store: Store<fromRoot.State>,
-    private _startKnittingService: StartKnittingService,
-  ) {}
+  public enabled$ = this._facade.knitButtonEnabled$;
 
   public knit(): void {
-    this._startKnittingService.emit();
+    this._facade.startKnitting();
     alert('Knitting is about to start') // FIXME
     const htmlContent = document.getElementById('content');
     if (htmlContent) {

@@ -5,14 +5,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 
-import * as fromUser from '../../actions/user.actions';
-
 import { MustMatch } from '../../helpers/must-match'; // custom validator
-import { SubmitService } from '../../../core/services/submit.service';
 import { CancelService } from '../../../core/services/cancel.service';
+import { ProfileFacade } from '../../facade/profile.facade';
 import { DebounceClickDirective } from '../../../core/directives/debounce.directive';
 import { Validation } from '../../../../../../shared/src/models/validation.model';
-import { RegistrationCredentials } from '../../../../../../shared/src/models/credentials.model';
 import { GenericButtonComponent } from '../../../core/components/generic-button/generic-button.component';
 
 @Component({
@@ -29,14 +26,15 @@ import { GenericButtonComponent } from '../../../core/components/generic-button/
     DebounceClickDirective,
     GenericButtonComponent,
   ],
+  providers: [ProfileFacade],
 })
 export class RegistrationFormComponent extends Validation implements OnInit {
   public form!: FormGroup;
   
   constructor(
     private _formBuilder: FormBuilder,
-    private _submitService: SubmitService,
     private _cancelService: CancelService,
+    private _facade: ProfileFacade,
   ) {
     super();
   }
@@ -75,19 +73,14 @@ export class RegistrationFormComponent extends Validation implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
-    let credentials = {
+      
+    // Submit credentials
+    this._facade.registration({
       username: this.f.username?.value,
       email:    this.f.email?.value,
       password: this.f.password?.value,
       role:     'USER',
-    } as RegistrationCredentials;
-      
-    // Return credentials
-    this._submitService.emit({
-      action: fromUser.registration,
-      payload: { credentials: credentials }
-    });    
+    });
   }
 /*
   public onReset() {

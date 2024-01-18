@@ -4,11 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../../reducers';
-import * as fromAuth from '../../../../auth/actions/auth.actions';
-
-import { SubmitService } from '../../../services/submit.service';
+import { AuthFacade } from '../../../../auth/facade/auth.facade';
 import { FormDialogComponent } from './form-dialog/form-dialog.component';
 import { RegistrationFormComponent } from '../../../../profile/components/registration-form/registration-form.component';
 import { LoginFormComponent } from '../../../../auth/components/login-form/login-form.component';
@@ -27,15 +23,15 @@ import { SettingsFormComponent } from '../../../../profile/components/settings-f
     MatButtonModule, 
     MatMenuModule,
   ],
+  providers: [AuthFacade],
 })
 export class MyAYABMenuComponent {
-  public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
-  public enabled$ = this._store.select(fromRoot.selectMenuEnabled);
+  public loggedIn$ = this._facade.loggedIn$;
+  public enabled$ = this._facade.menuEnabled$;
 
   public constructor(
-    private _store: Store<fromRoot.State>,
     private _dialog: MatDialog,
-    private _submitService: SubmitService,
+    private _facade: AuthFacade,
   ) {}
 
   public openRegistrationDialog(): void {
@@ -60,6 +56,6 @@ export class MyAYABMenuComponent {
   }
 
   public logout(): void {
-    this._submitService.emit({ action: fromAuth.logout });
+    this._facade.logout();
   }
 }

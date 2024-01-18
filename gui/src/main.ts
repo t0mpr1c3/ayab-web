@@ -15,18 +15,12 @@ import * as fromTest from './app/test/reducers/test.reducer';
 import * as fromFirmware from './app/firmware/reducers/firmware.reducer';
 import { AuthEffects } from './app/auth/effects/auth.effects';
 import { UserEffects } from './app/profile/effects/user.effects';
-import { ImageEffects } from './app/core/effects/image.effects';
 
 //import { routes } from './app/root/router';
 import { AppComponent } from './app/containers/app.component';
 import { ApiService } from './app/services/api.service';
 import { AuthApiService } from './app/auth/services/auth-api.service';
 import { UserApiService } from './app/profile/services/user-api.service';
-import { ImageLoadedService } from './app/core/services/image-loaded.service';
-import { StartKnittingService } from './app/knit/services/start-knitting.service';
-import { StartTestingService } from './app/test/services/start-testing.service';
-import { StartFirmwareService } from './app/firmware/services/start-firmware.service';
-import { SubmitService } from './app/core/services/submit.service';
 import { CancelService } from './app/core/services/cancel.service';
 
 bootstrapApplication(AppComponent, {
@@ -71,17 +65,11 @@ bootstrapApplication(AppComponent, {
     provideEffects([
       AuthEffects, 
       UserEffects,
-      //ImageEffects,
     ]),
 
     ApiService,
     AuthApiService,
     UserApiService,
-    ImageLoadedService,
-    StartKnittingService,
-    StartTestingService,
-    StartFirmwareService,
-    SubmitService,
     CancelService,
   ],
 }).catch(err => console.error(err));

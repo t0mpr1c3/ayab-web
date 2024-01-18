@@ -3,11 +3,8 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription, timer } from 'rxjs';
 
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../../reducers';
-
 import { drawCanvas } from '../../../helpers/canvas';
-import { ImageLoadedService } from '../../../services/image-loaded.service';
+import { CoreFacade } from '../../../facade/core.facade';
 
 /** 
  * @title Load image button
@@ -20,22 +17,21 @@ import { ImageLoadedService } from '../../../services/image-loaded.service';
   imports: [
     CommonModule,
     MatButtonModule,
-  ]
+  ],
+  providers: [CoreFacade],
 })
 export class LoadImageButtonComponent {
   public imageFile: File;
   private _checkUpload: Subscription;
-  public enabled$ = this._store.select(fromRoot.selectMenuEnabled);
+  public enabled$ = this._facade.menuEnabled$;
 
-  constructor(
-    private _store: Store<fromRoot.State>,
-    private _imageLoadedService: ImageLoadedService,
-  ) {}
+  constructor(private _facade: CoreFacade) {}
 
   public onFileChanged(event: Event): void {
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
-    // Check if file has been uploaded
+
+    // Set timer to check if file has been uploaded every 500ms
     this._checkUpload = timer(0, 500).subscribe(() => {
       const checkFile = files[0];
       if (checkFile) {
@@ -46,8 +42,14 @@ export class LoadImageButtonComponent {
   
   // Runs after user uploads file;
   public processFile(event: Event): void {
+    // Halt timer
     this._checkUpload.unsubscribe();
-    this._imageLoadedService.emit();
+
+    // Update state
+    this._facade.imageLoaded();
+    this._facade.showOptions();
+
+    // Get image file
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
     this.imageFile = files[0] as File;
@@ -59,6 +61,8 @@ export class LoadImageButtonComponent {
       // File wrong format
       return; // FIXME alert user
     }
+
+    // Show image on canvas
     drawCanvas(this.imageFile)
       .then()
       .catch(err => {

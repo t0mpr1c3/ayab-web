@@ -2,10 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../../reducers';
-
-import { CancelService } from '../../../services/cancel.service';
+import { KnitFacade } from '../../../../knit/facade/knit.facade';
 
 /** 
  * @title Cancel knitting button component
@@ -18,17 +15,15 @@ import { CancelService } from '../../../services/cancel.service';
   imports: [
     CommonModule,
     MatButtonModule,
-  ]
+  ],
+  providers: [KnitFacade],
 })
 export class CancelKnittingButtonComponent {
-  public enabled$ = this._store.select(fromRoot.selectKnitting);
+  constructor(private _facade: KnitFacade) {}
 
-  constructor(
-    private _store: Store<fromRoot.State>,
-    private _cancelService: CancelService,
-  ) {}
+  public enabled$ = this._facade.cancelButtonEnabled$;
 
   public cancel(): void {
-    this._cancelService.emit();
+    this._facade.stopKnitting();
   }
 }
