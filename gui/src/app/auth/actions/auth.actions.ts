@@ -1,16 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../../../../../shared/src/models/user.model';
 
-export const boot = createAction(
+export const bootAction = createAction(
   '[Auth] Initialize auth state'
 );
-export const isLoggedIn = createAction(
+export const isLoggedInAction = createAction(
   '[Auth] Is logged in',
   props<{ user: User }>()
 );
-export const isLoggedOut = createAction(
+export const isLoggedOutAction = createAction(
   '[Auth] Is logged out'
 );
-export const logout = createAction(
+export const logoutAction = createAction(
   '[Auth] Logout'
 );

@@ -17,7 +17,9 @@ import { MirrorIconDirective } from "./mirror-icon.directive";
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mirror-icon',
-  template: `<img id="mirrorIcon" class="mirror-icon">`,
+  template: `
+    <img id="mirrorIcon" class="mirror-icon" [disabled]="disabled" [knitSide]="knitSide">
+  `,
   styles: [`
     .mirror-icon {
       width: 18px;
@@ -33,22 +35,25 @@ import { MirrorIconDirective } from "./mirror-icon.directive";
   ],
 })
 export class MirrorIconComponent implements AfterViewChecked {
-  @Input({ required: true, transform: booleanAttribute }) knitSide: boolean;
   @Input({ transform: booleanAttribute }) disabled: boolean = true;
-  @ViewChild(MirrorIconDirective) icon!: MirrorIconDirective;
+  @Input({ transform: booleanAttribute }) knitSide: boolean = false;
+
+  @ViewChild(MirrorIconDirective) icon: MirrorIconDirective;
+
+  constructor() {}
   
   ngAfterViewChecked(): void {
     this.mirror(this.knitSide);
     this.disable(this.disabled);
   }
-
-  public mirror(isKnitSide: boolean): void {
-    this.knitSide = isKnitSide;
-    this.icon.knitSide = isKnitSide;
-  }
   
   public disable(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.icon.disabled = isDisabled;
+  }
+
+  public mirror(isKnitSide: boolean): void {
+    this.knitSide = isKnitSide;
+    this.icon.knitSide = isKnitSide;
   }
 }

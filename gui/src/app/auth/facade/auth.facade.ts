@@ -22,14 +22,14 @@ export class AuthFacade {
   public menuEnabled$ = this._store.select(fromRoot.selectMenuEnabled);
 
   public boot(): void {
-    this._store.dispatch(fromAuth.boot());
+    this._store.dispatch(fromAuth.bootAction());
   }
   
   public loginSubmit(credentials: LoginCredentials): void {
-    this._store.dispatch(fromLogin.loginSubmit({ credentials }));
+    this._store.dispatch(fromLogin.loginSubmitAction({ credentials }));
   }
   
   public logout(): void {
-    this._store.dispatch(fromAuth.logout());
+    this._store.dispatch(fromAuth.logoutAction());
   }
 }

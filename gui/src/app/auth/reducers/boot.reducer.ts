@@ -19,8 +19,8 @@ export const bootedState: State = {
 /*
 export const reducer = createReducer(
   initialState,
-  on(fromAuth.isLoggedOut, () => bootedState),
-  on(fromAuth.isLoggedIn, () => bootedState)
+  on(fromAuth.isLoggedOutAction, () => bootedState),
+  on(fromAuth.isLoggedInAction, () => bootedState)
 )
 */
 

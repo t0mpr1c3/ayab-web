@@ -11,16 +11,17 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import * as fromAuth from './app/auth/reducers/auth.reducer';
 import * as fromLayout from './app/core/reducers/layout.reducer';
 import * as fromKnittable from './app/knit/reducers/knittable.reducer';
-import * as fromTest from './app/test/reducers/test.reducer';
-import * as fromFirmware from './app/firmware/reducers/firmware.reducer';
+import * as fromTest from './app/test-device/reducers/test.reducer';
+import * as fromFirmware from './app/firmware-upload/reducers/firmware.reducer';
 import { AuthEffects } from './app/auth/effects/auth.effects';
 import { UserEffects } from './app/profile/effects/user.effects';
 
 //import { routes } from './app/root/router';
 import { ApiService } from './app/services/api.service';
 import { AuthApiService } from './app/auth/services/auth-api.service';
-import { UserApiService } from './app/profile/services/user-api.service';
 import { CancelService } from './app/core/services/cancel.service';
+import { LocalStorageService } from './app/services/local-storage.service';
+import { UserApiService } from './app/profile/services/user-api.service';
 import { AppComponent } from './app/containers/app.component';
 
 bootstrapApplication(AppComponent, {
@@ -72,7 +73,8 @@ bootstrapApplication(AppComponent, {
      */
     ApiService,
     AuthApiService,
-    UserApiService,
     CancelService,
+    LocalStorageService,
+    UserApiService,
   ],
 }).catch(err => console.error(err));

@@ -4,12 +4,12 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angul
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
+import { MatIconModule } from "@angular/material/icon"; 
 import { BehaviorSubject } from "rxjs";
 
 import { enumArray } from "../../../../../../shared/src/helpers/enum";
+import { LocalStorageService } from "../../../services/local-storage.service";
 import { CoreFacade } from "../../facade/core.facade";
-import { getUser } from "../../../auth/helpers/local-storage";
 import { ModeEnum } from "../../../../../../shared/src/models/mode-enum.model";
 import { AlignmentEnum } from "../../../../../../shared/src/models/alignment-enum.model";
 import { ColorEnum } from "../../../../../../shared/src/models/color-enum.model";
@@ -53,18 +53,19 @@ import { GenericCheckboxComponent } from "../generic-checkbox/generic-checkbox.c
 export class OptionsPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckboxComponent;
 
+  public alignmentEnum = enumArray(AlignmentEnum);
+  public disabled: boolean;
+  public enableOptions$ = this._facade.enableOptions$;
   public form: FormGroup;
   public formControls: Record<string, FormControl<TSetting>>;
-  public modeEnum = enumArray(ModeEnum);
-  public alignmentEnum = enumArray(AlignmentEnum);
-  private _enableOptions = new BehaviorSubject<boolean>(false);
-  public enableOptions$ = this._facade.enableOptions$;
   public loggedIn$ = this._facade.loggedIn$;
-  public disabled: boolean;
+  public modeEnum = enumArray(ModeEnum);
+  private _enableOptions = new BehaviorSubject<boolean>(false);
 
   constructor(
-    private _formBuilder: FormBuilder,
     private _facade: CoreFacade,
+    private _formBuilder: FormBuilder,    
+    private _localStorageService: LocalStorageService,
   ) {
     this.enableOptions$.subscribe(this._enableOptions);
   }
@@ -106,7 +107,7 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
   // resets options to defaults on logout
   public reset(isLoggedIn: boolean): void {
     let s = isLoggedIn ? 
-      getUser()!.settings as any :
+      this._localStorageService.getUser()!.settings as any :
       defaultSettings as any;
     this.formControls.mode!.setValue(s.mode);
     this.formControls.infRepeat!.setValue(s.infRepeat);

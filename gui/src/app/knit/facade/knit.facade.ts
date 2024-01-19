@@ -15,10 +15,10 @@ export class KnitFacade {
   public cancelButtonEnabled$ = this._store.select(fromRoot.selectKnitting);
 
   public startKnitting(): void {
-    this._store.dispatch(fromKnit.startKnitting());
+    this._store.dispatch(fromKnit.startKnittingAction());
   }
 
   public stopKnitting(): void {
-    this._store.dispatch(fromKnit.stopKnitting());
+    this._store.dispatch(fromKnit.stopKnittingAction());
   }
 }

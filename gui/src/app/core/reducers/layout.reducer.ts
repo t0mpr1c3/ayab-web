@@ -14,8 +14,8 @@ const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(layout.hideOptions, () => ({ showOptions: false })),
-  on(layout.showOptions, () => ({ showOptions: true })),
+  on(layout.hideOptionsAction, () => ({ showOptions: false })),
+  on(layout.showOptionsAction, () => ({ showOptions: true })),
 );
 
 export const selectShowOptions = (state: State) => state.showOptions;

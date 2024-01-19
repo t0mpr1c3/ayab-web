@@ -1,4 +1,4 @@
 import { createAction } from '@ngrx/store';
 
-export const startTesting = createAction('[Test] Start testing');
-export const stopTesting = createAction('[Test] Stop testing');
+export const startTestingAction = createAction('[Test] Start testing');
+export const stopTestingAction = createAction('[Test] Stop testing');

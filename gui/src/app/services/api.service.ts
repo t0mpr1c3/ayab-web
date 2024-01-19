@@ -3,11 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../environments/environment';
-import { getToken } from '../auth/helpers/local-storage';
+import { LocalStorageService } from './local-storage.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ApiService {
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private _localStorageService: LocalStorageService,
+  ) {}
 
   /*
   get(url: string, params: HttpParams = new HttpParams()): Observable<any> {
@@ -53,7 +56,7 @@ export class ApiService {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
-    const token = getToken();
+    const token = this._localStorageService.getToken();
     if (!!token) {
       headersConfig.Authorization = 'Bearer ' + token;
     }

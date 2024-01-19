@@ -14,7 +14,7 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromImage.imageLoaded, () => ({ loaded: true })),
+  on(fromImage.imageLoadedAction, () => ({ loaded: true })),
 );
 
 export const selectImageLoaded = (state: State) => state.loaded;

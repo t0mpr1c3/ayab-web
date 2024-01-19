@@ -14,8 +14,8 @@ const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(test.startTesting, () => ({ testing: true })),
-  on(test.stopTesting, () => ({ testing: false })),
+  on(test.startTestingAction, () => ({ testing: true })),
+  on(test.stopTestingAction, () => ({ testing: false })),
 );
 
 export const selectTesting = (state: State) => state.testing;

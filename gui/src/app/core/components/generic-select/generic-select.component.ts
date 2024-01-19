@@ -32,19 +32,19 @@ import { TSetting } from '../../../../../../shared/src/models/settings.model';
   ]
 })
 export class GenericSelectComponent implements OnInit {
-  @Input({ required: true }) name: string;
-  @Input({ required: true }) enum: string[];
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
   @Input({ transform: numberAttribute }) defaultValue: number = 0;
+  @Input({ required: true }) enum: string[];
+  @Input({ required: true }) name: string;
 
   public selection: number;
 
-  ngOnInit(): void {
+  constructor() {
     this.refresh();
   }
 
-  constructor() {
+  ngOnInit(): void {
     this.refresh();
   }
 

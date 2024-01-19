@@ -1,3 +1,3 @@
 import { createAction } from "@ngrx/store";
 
-export const imageLoaded = createAction('[Image] Image Loaded');
+export const imageLoadedAction = createAction('[Image] Image Loaded');

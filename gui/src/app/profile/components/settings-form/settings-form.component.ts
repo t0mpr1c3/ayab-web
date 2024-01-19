@@ -6,8 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 
 import { mapSettings, reduce } from '../../../../../../shared/src/helpers/reduce';
-import { getUser } from '../../../auth/helpers/local-storage';
 import { CancelService } from '../../../core/services/cancel.service';
+import { LocalStorageService } from '../../../services/local-storage.service';
 import { ProfileFacade } from '../../facade/profile.facade';
 import { Settings, TSetting } from '../../../../../../shared/src/models/settings.model';
 import { User } from '../../../../../../shared/src/models/user.model';
@@ -49,19 +49,20 @@ export class SettingsFormComponent implements OnInit {
     enum?: string[], 
     control: FormControl<TSetting>,
   }[];
+  private _debounce: Boolean = false;
   private _user: User;
   private _userSettings: Settings;
-  private _debounce: Boolean = false;
 
   public constructor(
-    private _formBuilder: FormBuilder,
     private _cancelService: CancelService,
     private _facade: ProfileFacade,
+    private _formBuilder: FormBuilder,
+    private _localStorageService: LocalStorageService,
   ) {}
 
   ngOnInit(): void {
     // Get user settings
-    this._user = getUser()!;
+    this._user = this._localStorageService.getUser()!;
     this._userSettings = this._user.settings;
 
     // Create form controls
@@ -91,7 +92,17 @@ export class SettingsFormComponent implements OnInit {
 
   // Convenience getter to access form fields
   public get f() { return this.form.controls; }
+  public onCancel() {
+    this._debounce = true;
+    this._cancelService.emit();
+  }
 
+  /*
+    public onReset() {
+      this.form.reset();
+    }
+  */
+ 
   public onSubmit() {
     if (this._debounce) {
       return;
@@ -110,15 +121,6 @@ export class SettingsFormComponent implements OnInit {
     this._facade.updateSettings(this._user.settings);
 
     // Close dialog
-    this._cancelService.emit();
-  }
-  /*
-    public onReset() {
-      this.form.reset();
-    }
-  */
-  public onCancel() {
-    this._debounce = true;
     this._cancelService.emit();
   }
 }

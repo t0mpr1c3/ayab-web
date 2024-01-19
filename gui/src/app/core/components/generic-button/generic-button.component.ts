@@ -19,9 +19,9 @@ import { MatButtonModule } from '@angular/material/button';
   ],
 })
 export class GenericButtonComponent {
-  @Input({ required: true }) name: string;
-  @Input() formControlName: string;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
+  @Input() formControlName: string;
+  @Input({ required: true }) name: string;
   
   @Output() clicked: EventEmitter<void> = new EventEmitter();
   

@@ -17,10 +17,10 @@ export class ProfileFacade {
   ) {}
   
   public registration(credentials: RegistrationCredentials): void {
-    this._store.dispatch(fromUser.registration({ credentials }));
+    this._store.dispatch(fromUser.registrationAction({ credentials }));
   }
   
   public updateSettings(settings: Settings): void {
-    this._store.dispatch(fromUser.updateSettings({ settings: settings }));
+    this._store.dispatch(fromUser.updateSettingsAction({ settings: settings }));
   }
 }

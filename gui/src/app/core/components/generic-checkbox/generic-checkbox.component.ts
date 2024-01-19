@@ -34,10 +34,10 @@ import { TSetting } from '../../../../../../shared/src/models/settings.model';
     ]
 })
 export class GenericCheckboxComponent {
-  @Input({ required: true }) name: string;
   @Input({ required: true }) control: FormControl<TSetting>;
-  @Input() disabled: boolean = false;
   @Input({ transform: booleanAttribute }) defaultValue: boolean = false;
+  @Input() disabled: boolean = false;
+  @Input({ required: true }) name: string;
 
   @Output() checked: EventEmitter<boolean> = new EventEmitter();
 

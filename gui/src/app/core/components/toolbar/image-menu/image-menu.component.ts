@@ -7,12 +7,12 @@ import { MatMenuModule } from '@angular/material/menu';
  */
  @Component({
   standalone : true,
-  selector: 'image-actions-menu',
-  templateUrl: 'image-actions-menu.component.html',
-  styleUrls: ['image-actions-menu.component.css'],
+  selector: 'image-menu',
+  templateUrl: 'image-menu.component.html',
+  styleUrls: ['image-menu.component.css'],
   imports: [
     MatButtonModule, 
     MatMenuModule,
   ],
 })
-export class ImageActionsMenuComponent {}
+export class ImageMenuComponent {}

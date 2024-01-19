@@ -6,35 +6,28 @@ import { exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as fromUser from '../actions/user.actions';
 
-import { getUser, maybeSetToken, setUser } from '../../auth/helpers/local-storage';
 import { UserApiService } from '../services/user-api.service';
 import { CancelService } from '../../core/services/cancel.service';
 import { RegistrationConfirmationDialog } from '../components/registration-form/registration-confirmation/registration-confirmation.component';
+import { LocalStorageService } from '../../services/local-storage.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserEffects {
   private _clicks$ = fromEvent(document, 'click');
   private _keys$ = fromEvent(document, 'keydown');
   private _mouse$ = fromEvent(document, 'mousemove');
 
-  public registration$ = createEffect(() =>
-    this._actions$.pipe(
-      ofType(fromUser.registration),
-      map(action => action.credentials),
-      exhaustMap(credentials =>
-        this._userApiService.register(credentials)
-      ),
-      tap(res => maybeSetToken(res.access_token)), // side effect
-      map(res => fromUser.confirmRegistration({
-        message: res.statusMessage,
-        success: res.statusCode >= 200 && res.statusCode < 300
-      })),
-    )
-  );
+  constructor(
+    private _actions$: Actions,
+    private _cancelService: CancelService,
+    private _dialog: MatDialog,
+    private _localStorageService: LocalStorageService,
+    private _userApiService: UserApiService,
+  ) {}
   
   public confirmRegistration$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromUser.confirmRegistration),
+      ofType(fromUser.confirmRegistrationAction),
       map(action => ({ message: action.message, success: action.success})),
       tap(args => 
         this._dialog.open(
@@ -48,35 +41,43 @@ export class UserEffects {
     { dispatch: false } // side effects only
   )
 
-  public updateSettings$ = createEffect(() => 
-    this._actions$.pipe(
-      ofType(fromUser.updateSettings),
-      map(action => action.settings),
-      tap(settings => {
-        let user = getUser()!;
-        user.settings = settings;
-        setUser(user);
-      }),
-      exhaustMap(settings =>
-        this._userApiService.update(settings)
-      ),
-      tap(res => maybeSetToken(res.access_token)),
-    ),
-    { dispatch: false } // side effects only
-  );
-
   public idle$ = createEffect(() =>
     merge(this._clicks$, this._keys$, this._mouse$).pipe(
       // 120 minute inactivity timeout
       switchMap(() => timer(120 * 60 * 1000)),
-      map(() => fromUser.idleTimeout())
+      map(() => fromUser.idleTimeoutAction())
     )
   );
 
-  constructor(
-    private _actions$: Actions,
-    private _userApiService: UserApiService,
-    private _dialog: MatDialog,
-    private _cancelService: CancelService,
-  ) {}
+  public registration$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(fromUser.registrationAction),
+      map(action => action.credentials),
+      exhaustMap(credentials =>
+        this._userApiService.register(credentials)
+      ),
+      tap(res => this._localStorageService.maybeSetToken(res.access_token)), // side effect
+      map(res => fromUser.confirmRegistrationAction({
+        message: res.statusMessage,
+        success: res.statusCode >= 200 && res.statusCode < 300
+      })),
+    )
+  );
+
+  public updateSettings$ = createEffect(() => 
+    this._actions$.pipe(
+      ofType(fromUser.updateSettingsAction),
+      map(action => action.settings),
+      tap(settings => {
+        let user = this._localStorageService.getUser()!;
+        user.settings = settings;
+        this._localStorageService.setUser(user);
+      }),
+      exhaustMap(settings =>
+        this._userApiService.update(settings)
+      ),
+      tap(res => this._localStorageService.maybeSetToken(res.access_token)),
+    ),
+    { dispatch: false } // side effects only
+  );
 }

@@ -27,13 +27,13 @@ const loggedOut: State = {
 export const reducer = createReducer(
   initialState,
 
-  on(fromAuth.isLoggedOut, state => (
+  on(fromAuth.isLoggedOutAction, state => (
     !state[fromBoot.featureKey].booting ? 
       state : 
       loggedOut
   )),
 
-  on(fromAuth.isLoggedIn, (state, { user }) => (
+  on(fromAuth.isLoggedInAction, (state, { user }) => (
     !state[fromBoot.featureKey].booting ? 
       state : 
       {
@@ -42,12 +42,12 @@ export const reducer = createReducer(
       }
   )),
 
-  on(fromAuthApi.loginSuccess, (state, { user }) => ({ 
+  on(fromAuthApi.loginSuccessAction, (state, { user }) => ({ 
     ...state,
     [fromUser.featureKey]: { user: user },
   })),
   
-  on(fromAuth.logout, () => loggedOut),
+  on(fromAuth.logoutAction, () => loggedOut),
 );
 
 export const getInit = (state: State) => state[fromBoot.featureKey];

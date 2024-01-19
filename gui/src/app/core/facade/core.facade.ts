@@ -16,16 +16,17 @@ export class CoreFacade {
   public enableOptions$ = this._store.select(fromRoot.selectConfiguring);
   public menuEnabled$ = this._store.select(fromRoot.selectMenuEnabled);
   public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
+  public imageLoaded$ = this._store.select(fromRoot.selectImageLoaded);
 
   public imageLoaded(): void {
-    this._store.dispatch(fromImage.imageLoaded());
+    this._store.dispatch(fromImage.imageLoadedAction());
   }
   
   public hideOptions(): void {
-    this._store.dispatch(fromLayout.hideOptions());
+    this._store.dispatch(fromLayout.hideOptionsAction());
   }
 
   public showOptions(): void {
-    this._store.dispatch(fromLayout.showOptions());
+    this._store.dispatch(fromLayout.showOptionsAction());
   }
 }

@@ -32,15 +32,12 @@ export class RegistrationFormComponent extends Validation implements OnInit {
   public form!: FormGroup;
   
   constructor(
-    private _formBuilder: FormBuilder,
     private _cancelService: CancelService,
     private _facade: ProfileFacade,
+    private _formBuilder: FormBuilder,
   ) {
     super();
   }
-
-  // Convenience getter function for form fields
-  public get f() { return this.form.controls; }
 
   ngOnInit() {
     this.form = this._formBuilder.group({
@@ -69,6 +66,19 @@ export class RegistrationFormComponent extends Validation implements OnInit {
     });
   }
 
+  // Convenience getter function for form fields
+  public get f() { return this.form.controls; }
+
+  public onCancel() {
+    this._cancelService.emit();
+  }
+
+  /*
+  public onReset() {
+    this.form.reset();
+  }
+  */
+
   public onSubmit() {
     if (this.form.invalid) {
       return;
@@ -81,13 +91,5 @@ export class RegistrationFormComponent extends Validation implements OnInit {
       password: this.f.password?.value,
       role:     'USER',
     });
-  }
-/*
-  public onReset() {
-    this.form.reset();
-  }
-*/
-  public onCancel() {
-    this._cancelService.emit();
   }
 }

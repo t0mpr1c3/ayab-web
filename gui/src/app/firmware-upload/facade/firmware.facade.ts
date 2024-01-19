@@ -12,10 +12,10 @@ export class FirmwareFacade {
   constructor(private _store: Store<fromRoot.State>) {}
 
   public startFirmware(): void {
-    this._store.dispatch(fromFirmware.startFirmware());
+    this._store.dispatch(fromFirmware.startFirmwareAction());
   }
 
   public stopFirmware(): void {
-    this._store.dispatch(fromFirmware.stopFirmware());
+    this._store.dispatch(fromFirmware.stopFirmwareAction());
   }
 }

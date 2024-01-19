@@ -30,11 +30,11 @@ export class LayoutComponent {
 
   constructor(private _facade: CoreFacade) {}
   
-  public showOptions() {
-    this._facade.showOptions();
-  }
-  
   public hideOptions() {
     this._facade.hideOptions();
+  }
+  
+  public showOptions() {
+    this._facade.showOptions();
   }
 }

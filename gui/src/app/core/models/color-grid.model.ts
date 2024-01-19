@@ -1,4 +1,5 @@
-class ColorGrid {
-  public width: number = 0;
-  public height: number = 0;
+class Img {
+  public width: number;
+  public height: number;
+  public data: Uint8Array;
 }

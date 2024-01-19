@@ -23,6 +23,11 @@
   border: solid 1px #DDD;
   background-color: #FFF;
 }
+canvas {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
 mat-form-field.custom > .mat-mdc-form-field-infix {
   padding-bottom: 0.5rem;
   min-height: 3rem;

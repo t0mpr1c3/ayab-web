@@ -12,10 +12,10 @@ export class TestFacade {
   constructor(private _store: Store<fromRoot.State>) {}
 
   public startTesting(): void {
-    this._store.dispatch(fromTest.startTesting());
+    this._store.dispatch(fromTest.startTestingAction());
   }
 
   public stopTesting(): void {
-    this._store.dispatch(fromTest.stopTesting());
+    this._store.dispatch(fromTest.stopTestingAction());
   }
 }

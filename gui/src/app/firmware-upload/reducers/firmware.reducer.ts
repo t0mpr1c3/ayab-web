@@ -14,8 +14,8 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromFirmware.startFirmware, () => ({ uploading: true })),
-  on(fromFirmware.stopFirmware, () => ({ uploading: false })),
+  on(fromFirmware.startFirmwareAction, () => ({ uploading: true })),
+  on(fromFirmware.stopFirmwareAction, () => ({ uploading: false })),
 );
 
 export const selectFirmware = (state: State) => state.uploading;

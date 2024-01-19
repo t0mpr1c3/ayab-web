@@ -15,8 +15,8 @@ export const initialState: State = {
 /*
 export const reducer = createReducer(
   initialState,
-  on(fromKnit.startKnitting, () => ({ knitting: true })),
-  on(fromKnit.stopKnitting, () => ({ knitting: false })),
+  on(fromKnit.startKnittingAction, () => ({ knitting: true })),
+  on(fromKnit.stopKnittingAction, () => ({ knitting: false })),
 );
 */
 

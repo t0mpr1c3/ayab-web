@@ -9,8 +9,8 @@ import * as fromLogin from '../actions/login.actions';
 import * as fromUser from '../../profile/actions/user.actions';
 
 import { AuthApiService } from '../services/auth-api.service';
-import { getUser, isLoggedOut, removeToken, removeUser, setToken, setUser } from '../helpers/local-storage';
 import { LoginCredentials } from '../../../../../shared/src/models/credentials.model';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 /*
  * In a service-based Angular application, components are responsible for interacting with 
@@ -31,59 +31,60 @@ import { LoginCredentials } from '../../../../../shared/src/models/credentials.m
  *       and return a new action.
  */
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthEffects {
   constructor(
     private _actions$: Actions,
     private _authApiService: AuthApiService,
+    private _localStorageService: LocalStorageService,
   ) {}
 
   public boot$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromAuth.boot),
-      map(() => (isLoggedOut() ? 
-        fromAuth.isLoggedOut() : 
-        fromAuth.isLoggedIn({ user: getUser()! })
+      ofType(fromAuth.bootAction),
+      map(() => (this._localStorageService.isLoggedOut() ? 
+        fromAuth.isLoggedOutAction() : 
+        fromAuth.isLoggedInAction({ user: this._localStorageService.getUser()! })
       )),
     )
   );
 
-  public loginSubmit$ = createEffect(() =>
+  public idleTimeout$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromLogin.loginSubmit),
-      map(action => action.credentials),
-      exhaustMap((credentials: LoginCredentials) =>
-        this._authApiService.login(credentials).pipe(  
-          tap(loginResponse => setUser(loginResponse.user)),
-          tap(loginResponse => setToken(loginResponse.access_token)),
-          map(loginResponse => fromAuthApi.loginSuccess({ user: loginResponse.user })),
-          catchError(error => of(fromAuthApi.loginFailure({ error })))
-        )
-      )
+      ofType(fromUser.idleTimeoutAction),
+      map(() => fromAuth.logoutAction())
     )
   );
 
   public loginFailure$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromAuthApi.loginFailure),
+      ofType(fromAuthApi.loginFailureAction),
       tap(action => alert(action.error.statusText)) // FIXME
     ),
     { dispatch: false } // side effects only
   );
 
-  public idleTimeout$ = createEffect(() =>
+  public loginSubmit$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromUser.idleTimeout),
-      map(() => fromAuth.logout())
+      ofType(fromLogin.loginSubmitAction),
+      map(action => action.credentials),
+      exhaustMap((credentials: LoginCredentials) =>
+        this._authApiService.login(credentials).pipe(  
+          tap(loginResponse => this._localStorageService.setUser(loginResponse.user)),
+          tap(loginResponse => this._localStorageService.setToken(loginResponse.access_token)),
+          map(loginResponse => fromAuthApi.loginSuccessAction({ user: loginResponse.user })),
+          catchError(error => of(fromAuthApi.loginFailureAction({ error })))
+        )
+      )
     )
   );
 
   public logout$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromAuth.logout),
+      ofType(fromAuth.logoutAction),
       tap(() => {
-        removeUser();
-        removeToken();
+        this._localStorageService.removeUser();
+        this._localStorageService.removeToken();
       })
     ),
     { dispatch: false } // side effects only

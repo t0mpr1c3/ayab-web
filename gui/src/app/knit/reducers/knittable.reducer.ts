@@ -19,12 +19,12 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
   
-  on(imageAction.imageLoaded, state => ({ 
+  on(imageAction.imageLoadedAction, state => ({ 
     ...state,
     [fromImage.featureKey]: { loaded: true }
   })),
   
-  on(knitAction.startKnitting, state => (
+  on(knitAction.startKnittingAction, state => (
     !state[fromImage.featureKey].loaded ?
       state : { 
         ...state, 
@@ -32,7 +32,7 @@ export const reducer = createReducer(
       }
   )),
   
-  on(knitAction.stopKnitting, state => ({ 
+  on(knitAction.stopKnittingAction, state => ({ 
       ...state, 
       [fromKnit.featureKey]: { knitting: false }
   })),

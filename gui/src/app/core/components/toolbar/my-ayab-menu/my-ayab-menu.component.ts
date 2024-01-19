@@ -26,8 +26,8 @@ import { SettingsFormComponent } from '../../../../profile/components/settings-f
   providers: [AuthFacade],
 })
 export class MyAYABMenuComponent {
-  public loggedIn$ = this._facade.loggedIn$;
   public enabled$ = this._facade.menuEnabled$;
+  public loggedIn$ = this._facade.loggedIn$;
 
   public constructor(
     private _dialog: MatDialog,

@@ -12,12 +12,6 @@ import { StatusMaybeWithToken } from '../../../../../shared/src/models/status.mo
 export class UserApiService {
   constructor(private _apiService: ApiService) {}
 
-  public update(user: Partial<User>): Observable<StatusMaybeWithToken> {
-    return this._apiService
-      .patch( `/user/update/${user.id}`, user)
-      .pipe( catchError(err => of({ ...err.error })));
-  }
-
   public register(credentials: RegistrationCredentials): Observable<StatusMaybeWithToken> {
     return this._apiService
       .post( '/user/register', {
@@ -27,6 +21,12 @@ export class UserApiService {
         settings: defaultSettings,
         role:     'USER',
       })
+      .pipe( catchError(err => of({ ...err.error })));
+  }
+
+  public update(user: Partial<User>): Observable<StatusMaybeWithToken> {
+    return this._apiService
+      .patch( `/user/update/${user.id}`, user)
       .pipe( catchError(err => of({ ...err.error })));
   }
 }

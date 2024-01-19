@@ -30,20 +30,20 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
   ]
 })
 export class NeedleInputComponent {
-  @Input({ required: true }) title: string;
-  @Input({ required: true }) needleControl: FormControl<TSetting>;
   @Input({ required: true }) colorControl: FormControl<TSetting>;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
+  @Input({ required: true }) needleControl: FormControl<TSetting>;
+  @Input({ required: true }) title: string;
 
-  @HostBinding('style.opacity') get opacity() {
-    return this.disabled ? '.38' : '.87';
-  }
+  @ViewChild('needleNumber', { read: ElementRef }) needleNumber!: ElementRef;
+  @ViewChild('needleColor', { read: ElementRef }) needleColor!: ElementRef;
 
   public needle: number;
   public color: number;
 
-  @ViewChild('needleNumber', { read: ElementRef }) needleNumber!: ElementRef;
-  @ViewChild('needleColor', { read: ElementRef }) needleColor!: ElementRef;
+  @HostBinding('style.opacity') get opacity() {
+    return this.disabled ? '.38' : '.87';
+  }
 /*
   public get value(): number {
     // selected color determines sign of returned value

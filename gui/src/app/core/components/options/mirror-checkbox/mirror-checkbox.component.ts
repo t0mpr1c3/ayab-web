@@ -44,8 +44,9 @@ import { MirrorIconComponent } from "./mirror-icon.component";
 })
 export class MirrorCheckboxComponent implements AfterViewInit {
   @Input({ required: true }) control: FormControl<TSetting>;
-  @Input({ transform: booleanAttribute }) disabled: boolean;
   @Input({ transform: booleanAttribute }) defaultValue: boolean = false;
+  @Input({ transform: booleanAttribute }) disabled: boolean;
+
   @ViewChild('checkbox') private _checkbox: MatCheckbox;
   @ViewChild('icon') private _icon: MirrorIconComponent;
 

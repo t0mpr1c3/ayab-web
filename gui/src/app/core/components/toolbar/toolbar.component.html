@@ -15,7 +15,13 @@
       </ng-container>
       <span>
         <my-ayab-menu></my-ayab-menu>
-      </span>
+      </span>      
+      <ng-container *ngIf="(imageLoaded$ | async)"> 
+        <span class="space"></span>
+        <span>
+          <image-menu></image-menu>
+        </span>
+      </ng-container>
       <span class="space"></span>
       <span>
         <tools-menu></tools-menu>

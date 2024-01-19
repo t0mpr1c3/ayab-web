@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription, timer } from 'rxjs';
 
@@ -21,11 +21,21 @@ import { CoreFacade } from '../../../facade/core.facade';
   providers: [CoreFacade],
 })
 export class LoadImageButtonComponent {
+  public enabled$ = this._facade.menuEnabled$;
   public imageFile: File;
   private _checkUpload: Subscription;
-  public enabled$ = this._facade.menuEnabled$;
+/*
+  private file: File | null = null;
 
-  constructor(private _facade: CoreFacade) {}
+  @HostListener('change', ['$event.target.files']) emitFiles( event: FileList ) {
+    const file = event && event.item(0);
+    this.file = file;
+  }
+*/
+  constructor(
+    //private _host: ElementRef<HTMLInputElement>,
+    private _facade: CoreFacade,
+  ) {}
 
   public onFileChanged(event: Event): void {
     const target = event.target as HTMLInputElement;

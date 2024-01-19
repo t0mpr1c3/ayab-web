@@ -1,4 +1,4 @@
 import { createAction } from '@ngrx/store';
 
-export const hideOptions = createAction('[Layout] Hide Options');
-export const showOptions = createAction('[Layout] Show Options');
+export const hideOptionsAction = createAction('[Layout] Hide Options');
+export const showOptionsAction = createAction('[Layout] Show Options');
