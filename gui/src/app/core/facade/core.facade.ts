@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { firstValueFrom } from "rxjs";
 
 import { Store } from "@ngrx/store";
 import * as fromRoot from '../../reducers';
@@ -17,9 +18,30 @@ export class CoreFacade {
   public menuEnabled$ = this._store.select(fromRoot.selectMenuEnabled);
   public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
   public imageLoaded$ = this._store.select(fromRoot.selectImageLoaded);
+  public image$ = this._store.select(fromRoot.selectImage);
+  public scale$ = this._store.select(fromRoot.selectImageScale);
 
-  public imageLoaded(): void {
-    this._store.dispatch(fromImage.imageLoadedAction());
+  public transform(fn: (img: ImageData) => ImageData) {
+    firstValueFrom(this.image$)
+      .then(img => { img && this.imageLoaded( fn( img ))});
+  }
+  
+  public zoom(increment: number, maxZoom: number = 8) {
+    const aspectRatio = 1; // FIXME set aspect ratio in settings
+    firstValueFrom(this.scale$)
+      .then(scale => {
+        let tryScale = scale.x + increment;
+        let newScale = tryScale >= 1 && tryScale <= maxZoom ? tryScale: scale.x;
+        this.imageZoomed(newScale, newScale * aspectRatio);
+      });
+  }
+
+  public imageLoaded(data: ImageData): void {
+    this._store.dispatch(fromImage.imageLoadedAction({ data: data }));
+  }
+
+  public imageZoomed(x: number, y: number): void {
+    this._store.dispatch(fromImage.imageZoomAction({ x: x, y: y }));
   }
   
   public hideOptions(): void {

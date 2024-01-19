@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
+    <mat-label for="x">Horizontal</mat-label>
+    <input id="x" matInput type="number" min="1" max="10" formControlName="x">
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
+    <mat-label for="y">Vertical</mat-label>
+    <input id="y" matInput type="number" min="1" max="10" formControlName="y">
+  </mat-form-field>
+  <div class="bar">
+    <generic-button name="OK" (clicked)="onSubmit()" debounce></generic-button>
+    <generic-button name="Cancel" (clicked)="onCancel()"></generic-button>
+  </div>
+</form>

@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 
-import { MustMatch } from '../../helpers/must-match'; // custom validator
+import CustomValidator from '../../helpers/custom-validator.helper';
 import { CancelService } from '../../../core/services/cancel.service';
 import { ProfileFacade } from '../../facade/profile.facade';
 import { DebounceClickDirective } from '../../../core/directives/debounce.directive';
@@ -14,7 +13,6 @@ import { GenericButtonComponent } from '../../../core/components/generic-button/
 
 @Component({
   standalone: true,
-  selector: '',
   templateUrl: 'registration-form.component.html',
   styleUrls: ['registration-form.component.css'],
   imports: [
@@ -22,7 +20,6 @@ import { GenericButtonComponent } from '../../../core/components/generic-button/
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatIconModule,
     DebounceClickDirective,
     GenericButtonComponent,
   ],
@@ -62,7 +59,7 @@ export class RegistrationFormComponent extends Validation implements OnInit {
         Validators.maxLength(this.passwordMaxLength)
       ]],
     }, { 
-      validators: MustMatch('password', 'confirm') 
+      validators: CustomValidator.MustMatch('password', 'confirm') 
     });
   }
 

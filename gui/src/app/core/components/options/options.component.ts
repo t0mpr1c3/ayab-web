@@ -7,7 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon"; 
 import { BehaviorSubject } from "rxjs";
 
-import { enumArray } from "../../../../../../shared/src/helpers/enum";
+import EnumHelper from "../../../../../../shared/src/helpers/enum.helper";
 import { LocalStorageService } from "../../../services/local-storage.service";
 import { CoreFacade } from "../../facade/core.facade";
 import { ModeEnum } from "../../../../../../shared/src/models/mode-enum.model";
@@ -53,13 +53,13 @@ import { GenericCheckboxComponent } from "../generic-checkbox/generic-checkbox.c
 export class OptionsPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckboxComponent;
 
-  public alignmentEnum = enumArray(AlignmentEnum);
+  public alignmentEnum = EnumHelper.enumArray(AlignmentEnum);
   public disabled: boolean;
   public enableOptions$ = this._facade.enableOptions$;
   public form: FormGroup;
   public formControls: Record<string, FormControl<TSetting>>;
   public loggedIn$ = this._facade.loggedIn$;
-  public modeEnum = enumArray(ModeEnum);
+  public modeEnum = EnumHelper.enumArray(ModeEnum);
   private _enableOptions = new BehaviorSubject<boolean>(false);
 
   constructor(

@@ -1,0 +1,9 @@
+<div class="card-header">
+  <span class="bar">
+    <h3>{{ data.title }}</h3>
+    <mat-icon class="icon">{{ data.icon }}</mat-icon>
+  </span>
+</div>
+<div class="card-body">
+  <ng-container *ngComponentOutlet="data.formType"></ng-container>
+</div>

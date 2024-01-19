@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
-import { mapSettings, reduce } from '../../../../../../shared/src/helpers/reduce';
+import SettingsHelper from '../../../../../../shared/src/helpers/settings.helper';
 import { CancelService } from '../../../core/services/cancel.service';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { ProfileFacade } from '../../facade/profile.facade';
@@ -22,7 +21,6 @@ import { SettingsListComponent } from './settings-list/settings-list.component';
  **/
 @Component({
   standalone: true,
-  selector: '',
   templateUrl: 'settings-form.component.html',
   styleUrls: ['settings-form.component.css'],
   imports: [
@@ -30,7 +28,6 @@ import { SettingsListComponent } from './settings-list/settings-list.component';
     ReactiveFormsModule,
     MatInputModule, 
     MatFormFieldModule, 
-    MatIconModule,
     GenericButtonComponent,
     GenericCheckboxComponent,
     GenericSelectComponent,
@@ -66,8 +63,8 @@ export class SettingsFormComponent implements OnInit {
     this._userSettings = this._user.settings;
 
     // Create form controls
-    this.formControls = reduce(
-      mapSettings(setting => ({
+    this.formControls = SettingsHelper.reduce(
+      SettingsHelper.mapSettings(setting => ({
         key: setting.key,
         value: new FormControl<TSetting>(
           this._userSettings[setting.key as keyof Settings]
@@ -81,7 +78,7 @@ export class SettingsFormComponent implements OnInit {
     );
 
     // Make dataset to generate form inputs
-    this.settingsData = mapSettings(setting => ({
+    this.settingsData = SettingsHelper.mapSettings(setting => ({
       key: setting.key,
       name: setting.title,
       value: this._userSettings[setting.key as keyof Settings],
@@ -110,8 +107,8 @@ export class SettingsFormComponent implements OnInit {
     this._debounce = true;
 
     // Update user settings
-    this._user.settings = reduce(
-      mapSettings(setting => ({
+    this._user.settings = SettingsHelper.reduce(
+      SettingsHelper.mapSettings(setting => ({
         key: setting.key,
         value: this.formControls[setting.key]!.value,
       }))

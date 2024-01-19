@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 
-import { UserEntity } from '../entity/user.entity';
-import { SettingsEntity } from '../entity/settings.entity';
+import JwtHelper from '../helpers/jwt.helper';
 import { dataSource } from '../models/data-source.model';
 import {
   StatusMaybeWithToken, 
@@ -12,7 +11,8 @@ import {
   error409,
 } from '../../../shared/src/models/status.model';
 import { defaultSettings } from '../../../shared/src/models/settings.model';
-import { accessToken } from '../helpers/access-token';
+import { UserEntity } from '../entity/user.entity';
+import { SettingsEntity } from '../entity/settings.entity';
 
 class UserController {
 /*
@@ -98,7 +98,7 @@ class UserController {
       .send({
         statusCode: 201, 
         statusMessage: 'New user created',
-        ...accessToken(newUserEntity.id, username),
+        ...JwtHelper.accessToken(newUserEntity.id, username),
       });
   };
 
@@ -190,7 +190,7 @@ class UserController {
       .send({
       statusCode: 200, 
       statusMessage: 'User information updated',
-      ...accessToken(id, username),
+      ...JwtHelper.accessToken(id, username),
     });
   };
 

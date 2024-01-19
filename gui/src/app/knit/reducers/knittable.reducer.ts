@@ -19,24 +19,35 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
   
-  on(imageAction.imageLoadedAction, state => ({ 
+  on(imageAction.imageLoadedAction, (state, data) => ({
     ...state,
-    [fromImage.featureKey]: { loaded: true }
+    [fromImage.featureKey]: {
+      data: data.data,
+      scale: { x: 1, y: 1 } // FIXME set scale appropriate to image size
+    }
+  })),
+  
+  on(imageAction.imageZoomAction, (state, scale) => ({ 
+    ...state,
+    [fromImage.featureKey]: { 
+      data: state[fromImage.featureKey].data, 
+      scale: { x: scale.x, y: scale.y }
+    }
   })),
   
   on(knitAction.startKnittingAction, state => (
-    !state[fromImage.featureKey].loaded ?
-      state : { 
+    !state[fromImage.featureKey].data ?
+      state : {
         ...state, 
         [fromKnit.featureKey]: { knitting: true }
       }
   )),
   
   on(knitAction.stopKnittingAction, state => ({ 
-      ...state, 
-      [fromKnit.featureKey]: { knitting: false }
+    ...state, 
+    [fromKnit.featureKey]: { knitting: false }
   })),
 );
 
-export const selectImage  = (state: State) => state.image;
-export const selectKnitting  = (state: State) => state.knitting;
+export const selectImageState  = (state: State) => state[fromImage.featureKey];
+export const selectKnittingState  = (state: State) => state[fromKnit.featureKey];

@@ -220,7 +220,7 @@ export const selectCombinedState = createFeatureSelector<fromKnittable.State>(
 
 export const selectImageState = createSelector(
   selectCombinedState,
-  fromKnittable.selectImage
+  fromKnittable.selectImageState
 );
 
 export const selectImageLoaded = createSelector(
@@ -228,12 +228,32 @@ export const selectImageLoaded = createSelector(
   fromImage.selectImageLoaded
 );
 
+export const selectImage = createSelector(
+  selectImageState,
+  fromImage.selectImage
+);
+
+export const selectImageScale = createSelector(
+  selectImageState,
+  fromImage.selectImageScale
+);
+
+export const selectImageXScale = createSelector(
+  selectImageState,
+  fromImage.selectImageXScale
+);
+
+export const selectImageYScale = createSelector(
+  selectImageState,
+  fromImage.selectImageYScale
+);
+
 /**
  * Knitting Selectors
  */
 export const selectKnittingState = createSelector(
   selectCombinedState,
-  fromKnittable.selectKnitting
+  fromKnittable.selectKnittingState
 );
 
 export const selectKnitting = createSelector(
@@ -288,7 +308,7 @@ export const selectConfiguring = createSelector(
   selectTestState,
   selectFirmwareState,
   (image, knitting, test, firmware) => ( 
-    image.loaded && 
+    !!image.data && 
     !knitting.knitting && 
     !test.testing && 
     !firmware.uploading

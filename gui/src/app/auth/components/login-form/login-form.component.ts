@@ -12,7 +12,6 @@ import { AuthFacade } from '../../facade/auth.facade';
 
 @Component({
   standalone: true,
-  selector: 'login-form',
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css'],
   imports: [

@@ -1,11 +1,16 @@
 <button mat-button [matMenuTriggerFor]="imageActionsMenu">Image</button>
 <mat-menu #imageActionsMenu="matMenu">
-  <button mat-menu-item>Invert</button>
-  <button mat-menu-item>Stretch</button>
-  <button mat-menu-item>Repeat</button>
-  <button mat-menu-item>Reflect</button>
-  <button mat-menu-item>Horizontal Flip</button>
-  <button mat-menu-item>Vertical Flip</button>
-  <button mat-menu-item>Rotate Left</button>
-  <button mat-menu-item>Rotate Right</button>
+  <button mat-menu-item (click)="invert()">Invert</button>
+  <button mat-menu-item (click)="stretch()">Stretch</button>
+  <button mat-menu-item (click)="repeat()">Repeat</button>
+  <button mat-menu-item (click)="reflect()">Reflect</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="hflip()">Horizontal Flip</button>
+  <button mat-menu-item (click)="vflip()">Vertical Flip</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="rotateLeft()">Rotate Left</button>
+  <button mat-menu-item (click)="rotateRight()">Rotate Right</button> 
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="zoomIn()">Zoom In</button>
+  <button mat-menu-item (click)="zoomOut()">Zoom Out</button>
 </mat-menu>

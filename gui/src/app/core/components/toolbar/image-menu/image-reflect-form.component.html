@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>Add mirrors:</div>
+  <pre></pre>
+  <div>
+    <mat-checkbox (change)="onLeft($event)" [checked]="left"
+      formControlName="left" class="checkbox">left</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox (change)="onRight($event)" [checked]="right"
+      formControlName="right" class="checkbox">right</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox (change)="onTop($event)" [checked]="top"
+      formControlName="top" class="checkbox">top</mat-checkbox>
+  </div>
+  <div>
+    <mat-checkbox (change)="onBottom($event)" [checked]="bottom"
+      formControlName="bottom" class="checkbox">bottom</mat-checkbox>
+  </div>
+  <pre></pre>
+  <div class="bar">
+    <generic-button name="OK" (clicked)="onSubmit()" debounce></generic-button>
+    <span style="width: 5rem;"></span>
+    <generic-button name="Cancel" (clicked)="onCancel()"></generic-button>
+  </div>
+</form>

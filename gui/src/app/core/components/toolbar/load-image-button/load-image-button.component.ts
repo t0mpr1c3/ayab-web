@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription, timer } from 'rxjs';
 
-import { drawCanvas } from '../../../helpers/canvas';
+import Scene from '../../../helpers/scene.helper';
 import { CoreFacade } from '../../../facade/core.facade';
 
 /** 
@@ -42,6 +42,7 @@ export class LoadImageButtonComponent {
     const files = target.files as FileList;
 
     // Set timer to check if file has been uploaded every 500ms
+    // (FIXME I'm sure there is a more elegant way of doing this)
     this._checkUpload = timer(0, 500).subscribe(() => {
       const checkFile = files[0];
       if (checkFile) {
@@ -54,10 +55,6 @@ export class LoadImageButtonComponent {
   public processFile(event: Event): void {
     // Halt timer
     this._checkUpload.unsubscribe();
-
-    // Update state
-    this._facade.imageLoaded();
-    this._facade.showOptions();
 
     // Get image file
     const target = event.target as HTMLInputElement;
@@ -73,8 +70,14 @@ export class LoadImageButtonComponent {
     }
 
     // Show image on canvas
-    drawCanvas(this.imageFile)
-      .then()
+    Scene.getImageData(this.imageFile)
+      .then(data => {
+        if (!!data) {
+          // Update state
+          this._facade.imageLoaded(data);
+          this._facade.showOptions();
+        }
+      })
       .catch(err => {
         throw err;
       });

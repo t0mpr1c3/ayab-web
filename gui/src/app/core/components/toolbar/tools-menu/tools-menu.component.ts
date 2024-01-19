@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../../reducers';
 
-import { FormDialogComponent } from '../my-ayab-menu/form-dialog/form-dialog.component';
+import { FormDialogComponent } from '../../form-dialog/form-dialog.component';
 import { TestDialogComponent } from '../../../../test-device/components/test-dialog/test-dialog.component';
 import { FirmwareDialogComponent } from '../../../../firmware-upload/components/firmware-upload-dialog/firmware-upload-dialog.component';
 
@@ -37,14 +37,26 @@ export class ToolsMenuComponent {
   public startTesting(): void {
     this._dialog.open(
       FormDialogComponent,  
-      { data: { formType: TestDialogComponent }}
+      { 
+        data: { 
+          formType: TestDialogComponent,
+          title: 'Hardware Test',
+          icon: 'build',
+        }
+      }
     );
   }
 
   public startFirmware(): void {
     this._dialog.open(
       FormDialogComponent,  
-      { data: { formType: FirmwareDialogComponent }}
+      { 
+        data: { 
+          formType: FirmwareDialogComponent,
+          title: 'Load Firmware',
+          icon: 'upload',
+        }
+      }
     );
   }
 }

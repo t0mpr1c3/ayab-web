@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 
-import { UserEntity } from '../entity/user.entity';
-import { accessToken } from '../helpers/access-token';
+import JwtHelper from '../helpers/jwt.helper';
 import { dataSource } from '../models/data-source.model';
 import {
   StatusMaybeWithToken, 
@@ -11,6 +10,7 @@ import {
 } from '../../../shared/src/models/status.model';
 import { User } from '../../../shared/src/models/user.model';
 import { LoginResponse } from '../../../shared/src/models/login-response.model';
+import { UserEntity } from '../entity/user.entity';
 
 class AuthController {
   static login = async (req: Request, res: Response): Promise<StatusMaybeWithToken> => {
@@ -56,7 +56,7 @@ class AuthController {
           settings: user.settings,
           role: user.role,
         } as User,
-        ...accessToken(user.id, username)
+        ...JwtHelper.accessToken(user.id, username)
       } as LoginResponse);
   };
 

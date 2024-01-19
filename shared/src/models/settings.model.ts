@@ -1,5 +1,5 @@
-import { enumArray } from '../helpers/enum';
-import { reduce } from '../helpers/reduce';
+import EnumHelper from '../helpers/enum.helper';
+import SettingsHelper from '../helpers/settings.helper';
 import { AlignmentEnum } from './alignment-enum.model';
 import { MachineEnum } from './machine-enum.model';
 import { ModeEnum } from './mode-enum.model';
@@ -8,6 +8,7 @@ import { ColorEnum } from './color-enum.model';
 // Type of generic setting value
 export type TSetting = MachineEnum | ModeEnum | AlignmentEnum | ColorEnum | boolean;
 
+// FIXME possibly add another setting for aspect ratio
 export interface Setting {
   key: string;
   title: string;
@@ -22,14 +23,14 @@ export const settings: Setting[] = [
     title: 'Machine',
     type: 'MachineEnum',
     default: MachineEnum.KH910_KH950i,
-    enum: enumArray(MachineEnum),
+    enum: EnumHelper.enumArray(MachineEnum),
   },
   {
     key: 'mode',
     title: 'Default knitting mode',
     type: 'ModeEnum',
     default: ModeEnum.Single_Bed,
-    enum: enumArray(ModeEnum),
+    enum: EnumHelper.enumArray(ModeEnum),
   },
   {
     key: 'infRepeat',
@@ -42,7 +43,7 @@ export const settings: Setting[] = [
     title: 'Default alignment',
     type: 'AlignmentEnum',
     default: AlignmentEnum.Center,
-    enum: enumArray(AlignmentEnum),
+    enum: EnumHelper.enumArray(AlignmentEnum),
   },
   {
     key: 'knitSide',
@@ -75,7 +76,7 @@ function asSchema<T extends Record<string, keyof MapSchemaTypes>>(t: T): T {
 
 const settingsSchema =
   asSchema(
-    reduce(
+    SettingsHelper.reduce(
       settings.map(setting => ({
         key: setting.key,
         value: setting.type,
@@ -85,7 +86,7 @@ const settingsSchema =
 export type Settings = MapSchema<typeof settingsSchema>;
 
 export const defaultSettings: Settings =
-  reduce(
+  SettingsHelper.reduce(
     settings.map(setting => ({
       key: setting.key,
       value: setting.default,
