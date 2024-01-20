@@ -50,16 +50,16 @@ import { combineReducers } from '@ngrx/store';
  * describes the state of the reducer plus any selector functions. 
  * The `* as` notation packages up all of the exports into a single object.
  */
-import * as fromAuth from '../auth/reducers/auth.reducer';
-import * as fromProf from '../auth/reducers/profile.reducer';
-import * as fromLogin from '../auth/reducers/login.reducer';
-import * as fromUser from '../auth/reducers/user.reducer';
-import * as fromLayout from '../core/reducers/layout.reducer';
-import * as fromImage from '../core/reducers/image.reducer';
-import * as fromKnitting from '../knit/reducers/knitting.reducer';
-import * as fromKnittable from '../knit/reducers/knittable.reducer';
-import * as fromTest from '../test-device/reducers/test.reducer';
-import * as fromFirmware from '../firmware-upload/reducers/firmware.reducer';
+import * as fromAuth from '../modules/auth/reducers/auth.reducer';
+import * as fromProf from '../modules/auth/reducers/profile.reducer';
+import * as fromLogin from '../modules/auth/reducers/login.reducer';
+import * as fromUser from '../modules/auth/reducers/user.reducer';
+import * as fromCore from '../modules/core/reducers/core.reducer';
+import * as fromImage from '../modules/core/reducers/image.reducer';
+import * as fromLayout from '../modules/core/reducers/layout.reducer';
+import * as fromKnit from '../modules/knit/reducers/knit.reducer';
+import * as fromTest from '../modules/test-device/reducers/test.reducer';
+import * as fromFirmware from '../modules/firmware-upload/reducers/firmware.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -67,8 +67,8 @@ import * as fromFirmware from '../firmware-upload/reducers/firmware.reducer';
  */
 export interface State {
   [fromAuth.featureKey]: fromAuth.State;
-  [fromLayout.featureKey]: fromLayout.State;
-  [fromKnittable.featureKey]: fromKnittable.State;
+  [fromCore.featureKey]: fromCore.State;
+  [fromKnit.featureKey]: fromKnit.State;
   [fromTest.featureKey]: fromTest.State;
   [fromFirmware.featureKey]: fromFirmware.State;
   //router: RouterReducerState<any>;
@@ -83,8 +83,8 @@ export interface State {
  */
 const reducers = {
   [fromAuth.featureKey]: fromAuth.reducer,
-  [fromLayout.featureKey]: fromLayout.reducer,
-  [fromKnittable.featureKey]: fromKnittable.reducer,
+  [fromCore.featureKey]: fromCore.reducer,
+  [fromKnit.featureKey]: fromKnit.reducer,
   [fromTest.featureKey]: fromTest.reducer,
   [fromFirmware.featureKey]: fromFirmware.reducer,
   //router: fromRouter.routerReducer,
@@ -106,18 +106,14 @@ export function reducer(state: any, action: any) {
  * These reducer functions are called with each dispatched action
  * and the current or initial state and return a new immutable state.
  */
-export const ROOT_REDUCERS = new InjectionToken<
-  ActionReducerMap<State, Action>
->('Root reducers token', {
-  factory: () => ({
-    [fromAuth.featureKey]: fromAuth.reducer,
-    [fromLayout.featureKey]: fromLayout.reducer,
-    [fromKnittable.featureKey]: fromKnittable.reducer,
-    [fromTest.featureKey]: fromTest.reducer,
-    [fromFirmware.featureKey]: fromFirmware.reducer,
-    //router: routerReducer,
-  }),
-});
+export const rootReducers: ActionReducerMap<State, Action> = {
+  [fromAuth.featureKey]: fromAuth.reducer,
+  [fromCore.featureKey]: fromCore.reducer,
+  [fromKnit.featureKey]: fromKnit.reducer,
+  [fromTest.featureKey]: fromTest.reducer,
+  [fromFirmware.featureKey]: fromFirmware.reducer,
+  //router: routerReducer,
+};
 
 // console.log all actions
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -202,8 +198,13 @@ export const selectLoginPending = createSelector(
 /**
  * Layout Selectors
  */
-export const selectLayoutState = createFeatureSelector<fromLayout.State>(
-  fromLayout.featureKey
+export const selectCoreState = createFeatureSelector<fromCore.State>(
+  fromCore.featureKey
+)
+
+export const selectLayoutState = createSelector(
+  selectCoreState,
+  state => state[fromLayout.featureKey]
 );
 
 export const selectShowOptions = createSelector(
@@ -214,13 +215,9 @@ export const selectShowOptions = createSelector(
 /**
  * Image Selectors
  */
-export const selectCombinedState = createFeatureSelector<fromKnittable.State>(
-  fromKnittable.featureKey
-);
-
 export const selectImageState = createSelector(
-  selectCombinedState,
-  fromKnittable.selectImageState
+  selectCoreState,
+  state => state[fromImage.featureKey]
 );
 
 export const selectImageLoaded = createSelector(
@@ -251,14 +248,13 @@ export const selectImageYScale = createSelector(
 /**
  * Knitting Selectors
  */
-export const selectKnittingState = createSelector(
-  selectCombinedState,
-  fromKnittable.selectKnittingState
+export const selectKnitState = createFeatureSelector<fromKnit.State>(
+  fromKnit.featureKey
 );
 
 export const selectKnitting = createSelector(
-  selectKnittingState,
-  fromKnitting.selectKnitting
+  selectKnitState,
+  fromKnit.selectKnitting
 );
 
 /**
@@ -289,7 +285,7 @@ export const selectFirmware = createSelector(
  * Menu enabled selector
  */
 export const selectMenuEnabled = createSelector(
-  selectKnittingState,
+  selectKnitState,
   selectTestState,
   selectFirmwareState,
   (knitting, test, firmware) => ( 
@@ -304,7 +300,7 @@ export const selectMenuEnabled = createSelector(
  */
 export const selectConfiguring = createSelector(
   selectImageState,
-  selectKnittingState,
+  selectKnitState,
   selectTestState,
   selectFirmwareState,
   (image, knitting, test, firmware) => ( 
