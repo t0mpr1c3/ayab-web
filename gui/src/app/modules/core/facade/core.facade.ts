@@ -38,6 +38,7 @@ export class CoreFacade {
   }
 
   public imageLoaded(data: ImageData): void {
+    console.log(data)
     this._store.dispatch(fromImage.imageLoadedAction({ data: data }));
   }
 

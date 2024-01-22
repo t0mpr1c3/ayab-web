@@ -18,7 +18,6 @@ import {
 })
 export class GenericButtonComponent {
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
-  @Input() formControlName: string;
   @Input({ required: true }) name: string;
   
   @Output() clicked: EventEmitter<void> = new EventEmitter();
