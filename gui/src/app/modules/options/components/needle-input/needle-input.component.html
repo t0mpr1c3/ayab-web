@@ -3,7 +3,7 @@
   <div class="bar">
     <span class="number">
       <!-- FIXME max number of needles depends on the machine (less for KH270) -->
-      <input matInput #needleNumber type="number" min="1" max="100" [formControl]="needleControl">
+      <input matInput #needleNumber type="number" min="1" [max]="maxNeedles$ | async" [formControl]="needleControl">
     </span>
     <span class="space"></span>
     <span class="color">

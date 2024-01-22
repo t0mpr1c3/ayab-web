@@ -1,17 +1,16 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { BehaviorSubject, map } from 'rxjs';
 
-import { CoreFacade } from "../../../core/facade/core.facade";
-import EnumHelper from "../../../../../../../shared/src/helpers/enum.helper";
-import { LocalStorageService } from "../../../shared/services/local-storage.service";
-import { ModeEnum } from "../../../../../../../shared/src/models/mode-enum.model";
-import { AlignmentEnum } from "../../../../../../../shared/src/models/alignment-enum.model";
-import { ColorEnum } from "../../../../../../../shared/src/models/color-enum.model";
-import { TSetting, defaultSettings } from "../../../../../../../shared/src/models/settings.model";
-import { MirrorCheckboxComponent } from "../mirror-checkbox/mirror-checkbox.component";
-
-// FIXME options panel is missing infinite repeat checkbox
+import { CoreFacade } from '../../../core/facade/core.facade';
+import EnumHelper from '../../../../../../../shared/src/helpers/enum.helper';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { ModeEnum } from '../../../../../../../shared/src/models/mode-enum.model';
+import { AlignmentEnum } from '../../../../../../../shared/src/models/alignment-enum.model';
+import { ColorEnum } from '../../../../../../../shared/src/models/color-enum.model';
+import { TSetting, defaultSettings } from '../../../../../../../shared/src/models/settings.model';
+import { MirrorCheckboxComponent } from '../mirror-checkbox/mirror-checkbox.component';
+import { MachineEnum } from '../../../../../../../shared/src/models/machine-enum.model';
 
 /**
  * @title Options panel component
@@ -21,7 +20,6 @@ import { MirrorCheckboxComponent } from "../mirror-checkbox/mirror-checkbox.comp
   selector: 'options-panel',
   templateUrl: 'options-panel.component.html',
   styleUrls: ['options-panel.component.css'],
-  providers: [CoreFacade],
 })
 export class OptionsPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckboxComponent;
@@ -32,6 +30,9 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
   public form: FormGroup;
   public formControls: Record<string, FormControl<TSetting>>;
   public loggedIn$ = this._facade.loggedIn$;
+  public machine$ = this._facade.settings$.pipe(
+    map((settings: any) => settings.machine as MachineEnum|null)
+  );
   public modeEnum = EnumHelper.enumArray(ModeEnum);
   private _enableOptions = new BehaviorSubject<boolean>(false);
 

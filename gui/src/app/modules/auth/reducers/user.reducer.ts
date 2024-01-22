@@ -23,3 +23,4 @@ export const reducer = createReducer(
 */
 
 export const getUser = (state: State) => state.user;
+export const getSettings = (state: State) => state.user ? state.user.settings : null;

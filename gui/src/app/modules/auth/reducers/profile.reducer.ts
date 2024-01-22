@@ -4,6 +4,7 @@ import * as fromBoot from './boot.reducer';
 import * as fromUser from './user.reducer';
 import * as fromAuth from '../actions/auth.actions';
 import * as fromAuthApi from '../actions/auth-api.actions';
+import * as fromSettings from '../../settings/actions/settings.actions';
 
 // Create intermediate state from boot and user states
 
@@ -45,6 +46,16 @@ export const reducer = createReducer(
   on(fromAuthApi.loginSuccessAction, (state, { user }) => ({ 
     ...state,
     [fromUser.featureKey]: { user: user },
+  })),
+
+  on(fromSettings.updateSettingsAction,  (state, { settings }) => ({ 
+    ...state,
+    [fromUser.featureKey]: { 
+      user: {
+        ...state[fromUser.featureKey].user!,
+        settings: settings 
+      } 
+    },
   })),
   
   on(fromAuth.logoutAction, () => loggedOut),

@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 import * as fromLogin from '../actions/login.actions';
 import * as fromAuth from '../actions/auth.actions';
 
-import { LoginCredentials } from "../../../../../../shared/src/models/credentials.model";
+import { LoginCredentials } from '../../../../../../shared/src/models/credentials.model';
 
 /**
  * @title Authentication facade

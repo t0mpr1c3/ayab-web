@@ -6,12 +6,12 @@ import {
   ViewChild, 
   booleanAttribute, 
   forwardRef 
-} from "@angular/core";
-import { FormControl, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { MatCheckbox } from "@angular/material/checkbox";
+} from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatCheckbox } from '@angular/material/checkbox';
 
-import { TSetting } from "../../../../../../../shared/src/models/settings.model";
-import { MirrorIconComponent } from "./mirror-icon.component";
+import { TSetting } from '../../../../../../../shared/src/models/settings.model';
+import { MirrorIconComponent } from './mirror-icon.component';
 
 /**
  * @title Mirror checkbox component

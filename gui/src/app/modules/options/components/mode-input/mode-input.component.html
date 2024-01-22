@@ -1,0 +1,13 @@
+<mat-form-field appearance="outline" class="wide">
+  <mat-label>Knitting mode</mat-label>
+  <mat-select [(value)]="selection" [disabled]="disabled" [formControl]="modeControl">
+    <mat-option *ngFor="let element of enum; index as i" [value]="i">
+      {{ element }}
+    </mat-option>
+  </mat-select>
+  <div class="bar">
+    <span>Colors:&nbsp;</span>
+    <!-- FIXME max number of colors per row depends on knitting mode -->
+    <input matInput type="number" value="2" min="2" max="6" [formControl]="colorsControl">
+  </div>
+</mat-form-field>

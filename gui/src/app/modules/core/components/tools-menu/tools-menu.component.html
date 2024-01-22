@@ -1,7 +1,0 @@
-<button mat-button [matMenuTriggerFor]="toolsMenu" [disabled]="!(enabled$ | async)">Tools</button>
-<mat-menu #toolsMenu="matMenu">
-  <button mat-menu-item (click)="startFirmware()">Load firmware</button>
-  <button mat-menu-item (click)="startTesting()">Test device</button>
-  <!--button mat-menu-item>Knit</button-->
-  <!--button mat-menu-item>Cancel Knitting</button-->
-</mat-menu>

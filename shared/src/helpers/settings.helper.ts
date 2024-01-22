@@ -12,13 +12,4 @@ export default class SettingsHelper {
       [element.key]: element.value,
     }), {});
   }
-
-  static mapSettings<T>(func: (setting: Setting) => T): T[] {
-    return Array
-      .from(Array(settings.length).keys())
-      .map(idx => {
-        let setting: Setting = settings[idx]!;
-        return func(setting);
-      })
-  }
 }

@@ -1,6 +1,6 @@
 <div class="card-body bar">
   <span>
-    <ng-container [ngTemplateOutlet]="testMsg" [ngTemplateOutletContext]="data"></ng-container>
+    <ng-container [ngTemplateOutlet]="testDeviceMsg" [ngTemplateOutletContext]="data"></ng-container>
   </span>
 </div>
 <div><br/></div>
@@ -11,11 +11,11 @@
   </span>
 </div>
   
-<ng-template #testMsg let-msg="message">
+<ng-template #testDeviceMsg let-msg="message">
   <span>{{ msg }}</span>
 </ng-template>
 
-<ng-template #testIcon let-success="success">
+<ng-template #testDeviceIcon let-success="success">
   <mat-icon class="icon">
     <ng-container *ngIf="success">check_circle_outline</ng-container>
     <ng-container *ngIf="!success">error_outline</ng-container>

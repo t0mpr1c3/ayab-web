@@ -5,9 +5,9 @@ import {
   Input,
   ViewChild, 
   booleanAttribute 
-} from "@angular/core";
+} from '@angular/core';
 
-import { MirrorIconDirective } from "./mirror-icon.directive";
+import { MirrorIconDirective } from './mirror-icon.directive';
 
 /**
  * @title Mirror icon component

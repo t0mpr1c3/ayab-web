@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { fromEvent, merge, of, timer } from 'rxjs';
+import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import * as fromAuthApi from '../actions/auth-api.actions';
 import * as fromAuth from '../actions/auth.actions';
 import * as fromLogin from '../actions/login.actions';
-import * as fromUser from '../../profile/actions/user.actions';
 
 import { AuthApiService } from '../services/auth-api.service';
 import { LoginCredentials } from '../../../../../../shared/src/models/credentials.model';
@@ -33,6 +32,10 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
 
 @Injectable({ providedIn: 'root' })
 export class AuthEffects {
+  private _clicks$ = fromEvent(document, 'click');
+  private _keys$ = fromEvent(document, 'keydown');
+  private _mouse$ = fromEvent(document, 'mousemove');
+
   constructor(
     private _actions$: Actions,
     private _authApiService: AuthApiService,
@@ -49,9 +52,17 @@ export class AuthEffects {
     )
   );
 
+  public idle$ = createEffect(() =>
+    merge(this._clicks$, this._keys$, this._mouse$).pipe(
+      // 120 minute inactivity timeout
+      switchMap(() => timer(120 * 60 * 1000)),
+      map(() => fromAuth.idleTimeoutAction())
+    )
+  );
+
   public idleTimeout$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromUser.idleTimeoutAction),
+      ofType(fromAuth.idleTimeoutAction),
       map(() => fromAuth.logoutAction())
     )
   );
@@ -72,7 +83,8 @@ export class AuthEffects {
         this._authApiService.login(credentials).pipe(  
           tap(loginResponse => this._localStorageService.setUser(loginResponse.user)),
           tap(loginResponse => this._localStorageService.setToken(loginResponse.access_token)),
-          map(loginResponse => fromAuthApi.loginSuccessAction({ user: loginResponse.user })),
+          map(loginResponse => fromAuthApi.loginSuccessAction({ user: loginResponse.user })),          
+          tap(() => document.getElementById('myAyabMenuButton')?.blur()),
           catchError(error => of(fromAuthApi.loginFailureAction({ error })))
         )
       )

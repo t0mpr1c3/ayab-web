@@ -4,6 +4,9 @@ import { User } from '../../../../../../shared/src/models/user.model';
 export const bootAction = createAction(
   '[Auth] Initialize auth state'
 );
+export const idleTimeoutAction = createAction(
+  '[Auth] Idle timeout'
+);
 export const isLoggedInAction = createAction(
   '[Auth] Is logged in',
   props<{ user: User }>()

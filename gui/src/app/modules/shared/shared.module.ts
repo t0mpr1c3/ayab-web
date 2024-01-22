@@ -8,8 +8,10 @@ import { FormDialogComponent } from './components/form-dialog/form-dialog.compon
 import { GenericButtonComponent } from './components/generic-button/generic-button.component';
 import { GenericCheckboxComponent } from './components/generic-checkbox/generic-checkbox.component';
 import { GenericSelectComponent } from './components/generic-select/generic-select.component';
+import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component';
 
 const COMPONENTS = [
+  CustomSnackbarComponent,
   DebounceClickDirective,
   FormDialogComponent,
   GenericButtonComponent,

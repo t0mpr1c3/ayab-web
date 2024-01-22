@@ -1,9 +1,18 @@
-<div class="options shown">
   <div class="margin"></div>
   <!--port-select [disabled]="!(enableOptions$ | async)"></port-select-->
+  <ng-container *ngIf="loggedIn$ | async">
+    <div [ngClass]="{ 'bar': true, 'padded': true, 'grey': !(enableOptions$ | async) }">
+      Machine:
+      <span>
+        <ng-container *ngIf="(machine$ | async) === 0">KH-910/50</ng-container>
+        <ng-container *ngIf="(machine$ | async) === 1">KH-900/30/40/65</ng-container>
+        <ng-container *ngIf="(machine$ | async) === 2">KH-270</ng-container>
+      </span>
+    </div>
+  </ng-container>
   <form [formGroup]="form">
-    <generic-select name="Knitting mode" [control]="formControls.mode!" [enum]="modeEnum"></generic-select>
-    <colors-input [control]="formControls.colors!"></colors-input>
+    <mode-input [disabled]="!(enableOptions$ | async)" [modeControl]="formControls.mode!"
+      [colorsControl]="formControls.colors!"></mode-input>
     <row-input [control]="formControls.row!" ></row-input>
     <generic-checkbox name="Infinite repeat" [control]="formControls.infRepeat!" ></generic-checkbox>
     <needle-input title="Start needle" [needleControl]="formControls.startNeedle!"
@@ -13,4 +22,3 @@
     <generic-select name="Alignment" [control]="formControls.alignment!" [enum]="alignmentEnum"></generic-select>
     <mirror-checkbox #mirrorCheckbox [control]="formControls.mirror!"></mirror-checkbox>      
   </form>
-</div>

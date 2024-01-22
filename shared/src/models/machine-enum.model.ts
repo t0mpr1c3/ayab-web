@@ -19,7 +19,7 @@ export class Machine {
     }
   }
 
-  public width(m: MachineEnum): number {
+  public needles(m: MachineEnum): number {
     switch(m) {
       case MachineEnum.KH270: {
         return 112;

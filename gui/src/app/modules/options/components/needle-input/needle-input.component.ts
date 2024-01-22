@@ -9,8 +9,11 @@ import {
   forwardRef 
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { map } from 'rxjs';
 
+import { CoreFacade } from '../../../core/facade/core.facade';
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
+import { MachineEnum } from '../../../../../../../shared/src/models/machine-enum.model';
 
 /** 
  * @title Needle input commponent
@@ -39,6 +42,10 @@ export class NeedleInputComponent {
 
   public needle: number;
   public color: number;
+  public maxNeedles$ = this._facade.settings$.pipe(
+    map((settings: any) => settings.machine as MachineEnum|null),
+    map(machine => (!!machine && machine === MachineEnum.KH270) ? 56 : 100)
+  );
 
   @HostBinding('style.opacity') get opacity() {
     return this.disabled ? '.38' : '.87';
@@ -52,4 +59,5 @@ export class NeedleInputComponent {
       return this.needleNumber.nativeElement.value;
     }    
 */
+constructor(private _facade: CoreFacade) {}
 }

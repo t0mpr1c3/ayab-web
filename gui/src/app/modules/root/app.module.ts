@@ -1,6 +1,6 @@
 // import required packages
 import 'zone.js'
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routes } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -8,21 +8,25 @@ import { CoreModule } from '../core/core.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { NgrxRouterStoreModule } from '../router/ngrx-router.module';
+import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 import { rootReducers, metaReducers } from '../../reducers';
 import { AuthEffects } from '../auth/effects/auth.effects';
-import { UserEffects } from '../profile/effects/user.effects';
-import { ImageEffects } from '../core/effects/image.effects';
+import { ImageEffects } from '../image/effects/image.effects';
+import { KnitEffects } from '../knit/effects/knit.effects';
+import { SettingsEffects } from '../settings/effects/settings.effects';
+import { RegistrationEffects } from '../registration/effects/registration.effects';
 
 import { ApiService } from '../shared/services/api.service';
 import { AuthApiService } from '../auth/services/auth-api.service';
-import { CancelService } from '../core/services/cancel.service';
+import { CancelService } from '../shared/services/cancel.service';
 import { LocalStorageService } from '../shared/services/local-storage.service';
-import { UserApiService } from '../profile/services/user-api.service';
-import { AppComponent } from '../core/components/app.component';
+import { UserApiService } from '../settings/services/user-api.service';
+import { AppComponent } from './app.component';
 
 @NgModule({
   imports: [
@@ -32,7 +36,10 @@ import { AppComponent } from '../core/components/app.component';
     CommonModule,
     CoreModule,
     HttpClientModule,
+    NgrxRouterStoreModule,
     StoreModule,
+
+    RouterModule.forRoot(routes),
 
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer
@@ -45,8 +52,8 @@ import { AppComponent } from '../core/components/app.component';
       metaReducers,
       runtimeChecks: {
         // strictStateImmutability and strictActionImmutability are enabled by default
-        //strictStateSerializability: true, // fails for ImageData
-        //strictActionSerializability: true, // fails for ImageData
+        strictStateSerializability: true, // fails for ImageData
+        strictActionSerializability: true, // fails for ImageData
         strictActionWithinNgZone: true,
         strictActionTypeUniqueness: true,
       },
@@ -72,8 +79,10 @@ import { AppComponent } from '../core/components/app.component';
      */
     EffectsModule.forRoot([
       AuthEffects, 
-      UserEffects,
       ImageEffects,
+      KnitEffects, 
+      SettingsEffects,
+      RegistrationEffects,
     ]),
   ],
   providers: [
@@ -86,6 +95,7 @@ import { AppComponent } from '../core/components/app.component';
     LocalStorageService,
     UserApiService,
   ],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

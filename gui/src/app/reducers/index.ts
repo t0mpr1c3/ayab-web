@@ -55,7 +55,7 @@ import * as fromProf from '../modules/auth/reducers/profile.reducer';
 import * as fromLogin from '../modules/auth/reducers/login.reducer';
 import * as fromUser from '../modules/auth/reducers/user.reducer';
 import * as fromCore from '../modules/core/reducers/core.reducer';
-import * as fromImage from '../modules/core/reducers/image.reducer';
+import * as fromImage from '../modules/image/reducer/image.reducer';
 import * as fromLayout from '../modules/core/reducers/layout.reducer';
 import * as fromKnit from '../modules/knit/reducers/knit.reducer';
 import * as fromTest from '../modules/test-device/reducers/test.reducer';
@@ -172,6 +172,11 @@ export const selectUser = createSelector(
   fromUser.getUser
 );
 
+export const selectSettings = createSelector(
+  selectUserState,
+  fromUser.getSettings
+);
+
 export const selectLoggedIn = createSelector(
   selectUser, 
   (user) => (user !== null)
@@ -207,9 +212,9 @@ export const selectLayoutState = createSelector(
   state => state[fromLayout.featureKey]
 );
 
-export const selectShowOptions = createSelector(
+export const selectOptionsShown = createSelector(
   selectLayoutState,
-  fromLayout.selectShowOptions,
+  fromLayout.selectOptionsShown,
 );
 
 /**
@@ -243,6 +248,11 @@ export const selectImageXScale = createSelector(
 export const selectImageYScale = createSelector(
   selectImageState,
   fromImage.selectImageYScale
+);
+
+export const selectSceneCreated = createSelector(
+  selectImageState,
+  fromImage.selectSceneCreated,
 );
 
 /**

@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { Store } from "@ngrx/store";
+import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 import * as fromFirmware from '../actions/firmware.actions';
 

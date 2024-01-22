@@ -18,3 +18,6 @@ npm start
 
 # run the migration
 npx ts-node ./node_modules/typeorm/cli.js -d ./src/models/dataSource.ts migration:run
+
+# start server
+npm start nodemon

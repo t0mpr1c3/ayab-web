@@ -1,3 +1,6 @@
 .margin {
   height: 0.5rem;
 }
+.padded {
+  padding: 0 1rem 1rem;
+}

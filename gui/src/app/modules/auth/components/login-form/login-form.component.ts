@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CancelService } from '../../../core/services/cancel.service';
+import { CancelService } from '../../../shared/services/cancel.service';
 import { Validation } from '../../../../../../../shared/src/models/validation.model';
 import { AuthFacade } from '../../facade/auth.facade';
 

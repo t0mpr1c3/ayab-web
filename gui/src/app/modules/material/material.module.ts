@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 const MODULES = [
@@ -26,6 +27,7 @@ const MODULES = [
   MatOptionModule,
   MatToolbarModule,
   MatSelectModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({

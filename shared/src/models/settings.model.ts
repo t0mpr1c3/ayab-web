@@ -8,7 +8,9 @@ import { ColorEnum } from './color-enum.model';
 // Type of generic setting value
 export type TSetting = MachineEnum | ModeEnum | AlignmentEnum | ColorEnum | boolean;
 
+// FIXME add setting for language locale
 // FIXME possibly add another setting for aspect ratio
+
 export interface Setting {
   key: string;
   title: string;
@@ -92,3 +94,12 @@ export const defaultSettings: Settings =
       value: setting.default,
     }))
   );
+  
+export function mapSettings<T>(func: (setting: Setting) => T): T[] {
+  return Array
+    .from(Array(settings.length).keys())
+    .map(idx => {
+      let setting: Setting = settings[idx]!;
+      return func(setting);
+    })
+}

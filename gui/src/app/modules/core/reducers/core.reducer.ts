@@ -1,9 +1,7 @@
 import { Action, ActionReducer, combineReducers } from '@ngrx/store';
 
-import * as fromImage from './image.reducer';
+import * as fromImage from '../../image/reducer/image.reducer';
 import * as fromLayout from './layout.reducer';
-
-// Extend intermediate state to include login state
 
 export const featureKey = 'core';
 

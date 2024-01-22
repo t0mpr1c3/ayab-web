@@ -5,17 +5,19 @@ import * as layout from '../actions/layout.actions';
 export const featureKey = 'layout';
 
 export interface State {
-  showOptions: boolean;
+  optionsShown: boolean;
+  sceneCreated: boolean;
 }
 
 export const initialState: State = {
-  showOptions: false,
+  optionsShown: false,
+  sceneCreated: false,
 };
 
 export const reducer = createReducer(
   initialState,
-  on(layout.hideOptionsAction, () => ({ showOptions: false })),
-  on(layout.showOptionsAction, () => ({ showOptions: true })),
+  on(layout.hideOptionsAction, state => ({ ...state, optionsShown: false })),
+  on(layout.showOptionsAction, state => ({ ...state, optionsShown: true })),
 );
 
-export const selectShowOptions = (state: State) => state.showOptions;
+export const selectOptionsShown = (state: State) => state.optionsShown;

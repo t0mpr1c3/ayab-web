@@ -13,6 +13,7 @@ import { NeedleInputComponent } from './components/needle-input/needle-input.com
 import { OptionsPanelComponent } from './components/options-panel/options-panel.component';
 import { PortSelectComponent } from './components/port-select/port-select.component';
 import { RowInputComponent } from './components/row-input/row-input.component';
+import { ModeInputComponent } from './components/mode-input/mode-input.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { RowInputComponent } from './components/row-input/row-input.component';
     MirrorCheckboxComponent,
     MirrorIconComponent,
     MirrorIconDirective,
+    ModeInputComponent,
     NeedleInputComponent,
     OptionsPanelComponent,
     PortSelectComponent,
@@ -34,4 +36,8 @@ import { RowInputComponent } from './components/row-input/row-input.component';
   ],
   exports: [OptionsPanelComponent],
 })
-export class OptionsModule {}
+export class OptionsModule {
+  static getOptionsPanelComponent() {
+    return OptionsPanelComponent;
+  }
+}
