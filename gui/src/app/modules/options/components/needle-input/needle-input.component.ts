@@ -43,8 +43,8 @@ export class NeedleInputComponent {
   public needle: number;
   public color: number;
   public maxNeedles$ = this._facade.settings$.pipe(
-    map((settings: any) => settings.machine as MachineEnum|null),
-    map(machine => (!!machine && machine === MachineEnum.KH270) ? 56 : 100)
+    map((settings: any) => settings?.machine as MachineEnum|null),
+    map(machine => (machine && machine === MachineEnum.KH270) ? 56 : 100)
   );
 
   @HostBinding('style.opacity') get opacity() {

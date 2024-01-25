@@ -19,6 +19,8 @@ export class ToolbarFacade {
   public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
   public image$ = this._store.select(fromRoot.selectImage);
   public scale$ = this._store.select(fromRoot.selectImageScale);
+
+  static MAX_ZOOM = 8;
   
   constructor(private _store: Store<fromRoot.State>) {}
 
@@ -27,7 +29,7 @@ export class ToolbarFacade {
       .then(data => { data && this.imageLoaded( fn( SceneHelper.deserialize( data )))});
   }
   
-  public zoom(increment: number, maxZoom: number = 8) {
+  public zoom(increment: number, maxZoom: number = ToolbarFacade.MAX_ZOOM) {
     const aspectRatio = 1; // FIXME set aspect ratio in settings
     firstValueFrom(this.scale$)
       .then(scale => {
