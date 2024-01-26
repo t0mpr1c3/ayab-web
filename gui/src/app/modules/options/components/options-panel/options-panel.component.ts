@@ -1,8 +1,14 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { 
+  AfterViewInit, 
+  ChangeDetectionStrategy, 
+  Component, 
+  OnInit, 
+  ViewChild 
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map } from 'rxjs';
 
-import { CoreFacade } from '../../../core/facade/core.facade';
+import { OptionsFacade } from '../../facade/options.facade';
 import EnumHelper from '../../../../../../../shared/src/helpers/enum.helper';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { ModeEnum } from '../../../../../../../shared/src/models/mode-enum.model';
@@ -20,6 +26,7 @@ import { MachineEnum } from '../../../../../../../shared/src/models/machine-enum
   selector: 'options-panel',
   templateUrl: 'options-panel.component.html',
   styleUrls: ['options-panel.component.css'],
+  providers: [OptionsFacade],
 })
 export class OptionsPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mirrorCheckbox') private _mirrorCheckbox: MirrorCheckboxComponent;
@@ -37,7 +44,7 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
   private _enableOptions = new BehaviorSubject<boolean>(false);
 
   constructor(
-    private _facade: CoreFacade,
+    private _facade: OptionsFacade,
     private _formBuilder: FormBuilder,    
     private _localStorageService: LocalStorageService,
   ) {

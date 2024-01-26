@@ -11,7 +11,7 @@ import {
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { map } from 'rxjs';
 
-import { CoreFacade } from '../../../core/facade/core.facade';
+import { OptionsFacade } from '../../facade/options.facade';
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
 import { MachineEnum } from '../../../../../../../shared/src/models/machine-enum.model';
 
@@ -24,6 +24,7 @@ import { MachineEnum } from '../../../../../../../shared/src/models/machine-enum
   templateUrl: 'needle-input.component.html',
   styleUrls: ['needle-input.component.css'],
   providers: [
+    OptionsFacade,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NeedleInputComponent),
@@ -59,5 +60,5 @@ export class NeedleInputComponent {
       return this.needleNumber.nativeElement.value;
     }    
 */
-constructor(private _facade: CoreFacade) {}
+constructor(private _facade: OptionsFacade) {}
 }

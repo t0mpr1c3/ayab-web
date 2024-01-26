@@ -235,6 +235,16 @@ export const selectImage = createSelector(
   fromImage.selectImage
 );
 
+export const selectImageWidth = createSelector(
+  selectImageState,
+  fromImage.selectImageWidth
+);
+
+export const selectImageHeight = createSelector(
+  selectImageState,
+  fromImage.selectImageHeight
+);
+
 export const selectImageScale = createSelector(
   selectImageState,
   fromImage.selectImageScale

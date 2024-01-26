@@ -46,7 +46,7 @@ export default class SceneHelper {
       }
     });
   }
-
+/*
   static loadCanvas(imageData: ImageData): void {
     const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
     if (canvas) {
@@ -57,7 +57,7 @@ export default class SceneHelper {
     }
   }
 
-  static async zoomCanvas(imageData: ImageData, scale: Scale): Promise<void> {  
+  static async zoomCanvas(imageData: ImageData, scale: Scale): Promise<void> {
     const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
     const bitmap = await createImageBitmap(imageData);
     if (canvas) {
@@ -68,6 +68,31 @@ export default class SceneHelper {
         ctx.imageSmoothingEnabled = false; // keep pixel perfect
         ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
       }
+    }
+  }
+*/
+  static async drawCanvas(imageData: ImageData, scale: Scale = { x: 1, y: 1 }, 
+  offset = 0, start = 1, width = 200): Promise<void> {
+    const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
+    const bitmap = await createImageBitmap(imageData);
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      canvas.width = (width + 2) * scale.x;
+      canvas.height = (imageData.height + 6) * scale.y;
+      if (ctx) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, (2 + width) * scale.x, 5 * scale.y);
+        ctx.fillStyle = "orange";
+        ctx.fillRect(scale.x, scale.y, width * scale.x / 2, 3 * scale.y);
+        ctx.fillStyle = "green";
+        ctx.fillRect(scale.x + width * scale.x / 2, scale.y, width * scale.x / 2, 3 * scale.y);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 5 * scale.y, scale.x, (imageData.height + 5) * scale.y);
+        ctx.fillRect((1 + imageData.width) * scale.x, 5 * scale.y, scale.x, (imageData.height + 5) * scale.y);
+        ctx.fillRect(0, (imageData.height + 6 - start) * scale.y, (2 + width) * scale.x, scale.y);
+        ctx.imageSmoothingEnabled = false; // keep pixel perfect
+        ctx.drawImage(bitmap, (1 + offset) * scale.x, 5 * scale.y, imageData.width * scale.x, imageData.height * scale.y);
+      } 
     }
   }
   

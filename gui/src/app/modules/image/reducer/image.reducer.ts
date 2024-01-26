@@ -80,6 +80,8 @@ export const reducer = createReducer(
 );
 
 export const selectImage = (state: State) => state.data;
+export const selectImageWidth = (state: State) => state.data?.width;
+export const selectImageHeight = (state: State) => state.data?.height;
 export const selectImageLoaded = (state: State) => !!state.data;
 export const selectImageScale = (state: State) => state.scale;
 export const selectImageXScale = (state: State) => state.scale.x;

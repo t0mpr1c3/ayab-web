@@ -12,9 +12,6 @@ import * as fromImage from '../../image/actions/image.actions';
 export class CoreFacade {
   public imageLoaded$ = this._store.select(fromRoot.selectImageLoaded);
   public sceneCreated$ = this._store.select(fromRoot.selectSceneCreated);
-  public enableOptions$ = this._store.select(fromRoot.selectConfiguring);
-  public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
-  public settings$ = this._store.select(fromRoot.selectSettings);
   
   constructor(private _store: Store<fromRoot.State>) {}
 

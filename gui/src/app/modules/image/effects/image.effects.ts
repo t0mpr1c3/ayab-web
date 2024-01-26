@@ -29,8 +29,8 @@ export class ImageEffects {
         fromImage.rotateImageLeftAction,
         fromImage.rotateImageRightAction,
       ),
-      tap(() => firstValueFrom( this._store.select( fromRoot.selectImage ))
-        .then(data => data && SceneHelper.loadCanvas( SceneHelper.deserialize( data )))),
+      tap(() => firstValueFrom( this._store.select( fromRoot.selectImageState ))
+        .then(state => state.data && SceneHelper.drawCanvas( SceneHelper.deserialize( state.data ), state.scale ))),
     ),
     { dispatch: false} // side effects only
   )
@@ -41,8 +41,8 @@ export class ImageEffects {
       // Wait until SceneComponent exists
       tap(() => MutationObserverHelper.waitFor('#canvas').then(() =>
         // Load image from store into canvas
-        firstValueFrom( this._store.select( fromRoot.selectImage )).then(data => 
-          data && SceneHelper.loadCanvas( SceneHelper.deserialize( data )))
+        firstValueFrom( this._store.select( fromRoot.selectImageState )).then(state => 
+          state.data && SceneHelper.drawCanvas( SceneHelper.deserialize( state.data ), state.scale ))
         ),
       ),
     ),
@@ -54,7 +54,7 @@ export class ImageEffects {
       ofType(fromImage.zoomImageAction),
       tap(scale => {
         firstValueFrom( this._store.select( fromRoot.selectImage ))
-          .then(data => data && SceneHelper.zoomCanvas(
+          .then(data => data && SceneHelper.drawCanvas(
             SceneHelper.deserialize(data),
             scale.scale,
           ).then());

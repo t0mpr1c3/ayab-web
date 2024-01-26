@@ -1,5 +1,6 @@
 <mat-form-field appearance="outline" class="wide">
   <mat-label>Start Row</mat-label>
-  <!-- FIXME max row value is last line of image -->
-  <input matInput id="row-start" type="number" value="1" min="1" [formControl]="control">
+  <input matInput id="row-start" type="number" value="1" min="1" [formControl]="control"
+    [max]="(rows$ | async) || null">
+    <mat-hint *ngIf="rows$ | async" align="end">Rows: {{rows$ | async}}</mat-hint>
 </mat-form-field>
