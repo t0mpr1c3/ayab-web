@@ -8,7 +8,7 @@ import { CoreModule } from '../core/core.module';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { NgrxRouterStoreModule } from '../router/ngrx-router.module';
+import { NgrxRouterStoreModule } from '../router/router.module';
 import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
@@ -18,6 +18,7 @@ import { rootReducers, metaReducers } from '../../reducers';
 import { AuthEffects } from '../auth/effects/auth.effects';
 import { ImageEffects } from '../image/effects/image.effects';
 import { KnitEffects } from '../knit/effects/knit.effects';
+import { OptionsEffects } from '../options/effects/options.effects';
 import { SettingsEffects } from '../settings/effects/settings.effects';
 import { RegistrationEffects } from '../registration/effects/registration.effects';
 
@@ -81,6 +82,7 @@ import { AppComponent } from './app.component';
       AuthEffects, 
       ImageEffects,
       KnitEffects, 
+      OptionsEffects, 
       SettingsEffects,
       RegistrationEffects,
     ]),

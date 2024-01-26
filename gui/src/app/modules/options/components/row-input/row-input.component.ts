@@ -21,4 +21,8 @@ export class RowInputComponent {
   public rows$ = this._facade.rows$;
 
   constructor(private _facade: OptionsFacade) {}
+
+  public onChange(): void {
+    this._facade.setStartRowOption(this.control.value as number);
+  }
 }

@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as fromAuthApi from '../actions/auth-api.actions';
 import * as fromAuth from '../actions/auth.actions';
 import { User } from '../../../../../../shared/src/models/user.model';
+import { MachineEnum } from '../../../../../../shared/src/models/machine-enum.model';
 
 export const featureKey = 'status';
 
@@ -22,5 +23,16 @@ export const reducer = createReducer(
 );
 */
 
-export const getUser = (state: State) => state.user;
-export const getSettings = (state: State) => state.user ? state.user.settings : null;
+export const selectUser = (state: State) => state.user;
+export const selectSettings = (state: State) => 
+  state.user ?
+    state.user.settings as any : 
+    null;
+export const selectMachineSetting = (state: State) => 
+  state.user ? 
+    (state.user.settings as any).machine : 
+    null;
+export const selectMachineWidth = (state: State) => 
+  state.user && (state.user.settings as any).machine === MachineEnum.KH270 ? 
+    112 : 
+    200;

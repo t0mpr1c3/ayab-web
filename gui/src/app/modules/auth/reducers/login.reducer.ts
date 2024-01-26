@@ -31,5 +31,5 @@ export const reducer = createReducer(
   }))
 );
 
-export const getError = (state: State) => state.error;
-export const getPending = (state: State) => state.pending;
+export const selectError = (state: State) => state.error;
+export const selectPending = (state: State) => state.pending;

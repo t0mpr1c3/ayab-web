@@ -24,4 +24,4 @@ export const reducer = createReducer(
 )
 */
 
-export const getBooting = (state: State) => state.booting;
+export const selectBooting = (state: State) => state.booting;

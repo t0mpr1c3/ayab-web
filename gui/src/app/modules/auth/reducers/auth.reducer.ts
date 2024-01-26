@@ -22,5 +22,5 @@ export const reducer = combineReducers({
   [fromLogin.featureKey]: fromLogin.reducer,
 }, initialState) as ActionReducer<State, Action>;
 
-export const getProfile = (state: State) => state[fromProf.featureKey];
-export const getLogin = (state: State) => state[fromLogin.featureKey];
+export const selectProfile = (state: State) => state[fromProf.featureKey];
+export const selectLogin = (state: State) => state[fromLogin.featureKey];

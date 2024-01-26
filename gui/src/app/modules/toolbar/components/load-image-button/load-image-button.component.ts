@@ -36,7 +36,7 @@ export class LoadImageButtonComponent {
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
 
-    // Set timer to check if file has been uploaded every 500ms
+    // Set timer to check every 500ms if file has been uploaded
     // (FIXME I'm sure there is a more elegant way of doing this)
     this._checkUpload = timer(0, 500).subscribe(() => {
       const checkFile = files[0];
@@ -46,7 +46,7 @@ export class LoadImageButtonComponent {
     });
   }
   
-  // Runs after user uploads file;
+  // Runs after user uploads file
   public processFile(event: Event): void {
     // Halt timer
     this._checkUpload.unsubscribe();
@@ -56,7 +56,7 @@ export class LoadImageButtonComponent {
     const files = target.files as FileList;
     this.imageFile = files[0] as File;
     if (this.imageFile.type !== 'image/png') {
-      // File wrong format
+      // File is wrong format
       this._snackBar.openFromComponent(
         CustomSnackbarComponent,
         {
@@ -66,8 +66,8 @@ export class LoadImageButtonComponent {
       );
       return;
     }
-    if (this.imageFile.size > 10000) {
-      // File too big
+    if (this.imageFile.size > 10000) { // FIXME this value needs a sanity check
+      // File is too big
       this._snackBar.openFromComponent(
         CustomSnackbarComponent,
         {

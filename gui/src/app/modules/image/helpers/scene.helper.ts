@@ -71,14 +71,15 @@ export default class SceneHelper {
     }
   }
 */
-  static async drawCanvas(imageData: ImageData, scale: Scale = { x: 1, y: 1 }, 
-  offset = 0, start = 1, width = 200): Promise<void> {
+  static async drawCanvas(data: SerializedImageData, scale: Scale = { x: 1, y: 1 }, 
+    startRow = 1, offset = 0, width = 200): Promise<void> {
+    let imageData = SceneHelper.deserialize(data);
     const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
     const bitmap = await createImageBitmap(imageData);
     if (canvas) {
       const ctx = canvas.getContext("2d");
       canvas.width = (width + 2) * scale.x;
-      canvas.height = (imageData.height + 6) * scale.y;
+      canvas.height = (imageData.height + 5) * scale.y;
       if (ctx) {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, (2 + width) * scale.x, 5 * scale.y);
@@ -89,9 +90,11 @@ export default class SceneHelper {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 5 * scale.y, scale.x, (imageData.height + 5) * scale.y);
         ctx.fillRect((1 + imageData.width) * scale.x, 5 * scale.y, scale.x, (imageData.height + 5) * scale.y);
-        ctx.fillRect(0, (imageData.height + 6 - start) * scale.y, (2 + width) * scale.x, scale.y);
+        ctx.fillRect(0, (imageData.height + 5 - startRow) * scale.y, (2 + width) * scale.x, scale.y);
         ctx.imageSmoothingEnabled = false; // keep pixel perfect
-        ctx.drawImage(bitmap, (1 + offset) * scale.x, 5 * scale.y, imageData.width * scale.x, imageData.height * scale.y);
+        ctx.drawImage(bitmap, (1 + offset) * scale.x, 5 * scale.y, imageData.width * scale.x, imageData.height * scale.y);        
+        ctx.fillStyle = "rgba(127, 127, 127, 0.5)";
+        ctx.fillRect((1 + offset) * scale.x, (imageData.height + 6 - startRow) * scale.y, imageData.width * scale.x, (startRow - 1) * scale.y);
       } 
     }
   }

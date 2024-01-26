@@ -29,10 +29,11 @@ export class ImageEffects {
         fromImage.rotateImageLeftAction,
         fromImage.rotateImageRightAction,
       ),
-      tap(() => firstValueFrom( this._store.select( fromRoot.selectImageState ))
-        .then(state => state.data && SceneHelper.drawCanvas( SceneHelper.deserialize( state.data ), state.scale ))),
+      tap(() => firstValueFrom( this._store.select( fromRoot.selectScene ))
+        .then(scene => scene.data && SceneHelper.drawCanvas( 
+          scene.data, scene.scale, scene.startRow ))), // FIXME also offset from alignment, width from machine width
     ),
-    { dispatch: false} // side effects only
+    { dispatch: false } // side effects only
   )
   
   public onCreateScene$ = createEffect(() =>
@@ -41,22 +42,21 @@ export class ImageEffects {
       // Wait until SceneComponent exists
       tap(() => MutationObserverHelper.waitFor('#canvas').then(() =>
         // Load image from store into canvas
-        firstValueFrom( this._store.select( fromRoot.selectImageState )).then(state => 
-          state.data && SceneHelper.drawCanvas( SceneHelper.deserialize( state.data ), state.scale ))
+        firstValueFrom( this._store.select( fromRoot.selectScene )).then(scene => 
+          scene.data && SceneHelper.drawCanvas( scene.data, scene.scale, scene.startRow ))
         ),
       ),
     ),
-    { dispatch: false} // side effects only
+    { dispatch: false } // side effects only
   )
 
   public onZoomImage$ = createEffect(() =>
     this._actions$.pipe(
       ofType(fromImage.zoomImageAction),
       tap(scale => {
-        firstValueFrom( this._store.select( fromRoot.selectImage ))
-          .then(data => data && SceneHelper.drawCanvas(
-            SceneHelper.deserialize(data),
-            scale.scale,
+        firstValueFrom( this._store.select( fromRoot.selectScene ))
+          .then(scene => scene.data && SceneHelper.drawCanvas(
+            scene.data, scale.scale, scene.startRow
           ).then());
       }),
     ),

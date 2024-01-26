@@ -61,5 +61,5 @@ export const reducer = createReducer(
   on(fromAuth.logoutAction, () => loggedOut),
 );
 
-export const getInit = (state: State) => state[fromBoot.featureKey];
-export const getStatus = (state: State) => state[fromUser.featureKey];
+export const selectInit = (state: State) => state[fromBoot.featureKey];
+export const selectStatus = (state: State) => state[fromUser.featureKey];

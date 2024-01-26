@@ -60,6 +60,9 @@ import * as fromLayout from '../modules/core/reducers/layout.reducer';
 import * as fromKnit from '../modules/knit/reducers/knit.reducer';
 import * as fromTest from '../modules/test-device/reducers/test.reducer';
 import * as fromFirmware from '../modules/firmware-upload/reducers/firmware.reducer';
+import * as fromOptions from '../modules/options/reducers/options.reducer';
+import * as fromRouter from '../modules/router/reducers/merged-route.reducer';
+import { routerStateConfig } from '../modules/router/router.module';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -71,7 +74,6 @@ export interface State {
   [fromKnit.featureKey]: fromKnit.State;
   [fromTest.featureKey]: fromTest.State;
   [fromFirmware.featureKey]: fromFirmware.State;
-  //router: RouterReducerState<any>;
 }
 
 /**
@@ -87,7 +89,6 @@ const reducers = {
   [fromKnit.featureKey]: fromKnit.reducer,
   [fromTest.featureKey]: fromTest.reducer,
   [fromFirmware.featureKey]: fromFirmware.reducer,
-  //router: fromRouter.routerReducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -112,7 +113,6 @@ export const rootReducers: ActionReducerMap<State, Action> = {
   [fromKnit.featureKey]: fromKnit.reducer,
   [fromTest.featureKey]: fromTest.reducer,
   [fromFirmware.featureKey]: fromFirmware.reducer,
-  //router: routerReducer,
 };
 
 // console.log all actions
@@ -169,17 +169,27 @@ export const selectUserState = createSelector(
 
 export const selectUser = createSelector(
   selectUserState,
-  fromUser.getUser
-);
-
-export const selectSettings = createSelector(
-  selectUserState,
-  fromUser.getSettings
+  fromUser.selectUser
 );
 
 export const selectLoggedIn = createSelector(
   selectUser, 
   (user) => (user !== null)
+);
+
+export const selectSettings = createSelector(
+  selectUserState,
+  fromUser.selectSettings
+);
+
+export const selectMachineSetting = createSelector(
+  selectUserState,
+  fromUser.selectMachineSetting
+);
+
+export const selectMachineWidth = createSelector(
+  selectUserState,
+  fromUser.selectMachineWidth
 );
 
 /**
@@ -192,12 +202,12 @@ export const selectLoginState = createSelector(
 
 export const selectLoginError = createSelector(
   selectLoginState,
-  fromLogin.getError
+  fromLogin.selectError
 );
 
 export const selectLoginPending = createSelector(
   selectLoginState,
-  fromLogin.getPending
+  fromLogin.selectPending
 );
 
 /**
@@ -263,6 +273,64 @@ export const selectImageYScale = createSelector(
 export const selectSceneCreated = createSelector(
   selectImageState,
   fromImage.selectSceneCreated,
+);
+
+/**
+ * Options selectors
+ */
+export const selectOptionsState = createSelector(
+  selectCoreState,
+  state => state[fromOptions.featureKey]
+);
+
+export const selectKnittingModeOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectKnittingModeOption
+);
+
+export const selectColorsOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectColorsOption
+);
+
+export const selectStartRowOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectStartRowOption
+);
+
+export const selectInfiniteRepeatOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectInfiniteRepeatOption
+);
+
+export const selectStartNeedleOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectStartNeedleOption
+);
+
+export const selectStartColorOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectStartColorOption
+);
+
+export const selectStopNeedleOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectStopNeedleOption
+);
+
+export const selectStopColorOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectStopColorOption
+);
+
+export const selectAlignmentOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectAlignmentOption
+);
+
+export const selectKnitSideOption = createSelector(
+  selectOptionsState,
+  fromOptions.selectKnitSideOption
 );
 
 /**
@@ -332,6 +400,26 @@ export const selectConfiguring = createSelector(
 );
 
 /**
- * Router Selectors
+ * Scene selector
  */
-//export const { selectRouteData } = getRouterSelectors();
+export const selectScene = createSelector(
+  selectImageState,
+  selectOptionsState,
+  (image, options) => ({
+    data: image.data,
+    scale: image.scale,
+    startRow: options.startRow,
+  })
+);
+
+/**
+ * Router selectors
+ */
+export const getRouterReducerState = createFeatureSelector<fromRouter.State>(
+  routerStateConfig.stateKey
+);
+
+export const getMergedRoute = createSelector(
+  getRouterReducerState, 
+  routerReducerState => routerReducerState.state
+);
