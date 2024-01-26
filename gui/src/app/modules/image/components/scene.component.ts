@@ -3,7 +3,8 @@ import {
   Component, 
   HostListener,
 } from '@angular/core';
-import { ToolbarFacade } from '../../toolbar/facade/toolbar.facade';
+import { ImageFacade } from '../facade/image.facade';
+import SceneHelper from '../helpers/scene.helper';
 
 /**
  * @title Scene component
@@ -22,22 +23,22 @@ import { ToolbarFacade } from '../../toolbar/facade/toolbar.facade';
       cursor: ns-resize;
     }
   `],
-  providers: [ToolbarFacade],
+  providers: [ImageFacade],
 })
 export class SceneComponent {
   private _scale = 1;
 
-  constructor(private _facade: ToolbarFacade) {}
+  constructor(private _facade: ImageFacade) {}
   
   @HostListener('wheel', ['$event']) onMouseWheel(event: WheelEvent) {
     event.preventDefault();
     let zoom = this._scale;
     zoom += event.deltaY * -0.05;
     console.log(zoom)
-    zoom = Math.min(Math.max(1, Math.floor(zoom * 4)/4), 8);
+    zoom = Math.min(Math.max(1, Math.floor(zoom * 4)/4), SceneHelper.MAX_ZOOM);
     if (this._scale !== zoom) {
       this._scale = zoom;
-      this._facade.imageZoomed({x: zoom, y: zoom});
+      this._facade.zoomImage({x: zoom, y: zoom});
     }
   }
 }

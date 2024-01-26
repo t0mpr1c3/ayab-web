@@ -1,3 +1,6 @@
+import { Scale } from "../../toolbar/models/scale.model";
+import { Mirrors } from "../model/mirrors.model";
+
 export default class TransformsHelper {
   static flatten3d(arr: Uint8ClampedArray[][], length: number, width: number, height: number): ImageData {
     let data = new Uint8ClampedArray(length);
@@ -9,7 +12,7 @@ export default class TransformsHelper {
     return new ImageData(data, width, height);
   }
   
-  static hflipImage = (img: ImageData): ImageData => {
+  static hFlipImage = (img: ImageData): ImageData => {
     // Convert to 3D array, reversing each row
     let data = Array<Array<Uint8ClampedArray>>(img.height);
     for (let y = 0, j = 0; y < img.height; y += 1, j += img.width * 4) {
@@ -33,7 +36,7 @@ export default class TransformsHelper {
     return new ImageData(data, img.width, img.height);
   }
   
-  static rotateLeftImage = (img: ImageData): ImageData => {
+  static rotateImageLeft = (img: ImageData): ImageData => {
     // Convert to 3D array, transposing rows and columns, reversing rows
     let data = Array<Array<Uint8ClampedArray>>(img.width);
     for (let x = 0, i = 0; x < img.width; x += 1, i += 4) {
@@ -47,7 +50,7 @@ export default class TransformsHelper {
     return this.flatten3d(data, img.data.length, img.height, img.width);
   }
   
-  static rotateRightImage = (img: ImageData): ImageData => {
+  static rotateImageRight = (img: ImageData): ImageData => {
     // Convert to 3D array, transposing rows and columns, reversing columns
     let data = Array<Array<Uint8ClampedArray>>(img.width);
     for (let x = 0, i = 0; x < img.width; x += 1, i += 4) {
@@ -61,36 +64,31 @@ export default class TransformsHelper {
     return this.flatten3d(data, img.data.length, img.height, img.width);
   }
 
-  static reflect(left: boolean, right: boolean, top: boolean, bottom: boolean, ) {
+  static reflectImage(mirrors: Mirrors) {
     return (img: ImageData): ImageData => {
-      console.log('mirrors:')
-      console.log(left)
-      console.log(right)
-      console.log(top)
-      console.log(bottom)
       // Convert to 3D array, multiplying each row and column
-      let xscale = +left + +right  + 1;
-      let yscale = +top  + +bottom + 1;
-      let u = left ? img.width : 0;
-      let v = top ? img.height : 0;
+      let xscale = +mirrors.left + +mirrors.right  + 1;
+      let yscale = +mirrors.top  + +mirrors.bottom + 1;
+      let u = mirrors.left ? img.width : 0;
+      let v = mirrors.top ? img.height : 0;
       let data = Array<Array<Uint8ClampedArray>>(img.height * yscale);
       for (let y = 0, j = 0; y < img.height; y += 1, j += img.width * 4) {
         let row = Array<Uint8ClampedArray>(xscale * img.width * 4);
         for (let x = 0, i = 0; x < img.width; x += 1, i += 4) {
           let slice = img.data.slice(i + j, i + j + 4);
-          if (left) {
+          if (mirrors.left) {
             row[img.width - x - 1] = slice;
           }
           row[x + u] = slice;
-          if (right) {
+          if (mirrors.right) {
             row[2 * img.width - x + u - 1] = slice;
           }
         }
-        if (top) {
+        if (mirrors.top) {
           data[img.height - y - 1] = row;
         }
         data[y + v] = row;
-        if (bottom) {
+        if (mirrors.bottom) {
           data[2 * img.height - y + v - 1] = row;
         }
       }
@@ -103,14 +101,14 @@ export default class TransformsHelper {
     }
   }
 
-  static repeat(xrepeat: number, yrepeat: number) {
+  static repeatImage( scale: Scale ) {
     return (img: ImageData): ImageData => {
       // Convert to 3D array, multiplying each row and column
-      let data = Array<Array<Uint8ClampedArray>>(img.height * yrepeat);
-      for (let v = 0; v < yrepeat; v += 1) {
+      let data = Array<Array<Uint8ClampedArray>>(img.height * scale.y);
+      for (let v = 0; v < scale.y; v += 1) {
         for (let y = 0, j = 0; y < img.height; y += 1, j += img.width * 4) {
-          let row = Array<Uint8ClampedArray>(xrepeat * img.width * 4);
-          for (let u = 0; u < xrepeat; u += 1) {
+          let row = Array<Uint8ClampedArray>(scale.x * img.width * 4);
+          for (let u = 0; u < scale.x; u += 1) {
             for (let x = 0, i = 0; x < img.width; x += 1, i += 4) {
               row[x + u * img.width] = img.data.slice(i + j, i + j + 4);
             }
@@ -121,37 +119,37 @@ export default class TransformsHelper {
       // Return flattened data
       return this.flatten3d(
         data, 
-        img.data.length * xrepeat * yrepeat, 
-        img.width * xrepeat, 
-        img.height * yrepeat);
+        img.data.length * scale.x * scale.y, 
+        img.width * scale.x, 
+        img.height * scale.y);
     }
   }
 
-  static stretch(xstretch: number, ystretch: number) {
+  static stretchImage( scale: Scale ) {
     return (img: ImageData): ImageData => {
       // Convert to 3D array, multiplying each row and column
-      let data = Array<Array<Uint8ClampedArray>>(img.height * ystretch);
-      for (let y = 0, j = 0; y < img.height * ystretch; y += ystretch, j += img.width * 4) {
-        let row = Array<Uint8ClampedArray>(img.width * xstretch);
-        for (let x = 0, i = 0; x < img.width * xstretch; x += xstretch, i += 4) {
-          for (let k = 0; k < xstretch; k += 1) {
+      let data = Array<Array<Uint8ClampedArray>>(img.height * scale.y);
+      for (let y = 0, j = 0; y < img.height * scale.y; y += scale.y, j += img.width * 4) {
+        let row = Array<Uint8ClampedArray>(img.width * scale.x);
+        for (let x = 0, i = 0; x < img.width * scale.x; x += scale.x, i += 4) {
+          for (let k = 0; k < scale.x; k += 1) {
             row[x + k] = img.data.slice(i + j, i + j + 4);
           }
         }
-        for (let k = 0; k < ystretch; k += 1) {
+        for (let k = 0; k < scale.y; k += 1) {
           data[y + k] = row;
         }
       }
       // Return flattened data
       return this.flatten3d(
         data, 
-        img.data.length * xstretch * ystretch, 
-        img.width * xstretch, 
-        img.height * ystretch);
+        img.data.length * scale.x * scale.y, 
+        img.width * scale.x, 
+        img.height * scale.y);
     }
   }
   
-  static vflipImage = (img: ImageData): ImageData => {
+  static vFlipImage = (img: ImageData): ImageData => {
     // Convert to 2D array, reversing order of rows
     let data = Array<Uint8ClampedArray>(img.height);
     for (let y = 0, j = 0; y < img.height; y += 1, j += img.width * 4) {

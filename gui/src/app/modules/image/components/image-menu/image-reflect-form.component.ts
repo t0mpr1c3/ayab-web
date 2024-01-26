@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
-import Transforms from '../../../image/helpers/transforms.helper';
 import { CancelService } from '../../../shared/services/cancel.service';
-import { ToolbarFacade } from '../../facade/toolbar.facade';
+import { ImageFacade } from '../../facade/image.facade';
 
 /** 
  * @title Image reflect form component
  **/
 @Component({
   templateUrl: 'image-reflect-form.component.html',
-  providers: [ToolbarFacade],
+  providers: [ImageFacade],
 })
 export class ImageReflectFormComponent implements OnInit {
   public form: FormGroup;
@@ -25,7 +24,7 @@ export class ImageReflectFormComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _cancelService: CancelService,
-    private _facade: ToolbarFacade,
+    private _facade: ImageFacade,
   ) {}
 
   ngOnInit() {
@@ -58,12 +57,13 @@ export class ImageReflectFormComponent implements OnInit {
     this._debounce = true;
       
     // Transform image
-    this._facade.transform( Transforms.reflect(
-      this.f.left?.value, 
-      this.f.right?.value,
-      this.f.top?.value, 
-      this.f.bottom?.value,
-    ));
+    let mirrors = {
+      left: this.f.left?.value, 
+      right: this.f.right?.value,
+      top: this.f.top?.value, 
+      bottom: this.f.bottom?.value,
+    };
+    this._facade.reflectImage( mirrors );
 
     // Close dialog
     this._cancelService.emit();

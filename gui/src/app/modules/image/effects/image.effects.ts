@@ -16,15 +16,26 @@ export class ImageEffects {
     private _store: Store,
   ) {}
   
-  public imageLoaded$ = createEffect(() =>
+  public onTransformImage$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromImage.imageLoadedAction),
-      tap(image => SceneHelper.loadCanvas( SceneHelper.deserialize( image.data ))),
+      ofType(
+        fromImage.loadImageAction,
+        fromImage.invertImageAction,
+        fromImage.stretchImageAction,
+        fromImage.repeatImageAction,
+        fromImage.reflectImageAction,
+        fromImage.hFlipImageAction,
+        fromImage.vFlipImageAction,
+        fromImage.rotateImageLeftAction,
+        fromImage.rotateImageRightAction,
+      ),
+      tap(() => firstValueFrom( this._store.select( fromRoot.selectImage ))
+        .then(data => data && SceneHelper.loadCanvas( SceneHelper.deserialize( data )))),
     ),
     { dispatch: false} // side effects only
   )
   
-  public sceneCreated$ = createEffect(() =>
+  public onCreateScene$ = createEffect(() =>
     this._actions$.pipe(
       ofType(fromImage.createSceneAction),
       // Wait until SceneComponent exists
@@ -38,9 +49,9 @@ export class ImageEffects {
     { dispatch: false} // side effects only
   )
 
-  public imageZoomed$ = createEffect(() =>
+  public onZoomImage$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(fromImage.imageZoomAction),
+      ofType(fromImage.zoomImageAction),
       tap(scale => {
         firstValueFrom( this._store.select( fromRoot.selectImage ))
           .then(data => data && SceneHelper.zoomCanvas(

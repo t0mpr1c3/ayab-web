@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import Transforms from '../../../image/helpers/transforms.helper';
+import { ImageFacade } from '../../facade/image.facade';
 import { FormDialogComponent } from '../../../shared/components/form-dialog/form-dialog.component';
 import { ImageStretchFormComponent } from './image-stretch-form.component';
 import { ImageRepeatFormComponent } from './image-repeat-form.component';
 import { ImageReflectFormComponent } from './image-reflect-form.component';
-import { ToolbarFacade } from '../../facade/toolbar.facade';
 
 /**
  * @title Image menu component
@@ -15,15 +14,15 @@ import { ToolbarFacade } from '../../facade/toolbar.facade';
   selector: 'image-menu',
   templateUrl: 'image-menu.component.html',
   styleUrls: ['image-menu.component.css'],
-  providers: [ToolbarFacade],
+  providers: [ImageFacade],
 })
 export class ImageMenuComponent {
   constructor(
     private _dialog: MatDialog,
-    private _facade: ToolbarFacade,
+    private _facade: ImageFacade,
   ) {}
 
-  public invert() { this._facade.transform( Transforms.invertImage )}
+  public invert() { this._facade.invertImage() }
 
   public stretch() {
     this._dialog.open(
@@ -64,15 +63,15 @@ export class ImageMenuComponent {
     );
   }
 
-  public hflip() { this._facade.transform( Transforms.hflipImage )}
+  public hflip() { this._facade.hFlipImage() }
 
-  public vflip() { this._facade.transform( Transforms.vflipImage )}
+  public vflip() { this._facade.vFlipImage() }
 
-  public rotateLeft() { this._facade.transform( Transforms.rotateLeftImage )}
+  public rotateLeft() { this._facade.rotateImageLeft() }
 
-  public rotateRight() { this._facade.transform( Transforms.rotateRightImage )}
+  public rotateRight() { this._facade.rotateImageRight() }
 
-  public zoomIn() { this._facade.zoom( +0.5, 8 )}
+  public zoomIn() { this._facade.zoom( +0.5 )}
 
-  public zoomOut() { this._facade.zoom( -0.5, 8 )}
+  public zoomOut() { this._facade.zoom( -0.5 )}
 }

@@ -2,6 +2,8 @@ import { Scale } from '../../toolbar/models/scale.model';
 import { SerializedImageData } from '../model/serialized-image-data.model';
 
 export default class SceneHelper {
+  static MAX_ZOOM = 8;
+  
   static getImageData(imageFile: File): Promise<ImageData|null> {
     // Read image file
     const reader = new FileReader();
@@ -76,10 +78,14 @@ export default class SceneHelper {
   
   static serialize(image: ImageData): SerializedImageData {
     return {
-      //data: image.data.buffer,
       data: Array.from(image.data),
       width: image.width, 
       height: image.height
     }
+  }
+
+  // pure transformation
+  static transform(data: SerializedImageData, fn: (i: ImageData) => ImageData): SerializedImageData {
+    return SceneHelper.serialize( fn ( SceneHelper.deserialize( data )));  
   }
 }

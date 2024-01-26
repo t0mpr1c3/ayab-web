@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import Transforms from '../../../image/helpers/transforms.helper';
 import { CancelService } from '../../../shared/services/cancel.service';
-import { ToolbarFacade } from '../../facade/toolbar.facade';
+import { ImageFacade } from '../../facade/image.facade';
+import { Scale } from '../../../toolbar/models/scale.model';
 
 /** 
- * @title Image repeat form component
+ * @title Image stretch form component
  **/
 @Component({
   templateUrl: 'scale-form.component.html',
-  host: { transform: 'repeat' },
-  providers: [ToolbarFacade],
+  host: { transform: 'stretch' },
+  providers: [ImageFacade],
 })
-export class ImageRepeatFormComponent implements OnInit {
+export class ImageStretchFormComponent implements OnInit {
   public form: FormGroup;
   private _debounce = false;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _cancelService: CancelService,
-    private _facade: ToolbarFacade,
+    private _facade: ImageFacade,
   ) {}
 
   ngOnInit() {
@@ -45,11 +45,11 @@ export class ImageRepeatFormComponent implements OnInit {
     this._debounce = true;
       
     // Transform image
-    this._facade.transform( Transforms.repeat(
-      this.f.x?.value, 
-      this.f.y?.value,
-    ));
-
+    this._facade.stretchImage({
+      x: this.f.x?.value, 
+      y: this.f.y?.value,
+    });
+    
     // Close dialog
     this._cancelService.emit();
   }

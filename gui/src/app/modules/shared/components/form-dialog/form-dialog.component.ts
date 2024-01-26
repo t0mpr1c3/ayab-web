@@ -7,8 +7,8 @@ import { CancelService } from '../../services/cancel.service';
 import { RegistrationFormComponent } from '../../../registration/components/registration-form/registration-form.component';
 import { LoginFormComponent } from '../../../auth/components/login-form/login-form.component';
 import { SettingsFormComponent } from '../../../settings/components/settings-form/settings-form.component';
-import { ImageStretchFormComponent } from '../../../toolbar/components/image-menu/image-stretch-form.component';
-import { ImageRepeatFormComponent } from '../../../toolbar/components/image-menu/image-repeat-form.component';
+import { ImageStretchFormComponent } from '../../../image/components/image-menu/image-stretch-form.component';
+import { ImageRepeatFormComponent } from '../../../image/components/image-menu/image-repeat-form.component';
 import { FirmwareDialogComponent } from '../../../firmware-upload/components/firmware-upload-dialog/firmware-upload-dialog.component';
 import { TestDialogComponent } from '../../../test-device/components/test-dialog/test-dialog.component';
 
