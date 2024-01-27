@@ -17,7 +17,8 @@ export default class KnitEffects {
     //private _store: Store,
   ) {}
   
-  public knittingCanceled$ = createEffect(() =>
+  // Alert user after knitting canceled
+  public onKnittingCanceled$ = createEffect(() =>
     this._actions$.pipe(
       ofType(fromKnit.stopKnittingAction),
       tap(() => this._snackBar.openFromComponent(

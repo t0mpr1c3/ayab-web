@@ -1,6 +1,6 @@
 <div class="bar checkbox">
-  <mat-checkbox #checkbox (change)="clicked($event.checked)" [formControl]="control"
+  <mat-checkbox #mirrorCheckbox (change)="check($event.checked)" [formControl]="control"
     class="checkbox">Knit side image</mat-checkbox>
   <span class="space"></span>
-  <mirror-icon #icon [knitSide]="defaultValue"></mirror-icon>
+  <mirror-icon #mirrorIcon [knitSide]="defaultValue"></mirror-icon>
 </div>

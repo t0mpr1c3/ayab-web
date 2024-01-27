@@ -2,22 +2,30 @@
   <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
     <mat-label for="username">User name</mat-label>
     <input id="username" matInput type="text" formControlName="username">
-    <mat-error *ngIf="f.username?.errors">{{getUsernameError(f.username?.errors)}}</mat-error>
+    @if (f.username?.errors) {
+      <mat-error class="form-error">{{getUsernameError(f.username?.errors)}}</mat-error>
+    }
   </mat-form-field>
   <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
     <mat-label for="email">Email address</mat-label>
     <input id="email" matInput type="text" formControlName="email">
-    <mat-error *ngIf="f.email?.errors">{{getEmailError(f.email?.errors)}}</mat-error>
+    @if (f.email?.errors) {
+      <mat-error class="form-error">{{getEmailError(f.email?.errors)}}</mat-error>
+    }
   </mat-form-field>
   <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
     <mat-label for="password">Password</mat-label>
     <input id="password" matInput type="password" formControlName="password">
-    <mat-error *ngIf="f.password?.errors">{{getPasswordError("Password", f.password?.errors)}}</mat-error>
+    @if (f.password?.errors) {
+      <mat-error class="form-error">{{getPasswordError("Password", f.password?.errors)}}</mat-error>
+    }
   </mat-form-field>
   <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
     <mat-label for="confirm">Confirm password</mat-label>
     <input id="confirm" matInput type="password" formControlName="confirm">
-    <mat-error *ngIf="f.confirm?.errors">{{getPasswordError("Password confirmation", f.confirm?.errors)}}</mat-error>
+    @if (f.confirm?.errors) {
+      <mat-error class="form-error">{{getPasswordError("Password confirmation", f.confirm?.errors)}}</mat-error>
+    }
   </mat-form-field>
   <div class="bar">
     <generic-button name="Register" (clicked)="onSubmit()" debounce></generic-button>

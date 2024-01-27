@@ -1,13 +1,16 @@
 import { 
   ChangeDetectionStrategy, 
   Component, 
+  EventEmitter, 
   Input, 
   OnInit, 
+  Output, 
   booleanAttribute, 
   forwardRef, 
   numberAttribute 
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
 
@@ -34,6 +37,8 @@ export default class GenericSelectComponent implements OnInit {
   @Input({ required: true }) enum: string[];
   @Input({ required: true }) name: string;
 
+  @Output() change = new EventEmitter<number>();
+
   public selection: number;
 
   constructor() {
@@ -42,6 +47,10 @@ export default class GenericSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh();
+  }
+
+  public onValueChange(value: number) {
+    this.change.emit(value);
   }
 
   public refresh() {

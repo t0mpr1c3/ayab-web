@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { 
+  ChangeDetectionStrategy, 
+  Component, 
+  EventEmitter, 
+  HostBinding, 
+  Input, 
+  Output 
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import EnumHelper from '../../../../../../../shared/src/helpers/enum.helper';
@@ -18,6 +25,9 @@ export default class ModeInputComponent {
   @Input({ required: true }) modeControl: FormControl<TSetting>;
   @Input({ required: true }) colorsControl: FormControl<TSetting>;
   @Input() disabled: boolean = false;
+
+  @Output() changeMode = new EventEmitter<ModeEnum>();
+  @Output() changeColors = new EventEmitter<Event>();
 
   @HostBinding('style.opacity') get opacity() {
     return this.disabled ? '.38' : '.87';

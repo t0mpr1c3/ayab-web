@@ -18,7 +18,8 @@ export default class SettingsEffects {
     private _userApiService: UserApiService,
   ) {}
   
-  public updateSettings$ = createEffect(() => 
+  // Update settings and JWT in local storage and alert user after settings updated
+  public updateSettingsEffect$ = createEffect(() => 
     this._actions$.pipe(
       ofType(fromUser.updateSettingsAction),
       map(action => action.settings),

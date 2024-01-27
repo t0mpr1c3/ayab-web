@@ -17,14 +17,22 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromLogin.loginSubmitAction, () => ({
+
+  on(fromLogin.submitLoginAction, () => ({
     error: null,
     pending: true,
   })),
+
+  on(fromLogin.cancelLoginAction, () => ({
+    error: null,
+    pending: false,
+  })),
+
   on(fromAuthApi.loginSuccessAction, () => ({
     error: null,
     pending: false,
   })),
+
   on(fromAuthApi.loginFailureAction, (_, { error }) => ({
     error,
     pending: false,

@@ -44,13 +44,11 @@ export default class LoginFormComponent extends Validation implements OnInit {
   public get f() { return this.form.controls; }
 
   public onSubmit(): void {
-    if (this.form.invalid || this._debounce) {
-      return;
-    }
+    if (this.form.invalid || this._debounce) return;
     this._debounce = true;
       
     // Submit credentials
-    this._facade.loginSubmit({
+    this._facade.submitLogin({
       username: this.f.username?.value, 
       password: this.f.password?.value,
     });
@@ -62,5 +60,6 @@ export default class LoginFormComponent extends Validation implements OnInit {
   public onCancel(): void {
     this._debounce = true;
     this._cancelService.emit();
+    this._facade.cancelLogin();
   }
 }

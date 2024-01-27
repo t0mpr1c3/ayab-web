@@ -83,9 +83,7 @@ export default class SettingsFormComponent implements OnInit {
   */
  
   public onSubmit() {
-    if (this._debounce) {
-      return;
-    }
+    if (this._debounce) return;
     this._debounce = true;
 
     // Update user settings

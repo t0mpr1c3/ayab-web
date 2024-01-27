@@ -2,7 +2,7 @@ import { AbstractControl } from '@angular/forms';
 
 // Custom validator to check that two fields match
 export default class CustomValidator {
-  static MustMatch(controlName: string, matchingControlName: string) {
+  static mustMatch(controlName: string, matchingControlName: string) {
     return (group: AbstractControl) => {
       const control = group.get(controlName);
       const matchingControl = group.get(matchingControlName);

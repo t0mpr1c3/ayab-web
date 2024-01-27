@@ -48,7 +48,7 @@ export default class RegistrationFormComponent extends Validation implements OnI
         Validators.maxLength(this.passwordMaxLength)
       ]],
     }, { 
-      validators: CustomValidator.MustMatch('password', 'confirm') 
+      validators: CustomValidator.mustMatch('password', 'confirm') 
     });
   }
 
@@ -66,9 +66,7 @@ export default class RegistrationFormComponent extends Validation implements OnI
   */
 
   public onSubmit() {
-    if (this.form.invalid) {
-      return;
-    }
+    if (this.form.invalid) return;
       
     // Submit credentials
     this._facade.registration({

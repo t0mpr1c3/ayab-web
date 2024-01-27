@@ -2,12 +2,16 @@
   <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
     <mat-label for="username">User name</mat-label>
     <input id="username" matInput type="text" formControlName="username">
-    <mat-error *ngIf="f.username?.errors">{{getUsernameError(f.username?.errors)}}</mat-error>
+    @if (f.username?.errors) {
+      <mat-error class="form-error">{{getUsernameError(f.username?.errors)}}</mat-error>
+    }
   </mat-form-field>
   <mat-form-field appearance="outline" class="block" [hideRequiredMarker]=true>
     <mat-label for="password">Password</mat-label>
     <input id="password" matInput type="password" formControlName="password">
-    <mat-error *ngIf="f.password?.errors">{{getPasswordError("Password", f.password?.errors)}}</mat-error>
+    @if (f.password?.errors) {
+      <mat-error class="form-error">{{getPasswordError("Password", f.password?.errors)}}</mat-error>
+    }
   </mat-form-field>
   <div class="bar">
     <generic-button name="Sign in" (clicked)="onSubmit()"

@@ -5,9 +5,19 @@
       <div #scenePlaceholder></div>
     </div>
     <div>
-      <ng-container *ngIf="shown; then hideButton"></ng-container>
+      @if (shown) {
+        <div class="top">
+          <button mat-mini-fab title="Hide options" class="shown" (click)="hideOptions()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      }
       <div [ngClass]="{ 'options': true, 'shown': shown, 'hidden': !shown }">
-        <ng-container *ngIf="!shown; then showButton"></ng-container>
+        @if (!shown) {
+          <button mat-mini-fab title="Show options" class="hidden" (click)="showOptions()">
+            <mat-icon class="hidden">chevron_left</mat-icon>
+          </button>
+        }
         <div [ngClass]="{ 'invisible': !shown }">
           <div #optionsPlaceholder></div>
         </div>     
@@ -15,17 +25,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #hideButton>
-  <div class="top">
-    <button mat-mini-fab title="Hide options" class="shown" (click)="hideOptions()">
-      <mat-icon>chevron_right</mat-icon>
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #showButton>
-  <button mat-mini-fab title="Show options" class="hidden" (click)="showOptions()">
-    <mat-icon class="hidden">chevron_left</mat-icon>
-  </button>
-</ng-template>

@@ -4,6 +4,10 @@ import { ModeEnum } from '../../../../../../shared/src/models/mode-enum.model';
 import { ColorEnum } from '../../../../../../shared/src/models/color-enum.model';
 import { AlignmentEnum } from '../../../../../../shared/src/models/alignment-enum.model';
 
+export const setOptionsValidityAction = createAction(
+  '[Options] Set options form validity',
+  props<{ valid: boolean }>(),
+);
 export const setKnittingModeOptionAction = createAction(
   '[Options] Set knitting mode',
   props<{ mode: ModeEnum }>(),

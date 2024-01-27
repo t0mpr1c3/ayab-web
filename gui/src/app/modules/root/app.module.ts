@@ -19,7 +19,6 @@ import AuthEffects from '../auth/effects/auth.effects';
 import ImageEffects from '../image/effects/image.effects';
 import KnitEffects from '../knit/effects/knit.effects';
 import HydrationEffects from '../hydration/effects/hydration.effects';
-import OptionsEffects from '../options/effects/options.effects';
 import SettingsEffects from '../settings/effects/settings.effects';
 import RegistrationEffects from '../registration/effects/registration.effects';
 
@@ -84,8 +83,7 @@ import AppComponent from './app.component';
       AuthEffects,
       HydrationEffects,
       ImageEffects,
-      KnitEffects, 
-      OptionsEffects, 
+      KnitEffects,
       SettingsEffects,
       RegistrationEffects,
     ]),

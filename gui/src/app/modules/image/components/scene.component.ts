@@ -35,7 +35,6 @@ export default class SceneComponent {
     event.preventDefault();
     let zoom = this._scale;
     zoom += event.deltaY * -0.05;
-    console.log(zoom)
     zoom = Math.min(Math.max(1, Math.floor(zoom * 4)/4), SceneHelper.MAX_ZOOM);
     if (this._scale !== zoom) {
       this._scale = zoom;

@@ -34,11 +34,11 @@ export default class GenericCheckboxComponent {
   @Input() disabled: boolean = false;
   @Input({ required: true }) name: string;
 
-  @Output() checked: EventEmitter<boolean> = new EventEmitter();
+  @Output() checked = new EventEmitter<boolean>();
 
   constructor() {}
 
-  public onClick(event: MatCheckboxChange) {
+  public onChange(event: MatCheckboxChange) {
     this.checked.emit(event.checked);
   }
 }

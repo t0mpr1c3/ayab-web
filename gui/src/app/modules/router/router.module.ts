@@ -31,9 +31,7 @@ export const routerStateConfig = {
 })
 export default class NgrxRouterStoreModule {
   constructor(@Self() @Optional() router: Router) {
-    if (router) {
-      console.log('All good, NgrxRouterStoreModule');
-    } else {
+    if (!router) {
       console.error('NgrxRouterStoreModule must be imported in the same same level as RouterModule');
     }
   }

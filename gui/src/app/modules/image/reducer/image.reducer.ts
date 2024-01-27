@@ -30,7 +30,7 @@ export const reducer = createReducer(
   on(fromImage.loadImageAction, (state, { data }) => ({ 
     ...state,
     data: data, 
-    scale: { x: 1, y: 1 },
+    //scale: { x: 1, y: 1 },
   })),
 
   on(fromImage.zoomImageAction, (state, { scale }) => ({ 

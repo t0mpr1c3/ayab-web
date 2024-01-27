@@ -8,19 +8,21 @@ import { AlignmentEnum } from '../../../../../../shared/src/models/alignment-enu
 import { ColorEnum } from '../../../../../../shared/src/models/color-enum.model';
 import { MachineEnum } from '../../../../../../shared/src/models/machine-enum.model';
 import { ModeEnum } from '../../../../../../shared/src/models/mode-enum.model';
+import { firstValueFrom } from 'rxjs';
 
 /**
  * @title Options facade
  */
 @Injectable()
 export default class OptionsFacade {
-  public enableOptions$ = this._store.select(fromRoot.selectConfiguring);
+  public enableOptions$ = this._store.select(fromRoot.selectOptionsEnabled);
   public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
   public settings$ = this._store.select(fromRoot.selectSettings);
   public machine$ = this._store.select(fromRoot.selectMachineSetting);
   public width$ = this._store.select(fromRoot.selectMachineWidth);
   public rows$ = this._store.select(fromRoot.selectImageHeight);
 
+  public valid$ = this._store.select(fromRoot.selectOptionsValidity);
   public mode$ = this._store.select(fromRoot.selectKnittingModeOption);
   public colors$ = this._store.select(fromRoot.selectColorsOption);
   public startRow$ = this._store.select(fromRoot.selectStartRowOption);
@@ -32,8 +34,12 @@ export default class OptionsFacade {
   public alignment$ = this._store.select(fromRoot.selectAlignmentOption);
   public knitSide$ = this._store.select(fromRoot.selectKnitSideOption);
   
-  
   constructor(private _store: Store<fromRoot.State>) {}
+
+  public setOptionsValidity(_valid: boolean): void {
+    firstValueFrom( this.valid$ ).then( valid => (valid !== _valid) &&
+      this._store.dispatch(fromOptions.setOptionsValidityAction({ valid: _valid })));
+  }
 
   public setKnittingModeOption(mode: ModeEnum): void {
     this._store.dispatch(fromOptions.setKnittingModeOptionAction({ mode: mode }));

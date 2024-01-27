@@ -23,7 +23,6 @@
 </ng-template>
 <ng-template #icon let-success="success">
   <mat-icon class="icon">
-    <ng-container *ngIf="success">check_circle_outline</ng-container>
-    <ng-container *ngIf="!success">error_outline</ng-container>
+    @if (success) { check_circle_outline } @else { error_outline }
   </mat-icon>
 </ng-template>

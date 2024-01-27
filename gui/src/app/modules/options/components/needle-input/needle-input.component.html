@@ -3,14 +3,18 @@
   <div class="bar">
     <span class="number">
       <!-- FIXME max number of needles depends on the machine (less for KH270) -->
-      <input matInput #needleNumber type="number" min="1" [max]="width/2" [formControl]="needleControl">
+      <input matInput #needleNumber type="number" min="1" [max]="width/2" [formControl]="needleControl"
+        (change)="changeNeedle.emit($event)">
     </span>
     <span class="space"></span>
     <span class="color">
-      <mat-select #needleColor [formControl]="colorControl">
+      <mat-select #needleColor [formControl]="colorControl" (valueChange)="changeColor.emit($event)">
         <mat-option [value]="0">orange</mat-option>
         <mat-option [value]="1">green</mat-option>
       </mat-select>
     </span>
   </div>
+  @if (needleControl.errors || colorControl.errors) {
+    <mat-error class="form-error">Start must go before stop</mat-error>
+  }
 </mat-form-field>

@@ -1,24 +1,31 @@
   <div class="margin"></div>
   <!--port-select [disabled]="!(enableOptions$ | async)"></port-select-->
-  <ng-container *ngIf="loggedIn$ | async">
+  @if (machine$ | async) {
     <div [ngClass]="{ 'bar': true, 'padded': true, 'grey': !(enableOptions$ | async) }">
       Machine:
       <span>
-        <ng-container *ngIf="(machine$ | async) === 0">KH-910/50</ng-container>
-        <ng-container *ngIf="(machine$ | async) === 1">KH-900/30/40/65</ng-container>
-        <ng-container *ngIf="(machine$ | async) === 2">KH-270</ng-container>
+        @if ((machine$ | async) === 0) { KH-910/50 }
+        @if ((machine$ | async) === 1) { KH-900/30/40/65 }
+        @if ((machine$ | async) === 2) { KH-270 }
       </span>
     </div>
-  </ng-container>
+  }
   <form [formGroup]="form">
     <mode-input [disabled]="!(enableOptions$ | async)" [modeControl]="optionsService.formControls.mode!"
-      [colorsControl]="optionsService.formControls.colors!"></mode-input>
-    <row-input [control]="optionsService.formControls.row!" [rows]="rows$ | async"></row-input>
-    <generic-checkbox name="Infinite repeat" [control]="optionsService.formControls.infRepeat!" ></generic-checkbox>
+      [colorsControl]="optionsService.formControls.colors!" (changeMode)="modeChanged($event)"
+      (changeColors)="colorsChanged($event)"></mode-input>
+    <row-input [control]="optionsService.formControls.startRow!" [rows]="rows$ | async"
+      (change)="rowChanged($event)"></row-input>
+    <generic-checkbox name="Infinite repeat" [control]="optionsService.formControls.infRepeat!"
+      (checked)="infRepeatChecked($event)"></generic-checkbox>
     <needle-input title="Start needle" [needleControl]="optionsService.formControls.startNeedle!"
-      [colorControl]="optionsService.formControls.startColor!" [width]="width$ | async"></needle-input>
+      [colorControl]="optionsService.formControls.startColor!" [width]="width$ | async"
+      (changeNeedle)="startNeedleChanged($event)" (changeColor)="startColorChanged($event)"></needle-input>
     <needle-input title="Stop needle" [needleControl]="optionsService.formControls.stopNeedle!"
-      [colorControl]="optionsService.formControls.stopColor!" [width]="width$ | async"></needle-input>
-    <generic-select name="Alignment" [control]="optionsService.formControls.alignment!" [enum]="alignmentEnum"></generic-select>
-    <mirror-checkbox #mirrorCheckbox [control]="optionsService.formControls.mirror!"></mirror-checkbox>      
+      [colorControl]="optionsService.formControls.stopColor!" [width]="width$ | async"
+      (changeNeedle)="stopNeedleChanged($event)" (changeColor)="stopColorChanged($event)"></needle-input>
+    <generic-select name="Alignment" [control]="optionsService.formControls.alignment!" 
+      (change)="alignmentChanged($event)" [enum]="alignmentEnum"></generic-select>
+    <mirror-checkbox [control]="optionsService.formControls.knitSide!"
+      (checked)="knitSideChecked($event)"></mirror-checkbox>      
   </form>

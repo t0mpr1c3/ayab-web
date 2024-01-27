@@ -2,13 +2,12 @@
   <settings-list [data]="settingsData">
     <ng-template [appSetting]="settingsData" let-setting>
       <div class="bar">
-        <ng-container *ngIf="!setting.enum">
+        @if (!setting.enum) {
           <generic-checkbox [name]="setting.name" [control]="setting.control"></generic-checkbox>
-        </ng-container>
-        <ng-container *ngIf="setting.enum">
+        } @else {
           <generic-select [name]="setting.name" [enum]="setting.enum" 
             [control]="setting.control" class="wide"></generic-select>
-        </ng-container>
+        }
       </div>
     </ng-template>
   </settings-list>

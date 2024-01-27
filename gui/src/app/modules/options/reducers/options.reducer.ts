@@ -8,6 +8,7 @@ import { ModeEnum } from '../../../../../../shared/src/models/mode-enum.model';
 export const featureKey = 'options';
 
 export interface State {
+  valid: boolean;
   mode: ModeEnum;
   colors: number;
   startRow: number;
@@ -21,6 +22,7 @@ export interface State {
 }
 
 export const initialState: State = {
+  valid: true,
   mode: ModeEnum.Single_Bed,
   colors: 2,
   startRow: 1,
@@ -36,57 +38,63 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
 
-  on(fromOptions.setKnittingModeOptionAction, (state, { mode }) => ({ 
+  on(fromOptions.setOptionsValidityAction, (state, { valid: valid }) => ({ 
+    ...state, 
+    valid: valid,
+  })),
+
+  on(fromOptions.setKnittingModeOptionAction, (state, { mode: mode }) => ({ 
     ...state, 
     mode: mode,
   })),
 
-  on(fromOptions.setColorsOptionAction, (state, { colors }) => ({ 
+  on(fromOptions.setColorsOptionAction, (state, { colors: colors }) => ({ 
     ...state,
     colors: colors,
   })),
 
-  on(fromOptions.setStartRowOptionAction, (state, { startRow }) => ({ 
+  on(fromOptions.setStartRowOptionAction, (state, { startRow: startRow }) => ({ 
     ...state,
     startRow: startRow,
   })),
 
-  on(fromOptions.setInfiniteRepeatOptionAction, (state, { infRepeat }) => ({ 
+  on(fromOptions.setInfiniteRepeatOptionAction, (state, { infRepeat: infRepeat }) => ({ 
     ...state,
     infRepeat: infRepeat,
   })),
 
-  on(fromOptions.setStartNeedleOptionAction, (state, { startNeedle }) => ({ 
+  on(fromOptions.setStartNeedleOptionAction, (state, { startNeedle: startNeedle }) => ({ 
     ...state,
     startNeedle: startNeedle,
   })),
 
-  on(fromOptions.setStartColorOptionAction, (state, { startColor }) => ({ 
+  on(fromOptions.setStartColorOptionAction, (state, { startColor: startColor }) => ({ 
     ...state,
     startColor: startColor,
   })),
 
-  on(fromOptions.setStopNeedleOptionAction, (state, { stopNeedle }) => ({ 
+  on(fromOptions.setStopNeedleOptionAction, (state, { stopNeedle: stopNeedle }) => ({ 
     ...state,
     stopNeedle: stopNeedle,
   })),
 
-  on(fromOptions.setStopColorOptionAction, (state, { stopColor }) => ({ 
+  on(fromOptions.setStopColorOptionAction, (state, { stopColor: stopColor }) => ({ 
     ...state,
     stopColor: stopColor,
   })),
   
-  on(fromOptions.setAlignmentOptionAction, (state, { alignment }) => ({ 
+  on(fromOptions.setAlignmentOptionAction, (state, { alignment: alignment }) => ({ 
     ...state,
     alignment: alignment,
   })),
 
-  on(fromOptions.setKnitSideOptionAction, (state, { knitSide }) => ({ 
+  on(fromOptions.setKnitSideOptionAction, (state, { knitSide: knitSide }) => ({ 
     ...state,
     knitSide: knitSide,
   })),
 );
 
+export const selectOptionsValidity = (state: State) => state.valid;
 export const selectKnittingModeOption = (state: State) => state.mode;
 export const selectColorsOption = (state: State) => state.colors;
 export const selectStartRowOption = (state: State) => state.startRow;
@@ -97,3 +105,12 @@ export const selectStopNeedleOption = (state: State) => state.stopNeedle;
 export const selectStopColorOption = (state: State) => state.stopColor;
 export const selectAlignmentOption = (state: State) => state.alignment;
 export const selectKnitSideOption = (state: State) => state.knitSide;
+export const selectNewImageOptions = (state: State) => {
+  state.startRow;
+  state.startNeedle;
+  state.startColor;
+  state.stopNeedle;
+  state.stopColor;
+  state.alignment;
+  state.knitSide;
+};

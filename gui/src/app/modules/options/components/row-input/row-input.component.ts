@@ -1,7 +1,9 @@
 import { 
   ChangeDetectionStrategy, 
   Component, 
+  EventEmitter, 
   Input, 
+  Output, 
   booleanAttribute, 
   numberAttribute 
 } from '@angular/core';
@@ -11,7 +13,7 @@ import OptionsFacade from '../../facade/options.facade';
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
 
 /** 
- * @title Row Start input
+ * @title Row start input component
  **/
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,8 +28,4 @@ export default class RowInputComponent {
   @Input({ transform: booleanAttribute }) disabled: boolean;
 
   constructor(private _facade: OptionsFacade) {}
-
-  public onChange(): void {
-    this._facade.setStartRowOption(this.control.value as number);
-  }
 }

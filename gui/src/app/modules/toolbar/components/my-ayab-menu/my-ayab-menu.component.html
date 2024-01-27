@@ -3,16 +3,15 @@
 <mat-menu #myAYABMenu="matMenu">
   <!-- register and login buttons disabled when user is logged in -->
   <!-- settings and logout buttons disabled when when user is logged out-->
-  <ng-container *ngIf="loggedIn$ | async">
+  @if (loggedIn$ | async) {
     <button mat-menu-item disabled>Sign in</button>
     <button mat-menu-item disabled>Register</button>
     <button mat-menu-item routerLink="settings">Settings</button>
     <button mat-menu-item (click)="logout()">Sign out</button>
-  </ng-container>
-  <ng-container *ngIf="!(loggedIn$ | async)">
+  } @else {
     <button mat-menu-item routerLink="login">Sign in</button>
     <button mat-menu-item routerLink="register">Register</button>
     <button mat-menu-item disabled>Settings</button>
     <button mat-menu-item disabled>Sign out</button>
-  </ng-container>
+  }
 </mat-menu>

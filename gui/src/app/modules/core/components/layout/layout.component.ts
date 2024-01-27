@@ -46,9 +46,7 @@ export default class LayoutComponent {
   }
 
   public createScene() {
-    if (this._created) {
-      return;
-    }
+    if (this._created) return;
     this._created = true;
 
     // Lazy load Image module
@@ -64,6 +62,7 @@ export default class LayoutComponent {
   }
   
   public hideOptions() {
+    if (!this.shown) return;
     this.shown = false;
 
     // Update state
@@ -71,9 +70,7 @@ export default class LayoutComponent {
   }
   
   public showOptions() {
-    if (this.shown) {
-      return;
-    }
+    if (this.shown) return;
     this.shown = true;
 
     // Lazy load Options module

@@ -1,4 +1,3 @@
 <button mat-raised-button title="Open image file" class="mat-accent" 
   [disabled]="!(enabled$ | async)" (click)="imageUpload.click()">Load image</button>
-<input #imageUpload id="imageUpload" name="imageUpload" accept="image/png" type="file" title=""
-  (change)="onFileChanged($event)">
+<input #imageUpload id="imageUpload" name="imageUpload" accept="image/png" type="file" title="">

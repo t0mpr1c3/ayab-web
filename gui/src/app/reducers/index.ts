@@ -287,6 +287,11 @@ export const selectOptionsState = createSelector(
   state => state[fromOptions.featureKey]
 );
 
+export const selectOptionsValidity = createSelector(
+  selectOptionsState,
+  fromOptions.selectOptionsValidity
+);
+
 export const selectKnittingModeOption = createSelector(
   selectOptionsState,
   fromOptions.selectKnittingModeOption
@@ -335,6 +340,11 @@ export const selectAlignmentOption = createSelector(
 export const selectKnitSideOption = createSelector(
   selectOptionsState,
   fromOptions.selectKnitSideOption
+);
+
+export const selectNewImageOptions = createSelector(
+  selectOptionsState,
+  fromOptions.selectNewImageOptions
 );
 
 /**
@@ -388,18 +398,24 @@ export const selectMenuEnabled = createSelector(
 );
 
 /**
- * Options panel enabled selector (AKA configuring state)
+ * Options panel enabled selector
  */
-export const selectConfiguring = createSelector(
+export const selectOptionsEnabled = createSelector(
+  selectMenuEnabled,
   selectImageState,
-  selectKnitState,
-  selectTestState,
-  selectFirmwareState,
-  (image, knitting, test, firmware) => ( 
-    !!image.data && 
-    !knitting.knitting && 
-    !test.testing && 
-    !firmware.uploading
+  (menuEnabled, image) => ( 
+    menuEnabled && !!image.data
+  )
+);
+
+/**
+ * Knit button enabled selector
+ */
+export const selectKnitButtonEnabled = createSelector(
+  selectOptionsEnabled,
+  selectOptionsValidity,
+  (optionsEnabled, optionsValid) => ( 
+    optionsEnabled && optionsValid
   )
 );
 
@@ -409,10 +425,18 @@ export const selectConfiguring = createSelector(
 export const selectScene = createSelector(
   selectImageState,
   selectOptionsState,
-  (image, options) => ({
+  selectMachineWidth,
+  (image, options, width) => ({
     data: image.data,
     scale: image.scale,
     startRow: options.startRow,
+    startColor: options.startColor,
+    startNeedle: options.startNeedle,
+    stopColor: options.stopColor,
+    stopNeedle: options.stopNeedle,
+    alignment: options.alignment,
+    knitSide: options.knitSide,
+    width: width,
   })
 );
 

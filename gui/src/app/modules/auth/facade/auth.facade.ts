@@ -25,8 +25,12 @@ export default class AuthFacade {
     this._store.dispatch(fromAuth.bootAction());
   }
   
-  public loginSubmit(credentials: LoginCredentials): void {
-    this._store.dispatch(fromLogin.loginSubmitAction({ credentials }));
+  public submitLogin(credentials: LoginCredentials): void {
+    this._store.dispatch(fromLogin.submitLoginAction({ credentials }));
+  }
+  
+  public cancelLogin(): void {
+    this._store.dispatch(fromLogin.cancelLoginAction());
   }
   
   public logout(): void {

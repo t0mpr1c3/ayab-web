@@ -19,8 +19,25 @@ export default class RegistrationEffects {
     private _localStorageService: LocalStorageService,
     private _userApiService: UserApiService,
   ) {}
+
+  // Save updated JWT and open registration confirmation dialog after new user registration
+  public registrationEffect$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(fromReg.registrationAction),
+      map(action => action.credentials),
+      exhaustMap(credentials =>
+        this._userApiService.register(credentials)
+      ),
+      tap(res => this._localStorageService.token = res.access_token), // side effect
+      map(res => fromReg.confirmRegistrationAction({
+        message: res.statusMessage,
+        success: res.statusCode >= 200 && res.statusCode < 300
+      })),
+    )
+  );
   
-  public confirmRegistration$ = createEffect(() =>
+  // Open registration confirmation dialog after registration confirmed
+  public confirmRegistrationEffect$ = createEffect(() =>
     this._actions$.pipe(
       ofType(fromReg.confirmRegistrationAction),
       map(action => ({ message: action.message, success: action.success})),
@@ -34,20 +51,5 @@ export default class RegistrationEffects {
       ),
     ),
     { dispatch: false } // side effects only
-  )
-
-  public registration$ = createEffect(() =>
-    this._actions$.pipe(
-      ofType(fromReg.registrationAction),
-      map(action => action.credentials),
-      exhaustMap(credentials =>
-        this._userApiService.register(credentials)
-      ),
-      tap(res => this._localStorageService.token = res.access_token), // side effect
-      map(res => fromReg.confirmRegistrationAction({
-        message: res.statusMessage,
-        success: res.statusCode >= 200 && res.statusCode < 300
-      })),
-    )
   );
 }

@@ -11,7 +11,7 @@ import * as fromKnit from '../actions/knit.actions';
 export default class KnitFacade {
   constructor(private _store: Store<fromRoot.State>) {}
   
-  public knitButtonEnabled$ = this._store.select(fromRoot.selectConfiguring);
+  public knitButtonEnabled$ = this._store.select(fromRoot.selectKnitButtonEnabled);
   public cancelButtonEnabled$ = this._store.select(fromRoot.selectKnitting);
 
   public startKnitting(): void {
