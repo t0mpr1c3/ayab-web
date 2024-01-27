@@ -14,7 +14,7 @@ import { ModeEnum } from '../../../../../../../shared/src/models/mode-enum.model
   templateUrl: './mode-input.component.html',
   styleUrls: ['./mode-input.component.css'],
 })
-export class ModeInputComponent {
+export default class ModeInputComponent {
   @Input({ required: true }) modeControl: FormControl<TSetting>;
   @Input({ required: true }) colorsControl: FormControl<TSetting>;
   @Input() disabled: boolean = false;

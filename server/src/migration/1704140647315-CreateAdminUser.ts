@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 import { dataSource } from '../models/data-source.model';
-import { UserEntity } from '../entity/user.entity';
+import UserEntity from '../entity/user.entity';
 import { TSetting, defaultSettings } from '../../../shared/src/models/settings.model';
-import { SettingsEntity } from '../entity/settings.entity';
+import SettingsEntity from '../entity/settings.entity';
 
 export class CreateAdminUser1704140647315 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

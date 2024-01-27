@@ -3,7 +3,8 @@ import {
   Component, 
   HostListener,
 } from '@angular/core';
-import { ImageFacade } from '../facade/image.facade';
+
+import ImageFacade from '../facade/image.facade';
 import SceneHelper from '../helpers/scene.helper';
 
 /**
@@ -25,7 +26,7 @@ import SceneHelper from '../helpers/scene.helper';
   `],
   providers: [ImageFacade],
 })
-export class SceneComponent {
+export default class SceneComponent {
   private _scale = 1;
 
   constructor(private _facade: ImageFacade) {}

@@ -15,7 +15,7 @@ import { debounceTime } from 'rxjs/operators';
 @Directive({
   selector: '[debounce]',
 })
-export class DebounceClickDirective implements OnInit, OnDestroy {
+export default class DebounceClickDirective implements OnInit, OnDestroy {
   @Input({ transform: numberAttribute }) debounceTime = 500;
 
   @Output() debouncedClick = new EventEmitter();

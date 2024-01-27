@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { KnitFacade } from '../../../knit/facade/knit.facade';
+import KnitFacade from '../../../knit/facade/knit.facade';
 
 /** 
  * @title Cancel knitting button component
@@ -11,7 +11,7 @@ import { KnitFacade } from '../../../knit/facade/knit.facade';
   styleUrls: ['cancel-button.component.css'],
   providers: [KnitFacade],
 })
-export class CancelKnittingButtonComponent {
+export default class CancelKnittingButtonComponent {
   constructor(private _facade: KnitFacade) {}
 
   public enabled$ = this._facade.cancelButtonEnabled$;

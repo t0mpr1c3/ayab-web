@@ -11,7 +11,7 @@ import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
-import { MirrorIconComponent } from './mirror-icon.component';
+import MirrorIconComponent from './mirror-icon.component';
 
 /**
  * @title Mirror checkbox component
@@ -29,7 +29,7 @@ import { MirrorIconComponent } from './mirror-icon.component';
     }
   ]
 })
-export class MirrorCheckboxComponent implements AfterViewInit {
+export default class MirrorCheckboxComponent implements AfterViewInit {
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input({ transform: booleanAttribute }) defaultValue: boolean = false;
   @Input({ transform: booleanAttribute }) disabled: boolean;

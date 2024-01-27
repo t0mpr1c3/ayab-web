@@ -11,8 +11,8 @@ import {
   error409,
 } from '../../../shared/src/models/status.model';
 import { defaultSettings } from '../../../shared/src/models/settings.model';
-import { UserEntity } from '../entity/user.entity';
-import { SettingsEntity } from '../entity/settings.entity';
+import UserEntity from '../entity/user.entity';
+import SettingsEntity from '../entity/settings.entity';
 
 class UserController {
 /*

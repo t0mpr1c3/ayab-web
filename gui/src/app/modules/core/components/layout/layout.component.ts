@@ -7,9 +7,9 @@ import {
   ViewContainerRef 
 } from '@angular/core';
 
-import { CoreFacade } from '../../facade/core.facade';
-import { OptionsPanelComponent } from '../../../options/components/options-panel/options-panel.component';
-import { SceneComponent } from '../../../image/components/scene.component';
+import CoreFacade from '../../facade/core.facade';
+import OptionsPanelComponent from '../../../options/components/options-panel/options-panel.component';
+import SceneComponent from '../../../image/components/scene.component';
 
 /**
  * @title Layout component
@@ -21,7 +21,7 @@ import { SceneComponent } from '../../../image/components/scene.component';
   styleUrls: ['layout.component.css'],
   providers: [CoreFacade],
 })
-export class LayoutComponent {
+export default class LayoutComponent {
   @ViewChild('optionsPlaceholder', { read: ViewContainerRef, static: true }) optionsVcf: ViewContainerRef;
   @ViewChild('scenePlaceholder', { read: ViewContainerRef, static: true }) sceneVcf: ViewContainerRef;
   

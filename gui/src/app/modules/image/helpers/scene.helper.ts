@@ -1,6 +1,6 @@
 import TransformsHelper from './transforms.helper';
-import { Scale } from '../../toolbar/models/scale.model';
-import { SerializedImageData } from '../model/serialized-image-data.model';
+import Scale from '../../toolbar/models/scale.model';
+import SerializedImageData from '../model/serialized-image-data.model';
 
 // Impure methods to update canvas etc.
 export default class SceneHelper {

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CancelService } from '../../../shared/services/cancel.service';
-import { Validation } from '../../../../../../../shared/src/models/validation.model';
-import { AuthFacade } from '../../facade/auth.facade';
+import CancelService from '../../../shared/services/cancel.service';
+import Validation from '../../../../../../../shared/src/models/validation.model';
+import AuthFacade from '../../facade/auth.facade';
 
 @Component({
   templateUrl: 'login-form.component.html',
   styleUrls: ['login-form.component.css'],
   providers: [AuthFacade],
 })
-export class LoginFormComponent extends Validation implements OnInit {
+export default class LoginFormComponent extends Validation implements OnInit {
   public form: FormGroup;
   private _debounce = false;
   public pending$ = this._facade.loginPending$;

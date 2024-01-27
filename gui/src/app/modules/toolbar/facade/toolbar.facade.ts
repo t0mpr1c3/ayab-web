@@ -11,7 +11,7 @@ import TransformsHelper from '../../image/helpers/transforms.helper';
  * @title Toolbar facade
  */
 @Injectable()
-export class ToolbarFacade {
+export default class ToolbarFacade {
   public menuEnabled$ = this._store.select(fromRoot.selectMenuEnabled);
   public imageLoaded$ = this._store.select(fromRoot.selectImageLoaded);
   public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);

@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: 'registration-confirmation.component.html',
   styleUrls: ['registration-confirmation.component.css'],
 })
-export class RegistrationConfirmationComponent {
+export default class RegistrationConfirmationComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { message: string, icon: string },
     private _dialogRef: MatDialogRef<RegistrationConfirmationComponent>,

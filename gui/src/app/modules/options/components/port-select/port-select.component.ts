@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   templateUrl: 'port-select.component.html',
   styleUrls: ['port-select.component.css'],
 })
-export class PortSelectComponent {
+export default class PortSelectComponent {
   @Input() disabled: boolean = false;
 
   public port = "simulation";

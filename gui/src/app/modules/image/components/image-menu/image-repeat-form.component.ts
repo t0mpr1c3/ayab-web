@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CancelService } from '../../../shared/services/cancel.service';
-import { ImageFacade } from '../../facade/image.facade';
+import CancelService from '../../../shared/services/cancel.service';
+import ImageFacade from '../../facade/image.facade';
 
 /** 
  * @title Image repeat form component
@@ -12,7 +12,7 @@ import { ImageFacade } from '../../facade/image.facade';
   host: { transform: 'repeat' },
   providers: [ImageFacade],
 })
-export class ImageRepeatFormComponent implements OnInit {
+export default class ImageRepeatFormComponent implements OnInit {
   public form: FormGroup;
   private _debounce = false;
 

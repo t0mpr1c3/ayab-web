@@ -3,7 +3,7 @@ import { Directive, AfterContentInit, ElementRef } from '@angular/core';
 @Directive({
   selector: '[autofocus]'
 })
-export class AutofocusDirective implements AfterContentInit {
+export default class AutofocusDirective implements AfterContentInit {
   public constructor(private element: ElementRef) {}
 
   public ngAfterContentInit(): void {

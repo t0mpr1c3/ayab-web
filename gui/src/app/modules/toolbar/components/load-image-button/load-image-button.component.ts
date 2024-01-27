@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription, timer } from 'rxjs';
 
 import SceneHelper from '../../../image/helpers/scene.helper';
-import { ToolbarFacade } from '../../facade/toolbar.facade';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CustomSnackbarComponent } from '../../../shared/components/custom-snackbar/custom-snackbar.component';
+import ToolbarFacade from '../../facade/toolbar.facade';
+import CustomSnackbarComponent from '../../../shared/components/custom-snackbar/custom-snackbar.component';
 
 /** 
  * @title Load image button component
@@ -14,7 +14,7 @@ import { CustomSnackbarComponent } from '../../../shared/components/custom-snack
   templateUrl: 'load-image-button.component.html',
   styleUrls: ['load-image-button.component.css'],
 })
-export class LoadImageButtonComponent {
+export default class LoadImageButtonComponent {
   public enabled$ = this._facade.menuEnabled$;
   public imageFile: File;
   private _checkUpload: Subscription;
@@ -55,7 +55,7 @@ export class LoadImageButtonComponent {
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
     this.imageFile = files[0] as File;
-    if (this.imageFile.type !== 'image/png') {
+    if (this.imageFile.type !== 'image/png') { // FIXME allow oher formats
       // File is wrong format
       this._snackBar.openFromComponent(
         CustomSnackbarComponent,
@@ -66,7 +66,7 @@ export class LoadImageButtonComponent {
       );
       return;
     }
-    if (this.imageFile.size > 10000) { // FIXME this value needs a sanity check
+    if (this.imageFile.size > 40000) { // sanity check: 200 * 500 * 4
       // File is too big
       this._snackBar.openFromComponent(
         CustomSnackbarComponent,

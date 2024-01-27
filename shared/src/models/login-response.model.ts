@@ -1,6 +1,6 @@
-import { AccessToken } from './access-token.model';
-import { User } from './user.model'
+import AccessToken from './access-token.model';
+import User from './user.model'
 
-export interface LoginResponse extends AccessToken {
+export default interface LoginResponse extends AccessToken {
   user: User,
 }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { AboutDialogComponent } from './about-dialog/about-dialog.component';
-import { ToolbarFacade } from '../../facade/toolbar.facade';
+import AboutDialogComponent from './about-dialog/about-dialog.component';
+import ToolbarFacade from '../../facade/toolbar.facade';
 
 /**
  * @title Help menu comoponent
@@ -12,7 +12,7 @@ import { ToolbarFacade } from '../../facade/toolbar.facade';
   templateUrl: 'help-menu.component.html',
   styleUrls: ['help-menu.component.css'],
 })
-export class HelpMenuComponent {
+export default class HelpMenuComponent {
   public enabled$ = this._facade.menuEnabled$;
 
   public constructor(

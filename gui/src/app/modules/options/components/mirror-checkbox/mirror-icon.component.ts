@@ -7,7 +7,7 @@ import {
   booleanAttribute 
 } from '@angular/core';
 
-import { MirrorIconDirective } from './mirror-icon.directive';
+import MirrorIconDirective from './mirror-icon.directive';
 
 /**
  * @title Mirror icon component
@@ -28,7 +28,7 @@ import { MirrorIconDirective } from './mirror-icon.directive';
     }
   `],
 })
-export class MirrorIconComponent implements AfterViewChecked {
+export default class MirrorIconComponent implements AfterViewChecked {
   @Input({ transform: booleanAttribute }) disabled: boolean = true;
   @Input({ transform: booleanAttribute }) knitSide: boolean = false;
 

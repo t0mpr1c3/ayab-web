@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { Scale } from '../../toolbar/models/scale.model';
-import { SerializedImageData } from '../model/serialized-image-data.model';
-import { Mirrors } from '../model/mirrors.model';
+
+import Scale from '../../toolbar/models/scale.model';
+import SerializedImageData from '../model/serialized-image-data.model';
+import Mirrors from '../model/mirrors.model';
 
 export const createSceneAction = createAction(
   '[Image] Create Scene',

@@ -10,7 +10,7 @@ import SceneHelper from '../helpers/scene.helper';
 import MutationObserverHelper from '../../shared/helpers/mutation-observer.helper';
 
 @Injectable({ providedIn: 'root' })
-export class ImageEffects {
+export default class ImageEffects {
   constructor(
     private _actions$: Actions,
     private _store: Store,

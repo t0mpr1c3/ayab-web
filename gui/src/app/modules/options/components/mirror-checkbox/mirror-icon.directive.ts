@@ -6,7 +6,7 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 @Directive({
   selector: '#mirrorIcon',
 }) 
-export class MirrorIconDirective {
+export default class MirrorIconDirective {
   @Input() set knitSide(val: boolean) {
     this._renderer.setAttribute(
       this._element.nativeElement,

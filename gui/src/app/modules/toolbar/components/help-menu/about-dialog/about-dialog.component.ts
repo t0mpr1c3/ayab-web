@@ -6,7 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: 'about-dialog.component.html',
   styleUrls: ['about-dialog.component.css'],
 })
-export class AboutDialogComponent {  
+export default class AboutDialogComponent {  
   constructor(
     private _dialogRef: MatDialogRef<AboutDialogComponent>,
   ) {}

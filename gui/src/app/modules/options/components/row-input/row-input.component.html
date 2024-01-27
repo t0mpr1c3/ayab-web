@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" class="wide">
   <mat-label>Start Row</mat-label>
   <input matInput id="row-start" type="number" value="1" min="1" [formControl]="control"
-    [max]="(rows$ | async) || null" (change)="onChange()">
-    <mat-hint *ngIf="rows$ | async" align="end">Rows: {{rows$ | async}}</mat-hint>
+    [max]="rows" (change)="onChange()">
+    <mat-hint *ngIf="rows" align="end">Rows: {{ rows }}</mat-hint>
 </mat-form-field>

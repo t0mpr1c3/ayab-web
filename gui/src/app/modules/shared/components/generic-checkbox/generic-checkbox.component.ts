@@ -28,7 +28,7 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
       }
     ]
 })
-export class GenericCheckboxComponent {
+export default class GenericCheckboxComponent {
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input({ transform: booleanAttribute }) defaultValue: boolean = false;
   @Input() disabled: boolean = false;

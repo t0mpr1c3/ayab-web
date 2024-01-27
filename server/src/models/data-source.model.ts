@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 
-import { UserEntity } from '../entity/user.entity';
-import { SettingsEntity } from '../entity/settings.entity';
+import UserEntity from '../entity/user.entity';
+import SettingsEntity from '../entity/settings.entity';
 
 // for production environment:
 // put password in an environment variable and parse using 'dotenv'

@@ -9,7 +9,7 @@ import * as fromImage from '../../image/actions/image.actions';
  * @title Core facade
  */
 @Injectable()
-export class CoreFacade {
+export default class CoreFacade {
   public imageLoaded$ = this._store.select(fromRoot.selectImageLoaded);
   public sceneCreated$ = this._store.select(fromRoot.selectSceneCreated);
   

@@ -1,4 +1,4 @@
-export interface Mirrors {
+export default interface Mirrors {
   left: boolean;
   right: boolean;
   top: boolean;

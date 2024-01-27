@@ -1,7 +1,7 @@
-import { Scale } from "../../toolbar/models/scale.model";
-import { SerializedImageData } from "./serialized-image-data.model";
+import Scale from "../../toolbar/models/scale.model";
+import SerializedImageData from "./serialized-image-data.model";
 
-export interface Scene {
+export default interface Scene {
   data: SerializedImageData,
   scale: Scale,
   startRow: number,

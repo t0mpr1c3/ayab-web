@@ -10,7 +10,7 @@ import { RegistrationCredentials } from '../../../../../../shared/src/models/cre
  * @title Registration facade
  */
 @Injectable()
-export class RegistrationFacade {
+export default class RegistrationFacade {
   constructor(
     private _store: Store<fromRoot.State>,
   ) {}

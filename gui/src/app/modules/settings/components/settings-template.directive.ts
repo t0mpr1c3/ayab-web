@@ -6,7 +6,7 @@ import { Directive, Input } from '@angular/core';
 @Directive({
   selector: 'ng-template[appSetting]',
 })
-export class SettingTemplateDirective<T extends object> {
+export default class SettingTemplateDirective<T extends object> {
   @Input('appSetting') data!: T[];
 
   public $implicit: T;

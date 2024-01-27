@@ -2,7 +2,7 @@ import { sign } from "jsonwebtoken";
 
 import { jwtExpiresIn } from "../middlewares/check-jwt";
 import config from "../config/config";
-import { AccessToken } from "../../../shared/src/models/access-token.model";
+import AccessToken from "../../../shared/src/models/access-token.model";
 
 export default class JwtHelper {
   static accessToken(userId: number, username: string): AccessToken {

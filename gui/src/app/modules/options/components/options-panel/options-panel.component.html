@@ -11,14 +11,14 @@
     </div>
   </ng-container>
   <form [formGroup]="form">
-    <mode-input [disabled]="!(enableOptions$ | async)" [modeControl]="formControls.mode!"
-      [colorsControl]="formControls.colors!"></mode-input>
-    <row-input [control]="formControls.row!" ></row-input>
-    <generic-checkbox name="Infinite repeat" [control]="formControls.infRepeat!" ></generic-checkbox>
-    <needle-input title="Start needle" [needleControl]="formControls.startNeedle!"
-      [colorControl]="formControls.startColor!"></needle-input>
-    <needle-input title="Stop needle" [needleControl]="formControls.stopNeedle!"
-      [colorControl]="formControls.stopColor!"></needle-input>
-    <generic-select name="Alignment" [control]="formControls.alignment!" [enum]="alignmentEnum"></generic-select>
-    <mirror-checkbox #mirrorCheckbox [control]="formControls.mirror!"></mirror-checkbox>      
+    <mode-input [disabled]="!(enableOptions$ | async)" [modeControl]="optionsService.formControls.mode!"
+      [colorsControl]="optionsService.formControls.colors!"></mode-input>
+    <row-input [control]="optionsService.formControls.row!" [rows]="rows$ | async"></row-input>
+    <generic-checkbox name="Infinite repeat" [control]="optionsService.formControls.infRepeat!" ></generic-checkbox>
+    <needle-input title="Start needle" [needleControl]="optionsService.formControls.startNeedle!"
+      [colorControl]="optionsService.formControls.startColor!" [width]="width$ | async"></needle-input>
+    <needle-input title="Stop needle" [needleControl]="optionsService.formControls.stopNeedle!"
+      [colorControl]="optionsService.formControls.stopColor!" [width]="width$ | async"></needle-input>
+    <generic-select name="Alignment" [control]="optionsService.formControls.alignment!" [enum]="alignmentEnum"></generic-select>
+    <mirror-checkbox #mirrorCheckbox [control]="optionsService.formControls.mirror!"></mirror-checkbox>      
   </form>

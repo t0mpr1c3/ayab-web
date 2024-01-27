@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AuthFacade } from '../auth/facade/auth.facade';
+import AuthFacade from '../auth/facade/auth.facade';
 
 /**
  * @title App component
@@ -10,7 +10,7 @@ import { AuthFacade } from '../auth/facade/auth.facade';
   template: `<layout></layout>`,
   providers: [AuthFacade],
 })
-export class AppComponent {
+export default class AppComponent {
   constructor(private _facade: AuthFacade) {
     this._facade.boot();
   }

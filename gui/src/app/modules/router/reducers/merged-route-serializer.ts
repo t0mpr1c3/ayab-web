@@ -1,9 +1,9 @@
-import {RouterStateSerializer} from '@ngrx/router-store';
-import {ActivatedRouteSnapshot, Data, Params, RouterStateSnapshot} from '@angular/router';
+import { RouterStateSerializer } from '@ngrx/router-store';
+import { ActivatedRouteSnapshot, Data, Params, RouterStateSnapshot } from '@angular/router';
 
-import {MergedRoute} from './merged-route.reducer';
+import MergedRoute from './merged-route.reducer';
 
-export class MergedRouterStateSerializer implements RouterStateSerializer<MergedRoute> {
+export default class MergedRouterStateSerializer implements RouterStateSerializer<MergedRoute> {
   serialize(routerState: RouterStateSnapshot): MergedRoute {
     return {
       url: routerState.url,

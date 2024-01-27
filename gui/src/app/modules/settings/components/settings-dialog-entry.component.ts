@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { FormDialogComponent } from '../../shared/components/form-dialog/form-dialog.component';
-import { SettingsFormComponent } from './settings-form/settings-form.component';
+import FormDialogComponent from '../../shared/components/form-dialog/form-dialog.component';
+import SettingsFormComponent from './settings-form/settings-form.component';
 
 /** 
  * @title Settings dialog entry component
@@ -11,7 +11,7 @@ import { SettingsFormComponent } from './settings-form/settings-form.component';
 @Component({
   template: '',
 })
-export class SettingsDialogEntryComponent {
+export default class SettingsDialogEntryComponent {
   private _dialogRef: MatDialogRef<FormDialogComponent, any>;
 
   constructor(

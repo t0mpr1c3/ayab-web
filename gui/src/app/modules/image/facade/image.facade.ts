@@ -6,14 +6,14 @@ import * as fromRoot from '../../../reducers';
 import * as fromImage from '../actions/image.actions';
 
 import TransformsHelper from '../helpers/transforms.helper';
-import { Scale } from '../../toolbar/models/scale.model';
-import { Mirrors } from '../model/mirrors.model';
+import Scale from '../../toolbar/models/scale.model';
+import Mirrors from '../model/mirrors.model';
 
 /**
  * @title Image facade
  */
 @Injectable()
-export class ImageFacade {
+export default class ImageFacade {
   public image$ = this._store.select(fromRoot.selectImage);
   public scale$ = this._store.select(fromRoot.selectImageScale);
 

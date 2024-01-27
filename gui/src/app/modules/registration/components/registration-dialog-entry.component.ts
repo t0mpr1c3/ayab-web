@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { RegistrationFacade } from '../facade/registration.facade';
-import { FormDialogComponent } from '../../shared/components/form-dialog/form-dialog.component';
-import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import RegistrationFacade from '../facade/registration.facade';
+import FormDialogComponent from '../../shared/components/form-dialog/form-dialog.component';
+import RegistrationFormComponent from './registration-form/registration-form.component';
 
 /** 
  * @title Registration dialog entry component
@@ -13,7 +13,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
   template: '',
   providers: [RegistrationFacade],
 })
-export class RegistrationDialogEntryComponent {
+export default class RegistrationDialogEntryComponent {
   private _dialogRef: MatDialogRef<FormDialogComponent, any>;
 
   constructor(

@@ -2,8 +2,8 @@ import { createReducer, on } from '@ngrx/store';
 import * as fromImage from '../actions/image.actions';
 
 import TransformsHelper from '../helpers/transforms.helper';
-import { Scale } from '../../toolbar/models/scale.model';
-import { SerializedImageData } from '../model/serialized-image-data.model';
+import Scale from '../../toolbar/models/scale.model';
+import SerializedImageData from '../model/serialized-image-data.model';
 
 export const featureKey = 'image';
 

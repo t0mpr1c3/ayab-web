@@ -12,12 +12,12 @@ import { Length, IsNotEmpty } from 'class-validator';
 import { compare, hash } from 'bcryptjs';
 
 import { Role } from '../../../shared/src/models/user.model';
-import { SettingsEntity } from './settings.entity';
+import SettingsEntity from './settings.entity';
 
 @Entity()
 @Unique(['username'])
 @Unique(['email'])
-export class UserEntity {
+export default class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -46,7 +46,7 @@ export class UserEntity {
   updated: Date;
   
   @OneToOne(() => SettingsEntity, {
-    cascade: ['insert', 'update'],
+    //cascade: ['insert', 'update'],
     eager: false,
   })
   @JoinColumn()

@@ -8,9 +8,9 @@ import {
   error401, 
   error404 
 } from '../../../shared/src/models/status.model';
-import { User } from '../../../shared/src/models/user.model';
-import { LoginResponse } from '../../../shared/src/models/login-response.model';
-import { UserEntity } from '../entity/user.entity';
+import User from '../../../shared/src/models/user.model';
+import LoginResponse from '../../../shared/src/models/login-response.model';
+import UserEntity from '../entity/user.entity';
 
 class AuthController {
   static login = async (req: Request, res: Response): Promise<StatusMaybeWithToken> => {

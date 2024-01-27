@@ -1,8 +1,13 @@
-import {NgModule, Optional, Self} from '@angular/core';
-import {routerReducer, RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
-import {StoreModule} from '@ngrx/store';
-import {MergedRouterStateSerializer} from './reducers/merged-route-serializer';
-import {Router} from '@angular/router';
+import { NgModule, Optional, Self } from '@angular/core';
+import { 
+  routerReducer, 
+  RouterStateSerializer, 
+  StoreRouterConnectingModule 
+} from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
+import { Router } from '@angular/router';
+
+import MergedRouterStateSerializer from './reducers/merged-route-serializer';
 
 export const routerStateConfig = {
   stateKey: 'router', // state-slice name for routing state
@@ -24,8 +29,7 @@ export const routerStateConfig = {
     }
   ],
 })
-
-export class NgrxRouterStoreModule {
+export default class NgrxRouterStoreModule {
   constructor(@Self() @Optional() router: Router) {
     if (router) {
       console.log('All good, NgrxRouterStoreModule');

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NotFoundPageComponent } from './not-found-page.component';
+import NotFoundPageComponent from './not-found-page.component';
 
 export const routes: Routes = [
   {
@@ -10,27 +10,27 @@ export const routes: Routes = [
       {
         path: 'firmware',
         loadChildren: () => import('../firmware-upload/firmware-upload.module')
-          .then(module => module.FirmwareUploadModule),
+          .then(module => module.default),
       },
       {
         path: 'login',
         loadChildren: () => import('../auth/auth.module')
-          .then(module => module.AuthModule),
+          .then(module => module.default),
       },
       {
         path: 'register',
         loadChildren: () => import('../registration/registration.module')
-          .then(module => module.RegistrationModule),
+          .then(module => module.default),
       },
       {
         path: 'settings',
         loadChildren: () => import('../settings/settings.module')
-          .then(module => module.SettingsModule),
+          .then(module => module.default),
       },
       {
         path: 'test',
         loadChildren: () => import('../test-device/test-device.module')
-          .then(module => module.TestDeviceModule),
+          .then(module => module.default),
       },
     ],
   },
@@ -54,4 +54,4 @@ export const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export default class AppRoutingModule {}

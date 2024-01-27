@@ -1,7 +1,7 @@
-import {Data, Params} from '@angular/router';
-import {RouterReducerState} from '@ngrx/router-store';
+import { Data, Params } from '@angular/router';
+import { RouterReducerState } from '@ngrx/router-store';
 
-export interface MergedRoute {
+export default interface MergedRoute {
   url: string;
   queryParams: Params;
   params: Params;

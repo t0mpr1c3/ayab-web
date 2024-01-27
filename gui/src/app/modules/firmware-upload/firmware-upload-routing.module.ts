@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FirmwareDialogEntryComponent } from './components/firmware-upload-entry.component';
+
+import FirmwareDialogEntryComponent from './components/firmware-upload-entry.component';
 
 const routes: Routes = [
   {
@@ -13,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FirmwareUploadRoutingModule {}
+export default class FirmwareUploadRoutingModule {}

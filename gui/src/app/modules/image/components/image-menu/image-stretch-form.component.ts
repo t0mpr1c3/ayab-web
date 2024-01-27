@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CancelService } from '../../../shared/services/cancel.service';
-import { ImageFacade } from '../../facade/image.facade';
-import { Scale } from '../../../toolbar/models/scale.model';
+import CancelService from '../../../shared/services/cancel.service';
+import ImageFacade from '../../facade/image.facade';
+import Scale from '../../../toolbar/models/scale.model';
 
 /** 
  * @title Image stretch form component
@@ -13,7 +13,7 @@ import { Scale } from '../../../toolbar/models/scale.model';
   host: { transform: 'stretch' },
   providers: [ImageFacade],
 })
-export class ImageStretchFormComponent implements OnInit {
+export default class ImageStretchFormComponent implements OnInit {
   public form: FormGroup;
   private _debounce = false;
 

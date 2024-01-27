@@ -11,7 +11,7 @@ import { LoginCredentials } from '../../../../../../shared/src/models/credential
  * @title Authentication facade
  */
 @Injectable()
-export class AuthFacade {
+export default class AuthFacade {
   constructor(
     private _store: Store<fromRoot.State>,
   ) {}

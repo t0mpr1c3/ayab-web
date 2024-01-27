@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import SettingsHelper from '../../../../../../../shared/src/helpers/settings.helper';
-import { CancelService } from '../../../shared/services/cancel.service';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { SettingsFacade } from '../../facade/settings.facade';
+import CancelService from '../../../shared/services/cancel.service';
+import LocalStorageService from '../../../shared/services/local-storage.service';
+import SettingsFacade from '../../facade/settings.facade';
 import { Settings, TSetting, mapSettings } from '../../../../../../../shared/src/models/settings.model';
-import { User } from '../../../../../../../shared/src/models/user.model';
+import User from '../../../../../../../shared/src/models/user.model';
 
 // FIXME add setting for language locale
 
@@ -18,7 +18,7 @@ import { User } from '../../../../../../../shared/src/models/user.model';
   styleUrls: ['settings-form.component.css'],
   providers: [SettingsFacade],
 })
-export class SettingsFormComponent implements OnInit {
+export default class SettingsFormComponent implements OnInit {
   public form!: FormGroup;
   public formControls: Record<string, FormControl<TSetting>>;
   public settingsData: { 

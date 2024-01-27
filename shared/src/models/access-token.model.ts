@@ -1,4 +1,4 @@
-export interface AccessToken {
+export default interface AccessToken {
   access_token: string;
   token_type: string;
   expires_in?: string;

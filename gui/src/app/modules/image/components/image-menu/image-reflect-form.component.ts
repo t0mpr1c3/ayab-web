@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
-import { CancelService } from '../../../shared/services/cancel.service';
-import { ImageFacade } from '../../facade/image.facade';
+import CancelService from '../../../shared/services/cancel.service';
+import ImageFacade from '../../facade/image.facade';
 
 /** 
  * @title Image reflect form component
@@ -12,7 +12,7 @@ import { ImageFacade } from '../../facade/image.facade';
   templateUrl: 'image-reflect-form.component.html',
   providers: [ImageFacade],
 })
-export class ImageReflectFormComponent implements OnInit {
+export default class ImageReflectFormComponent implements OnInit {
   public form: FormGroup;
   public formControls: Record<string, FormControl<boolean|null>>;
   public left: boolean = false;

@@ -7,9 +7,9 @@ import * as fromAuthApi from '../actions/auth-api.actions';
 import * as fromAuth from '../actions/auth.actions';
 import * as fromLogin from '../actions/login.actions';
 
-import { AuthApiService } from '../services/auth-api.service';
+import AuthApiService from '../services/auth-api.service';
 import { LoginCredentials } from '../../../../../../shared/src/models/credentials.model';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
+import LocalStorageService from '../../shared/services/local-storage.service';
 
 /*
  * In a service-based Angular application, components are responsible for interacting with 
@@ -31,7 +31,7 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
  */
 
 @Injectable({ providedIn: 'root' })
-export class AuthEffects {
+export default class AuthEffects {
   private _clicks$ = fromEvent(document, 'click');
   private _keys$ = fromEvent(document, 'keydown');
   private _mouse$ = fromEvent(document, 'mousemove');

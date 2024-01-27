@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { User } from '../../../../../../shared/src/models/user.model';
+import User from '../../../../../../shared/src/models/user.model';
 import * as fromRoot from '../../../reducers';
 
 @Injectable({ providedIn: 'root' })
-export class LocalStorageService {
+export default class LocalStorageService {
   private _tokenKey = 'jwt' as const;
   private _userKey = 'user' as const;
   private _stateKey = 'state' as const;

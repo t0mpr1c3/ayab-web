@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { LocalStorageService } from './local-storage.service';
+import LocalStorageService from './local-storage.service';
 
 @Injectable({ providedIn: 'root' })
-export class ApiService {
+export default class ApiService {
   constructor(
     private _http: HttpClient,
     private _localStorageService: LocalStorageService,

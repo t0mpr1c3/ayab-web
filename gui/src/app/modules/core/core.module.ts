@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material/material.module';
+import MaterialModule from '../material/material.module';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
+import SharedModule from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
-import { ToolbarModule } from '../toolbar/components/cancel-button/toolbar.module';
+import ToolbarModule from '../toolbar/toolbar.module';
 
-import { LayoutComponent } from './components/layout/layout.component';
+import LayoutComponent from './components/layout/layout.component';
 
 @NgModule({
   imports: [
@@ -26,4 +26,4 @@ import { LayoutComponent } from './components/layout/layout.component';
     LayoutComponent,
   ],
 })
-export class CoreModule {}
+export default class CoreModule {}

@@ -1,6 +1,6 @@
-import { AccessToken } from "./access-token.model";
+import AccessToken from "./access-token.model";
 
-export interface Status {
+export default interface Status {
   statusCode: number;
   statusMessage: string;
 };

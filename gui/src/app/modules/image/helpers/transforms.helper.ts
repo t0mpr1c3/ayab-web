@@ -1,13 +1,20 @@
-import { Scale } from "../../toolbar/models/scale.model";
-import { Mirrors } from "../model/mirrors.model";
-import { SerializedImageData } from "../model/serialized-image-data.model";
+import Scale from "../../toolbar/models/scale.model";
+import Mirrors from "../model/mirrors.model";
+import SerializedImageData from "../model/serialized-image-data.model";
 
 // All methods in this class are pure
+// FIXME crop if result exceeds machine width
 export default class TransformsHelper {
-  static flatten3d(arr: Uint8ClampedArray[][], length: number, width: number, height: number): ImageData {
-    let data = new Uint8ClampedArray(length);
-    for (let y = 0, j = 0; y < height; y += 1, j += width * 4) {
-      for (let x = 0, i = 0; x < width; x += 1, i += 4) {
+  static MAX_WIDTH = 200; // or machine width, whichever is lower
+  static MAX_HEIGHT = 500;
+
+  // FIXME crop if result exceeds allowable dimensions
+  static flatten3d(arr: Uint8ClampedArray[][], width: number, height: number): ImageData {
+    let _width = Math.min( width, TransformsHelper.MAX_WIDTH );
+    let _height = Math.min( height, TransformsHelper.MAX_HEIGHT );
+    let data = new Uint8ClampedArray( _width * _height * 4 );
+    for (let y = 0, j = 0; y < _height; y += 1, j += _width * 4) {
+      for (let x = 0, i = 0; x < _width; x += 1, i += 4) {
         data.set(arr[y]![x]!, i + j);
       }
     }
@@ -25,7 +32,7 @@ export default class TransformsHelper {
       data[y] = row;
     }
     // Return flattened data
-    return this.flatten3d(data, img.data.length, img.width, img.height);
+    return this.flatten3d(data, img.width, img.height);
   }
   
   static invertImage = (img: ImageData): ImageData => {
@@ -49,7 +56,7 @@ export default class TransformsHelper {
       data[img.width - x - 1] = column;
     }
     // Return flattened data
-    return this.flatten3d(data, img.data.length, img.height, img.width);
+    return this.flatten3d(data, img.height, img.width);
   }
   
   static rotateImageRight = (img: ImageData): ImageData => {
@@ -63,7 +70,7 @@ export default class TransformsHelper {
       data[x] = column;
     }
     // Return flattened data
-    return this.flatten3d(data, img.data.length, img.height, img.width);
+    return this.flatten3d(data, img.height, img.width);
   }
 
   static reflectImage(mirrors: Mirrors) {
@@ -97,7 +104,6 @@ export default class TransformsHelper {
       // Return flattened data
       return this.flatten3d(
         data, 
-        img.data.length * xscale * yscale, 
         img.width * xscale, 
         img.height * yscale);
     }
@@ -120,8 +126,7 @@ export default class TransformsHelper {
       }
       // Return flattened data
       return this.flatten3d(
-        data, 
-        img.data.length * scale.x * scale.y, 
+        data,
         img.width * scale.x, 
         img.height * scale.y);
     }
@@ -144,8 +149,7 @@ export default class TransformsHelper {
       }
       // Return flattened data
       return this.flatten3d(
-        data, 
-        img.data.length * scale.x * scale.y, 
+        data,
         img.width * scale.x, 
         img.height * scale.y);
     }

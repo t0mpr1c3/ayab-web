@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import CustomValidator from '../../helpers/custom-validator.helper';
-import { CancelService } from '../../../shared/services/cancel.service';
-import { Validation } from '../../../../../../../shared/src/models/validation.model';
-import { RegistrationFacade } from '../../facade/registration.facade';
+import CancelService from '../../../shared/services/cancel.service';
+import Validation from '../../../../../../../shared/src/models/validation.model';
+import RegistrationFacade from '../../facade/registration.facade';
 
 /** 
  * @title Registration form component
@@ -14,7 +14,7 @@ import { RegistrationFacade } from '../../facade/registration.facade';
   styleUrls: ['registration-form.component.css'],
   providers: [RegistrationFacade],
 })
-export class RegistrationFormComponent extends Validation implements OnInit {
+export default class RegistrationFormComponent extends Validation implements OnInit {
   public form!: FormGroup;
   
   constructor(

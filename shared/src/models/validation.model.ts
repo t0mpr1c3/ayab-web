@@ -1,4 +1,4 @@
-export class Validation {
+export default class Validation {
   public userNameMinLength: number = 3;
   public userNameMaxLength: number = 20;
   public    emailMinLength: number = 5;

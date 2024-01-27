@@ -3,16 +3,16 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { FormDialogComponent } from '../../shared/components/form-dialog/form-dialog.component';
-import { FirmwareDialogComponent } from './firmware-upload-dialog/firmware-upload-dialog.component';
-import { FirmwareFacade } from '../facade/firmware.facade';
+import FormDialogComponent from '../../shared/components/form-dialog/form-dialog.component';
+import FirmwareDialogComponent from './firmware-upload-dialog/firmware-upload-dialog.component';
+import FirmwareFacade from '../facade/firmware.facade';
 
 @Component({
   template: '',
   providers: [FirmwareFacade],
   host: { dialog: 'FirmwareDialogComponent' },
 })
-export class FirmwareDialogEntryComponent {
+export default class FirmwareDialogEntryComponent {
   private _dialogRef: MatDialogRef<FormDialogComponent, any>;
   private _subscription: Subscription;
 

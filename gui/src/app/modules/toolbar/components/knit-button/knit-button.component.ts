@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { KnitFacade } from '../../../knit/facade/knit.facade';
+
+import KnitFacade from '../../../knit/facade/knit.facade';
 
 /** 
  * @title Knit button component
@@ -11,7 +12,7 @@ import { KnitFacade } from '../../../knit/facade/knit.facade';
   styleUrls: ['knit-button.component.css'],
   providers: [KnitFacade],
 })
-export class KnitButtonComponent {
+export default class KnitButtonComponent {
   public enabled$ = this._facade.knitButtonEnabled$;
 
   constructor(

@@ -13,13 +13,25 @@ import { ModeEnum } from '../../../../../../shared/src/models/mode-enum.model';
  * @title Options facade
  */
 @Injectable()
-export class OptionsFacade {
+export default class OptionsFacade {
   public enableOptions$ = this._store.select(fromRoot.selectConfiguring);
   public loggedIn$ = this._store.select(fromRoot.selectLoggedIn);
   public settings$ = this._store.select(fromRoot.selectSettings);
   public machine$ = this._store.select(fromRoot.selectMachineSetting);
   public width$ = this._store.select(fromRoot.selectMachineWidth);
   public rows$ = this._store.select(fromRoot.selectImageHeight);
+
+  public mode$ = this._store.select(fromRoot.selectKnittingModeOption);
+  public colors$ = this._store.select(fromRoot.selectColorsOption);
+  public startRow$ = this._store.select(fromRoot.selectStartRowOption);
+  public infRepeat$ = this._store.select(fromRoot.selectInfiniteRepeatOption);
+  public startNeedle$ = this._store.select(fromRoot.selectStartNeedleOption);
+  public startColor$ = this._store.select(fromRoot.selectStartColorOption);
+  public stopNeedle$ = this._store.select(fromRoot.selectStopNeedleOption);
+  public stopColor$ = this._store.select(fromRoot.selectStopColorOption);
+  public alignment$ = this._store.select(fromRoot.selectAlignmentOption);
+  public knitSide$ = this._store.select(fromRoot.selectKnitSideOption);
+  
   
   constructor(private _store: Store<fromRoot.State>) {}
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material/material.module';
+import MaterialModule from '../material/material.module';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
+import SharedModule from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
@@ -16,4 +16,4 @@ import { StoreModule } from '@ngrx/store';
   exports: [
   ],
 })
-export class KnitModule {}
+export default class KnitModule {}

@@ -13,7 +13,7 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
     </div>
   `,
 })
-export class CustomSnackbarComponent {
+export default class CustomSnackbarComponent {
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
     console.log(data); 
   }

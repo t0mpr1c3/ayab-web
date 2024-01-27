@@ -3,15 +3,15 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { AuthFacade } from '../facade/auth.facade';
-import { FormDialogComponent } from '../../shared/components/form-dialog/form-dialog.component';
-import { LoginFormComponent } from './login-form/login-form.component';
+import AuthFacade from '../facade/auth.facade';
+import FormDialogComponent from '../../shared/components/form-dialog/form-dialog.component';
+import LoginFormComponent from './login-form/login-form.component';
 
 @Component({
   template: '',
   providers: [AuthFacade],
 })
-export class LoginDialogEntryComponent {
+export default class LoginDialogEntryComponent {
   private _dialogRef: MatDialogRef<FormDialogComponent, any>;
   private _subscription: Subscription;
 

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ImageFacade } from '../../facade/image.facade';
-import { FormDialogComponent } from '../../../shared/components/form-dialog/form-dialog.component';
-import { ImageStretchFormComponent } from './image-stretch-form.component';
-import { ImageRepeatFormComponent } from './image-repeat-form.component';
-import { ImageReflectFormComponent } from './image-reflect-form.component';
+import ImageFacade from '../../facade/image.facade';
+import FormDialogComponent from '../../../shared/components/form-dialog/form-dialog.component';
+import ImageStretchFormComponent from './image-stretch-form.component';
+import ImageRepeatFormComponent from './image-repeat-form.component';
+import ImageReflectFormComponent from './image-reflect-form.component';
 
 /**
  * @title Image menu component
@@ -16,7 +16,7 @@ import { ImageReflectFormComponent } from './image-reflect-form.component';
   styleUrls: ['image-menu.component.css'],
   providers: [ImageFacade],
 })
-export class ImageMenuComponent {
+export default class ImageMenuComponent {
   constructor(
     private _dialog: MatDialog,
     private _facade: ImageFacade,

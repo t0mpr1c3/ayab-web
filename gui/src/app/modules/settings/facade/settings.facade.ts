@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 import * as fromUser from '../actions/settings.actions'
 
 import { Settings } from '../../../../../../shared/src/models/settings.model';
-import { firstValueFrom } from 'rxjs';
 
 /**
  * @title Settings facade
  */
 @Injectable()
-export class SettingsFacade {
+export default class SettingsFacade {
   constructor(
     private _store: Store<fromRoot.State>,
   ) {}

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ToolbarFacade } from '../../facade/toolbar.facade';
+
+import ToolbarFacade from '../../facade/toolbar.facade';
 
 /*
  * @title Tools menu component
@@ -9,7 +10,7 @@ import { ToolbarFacade } from '../../facade/toolbar.facade';
   templateUrl: 'tools-menu.component.html',
   styleUrls: ['tools-menu.component.css'],
 })
-export class ToolsMenuComponent {
+export default class ToolsMenuComponent {
   public enabled$ = this._facade.menuEnabled$;
 
   constructor(

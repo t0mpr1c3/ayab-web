@@ -6,12 +6,13 @@ import {
   Input, 
   ViewChild, 
   booleanAttribute, 
-  forwardRef 
+  forwardRef, 
+  numberAttribute
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { map } from 'rxjs';
 
-import { OptionsFacade } from '../../facade/options.facade';
+import OptionsFacade from '../../facade/options.facade';
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
 import { MachineEnum } from '../../../../../../../shared/src/models/machine-enum.model';
 
@@ -32,21 +33,18 @@ import { MachineEnum } from '../../../../../../../shared/src/models/machine-enum
     }
   ]
 })
-export class NeedleInputComponent {
+export default class NeedleInputComponent {
   @Input({ required: true }) colorControl: FormControl<TSetting>;
-  @Input({ transform: booleanAttribute }) disabled: boolean = false;
   @Input({ required: true }) needleControl: FormControl<TSetting>;
   @Input({ required: true }) title: string;
+  @Input({ transform: booleanAttribute }) disabled: boolean = false;
+  @Input({ transform: numberAttribute }) width: number = 200;
 
   @ViewChild('needleNumber', { read: ElementRef }) needleNumber!: ElementRef;
   @ViewChild('needleColor', { read: ElementRef }) needleColor!: ElementRef;
 
   public needle: number;
   public color: number;
-  public maxNeedles$ = this._facade.settings$.pipe(
-    map((settings: any) => settings?.machine as MachineEnum|null),
-    map(machine => (machine && machine === MachineEnum.KH270) ? 56 : 100)
-  );
 
   @HostBinding('style.opacity') get opacity() {
     return this.disabled ? '.38' : '.87';

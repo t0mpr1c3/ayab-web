@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../../../../../shared/src/models/user.model';
+
+import User from '../../../../../../shared/src/models/user.model';
 
 export const bootAction = createAction(
   '[Auth] Initialize auth state'

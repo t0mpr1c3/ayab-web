@@ -27,7 +27,7 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
     }
   ]
 })
-export class GenericSelectComponent implements OnInit {
+export default class GenericSelectComponent implements OnInit {
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
   @Input({ transform: numberAttribute }) defaultValue: number = 0;

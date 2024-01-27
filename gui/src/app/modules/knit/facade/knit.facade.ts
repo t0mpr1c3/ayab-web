@@ -8,7 +8,7 @@ import * as fromKnit from '../actions/knit.actions';
  * @title Knit facade
  */
 @Injectable()
-export class KnitFacade {
+export default class KnitFacade {
   constructor(private _store: Store<fromRoot.State>) {}
   
   public knitButtonEnabled$ = this._store.select(fromRoot.selectConfiguring);

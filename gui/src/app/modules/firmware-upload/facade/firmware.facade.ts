@@ -8,7 +8,7 @@ import * as fromFirmware from '../actions/firmware.actions';
  * @title Firmware facade
  */
 @Injectable()
-export class FirmwareFacade {
+export default class FirmwareFacade {
   constructor(private _store: Store<fromRoot.State>) {}
 
   public startFirmware(): void {

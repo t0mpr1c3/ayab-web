@@ -5,13 +5,13 @@ import { exhaustMap, map, tap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as fromReg from '../actions/registration.actions';
 
-import { CancelService } from '../../shared/services/cancel.service';
-import { RegistrationConfirmationComponent } from '../components/registration-confirmation/registration-confirmation.component';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
-import { UserApiService } from '../../settings/services/user-api.service';
+import CancelService from '../../shared/services/cancel.service';
+import LocalStorageService from '../../shared/services/local-storage.service';
+import UserApiService from '../../settings/services/user-api.service';
+import RegistrationConfirmationComponent from '../components/registration-confirmation/registration-confirmation.component';
 
 @Injectable({ providedIn: 'root' })
-export class RegistrationEffects {
+export default class RegistrationEffects {
   constructor(
     private _actions$: Actions,
     private _cancelService: CancelService,

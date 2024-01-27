@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, booleanAttribute } from '@angular/core';
+import { 
+  ChangeDetectionStrategy, 
+  Component, 
+  Input, 
+  booleanAttribute, 
+  numberAttribute 
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { OptionsFacade } from '../../facade/options.facade';
+import OptionsFacade from '../../facade/options.facade';
 import { TSetting } from '../../../../../../../shared/src/models/settings.model';
 
 /** 
@@ -14,11 +20,10 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
   styleUrls: ['row-input.component.css'],
   providers: [OptionsFacade],
 })
-export class RowInputComponent {
+export default class RowInputComponent {
   @Input({ required: true }) control: FormControl<TSetting>;
+  @Input({ transform: numberAttribute }) rows: number | null;
   @Input({ transform: booleanAttribute }) disabled: boolean;
-
-  public rows$ = this._facade.rows$;
 
   constructor(private _facade: OptionsFacade) {}
 

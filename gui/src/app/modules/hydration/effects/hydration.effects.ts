@@ -5,12 +5,13 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 import * as fromHydrate from '../actions/hydration.actions';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
+
+import LocalStorageService from '../../shared/services/local-storage.service';
 
 // Side effects to re-hydrate state from local storage
 // https://nils-mehlhorn.de/posts/ngrx-keep-state-refresh/
 @Injectable()
-export class HydrationEffects implements OnInitEffects {
+export default class HydrationEffects implements OnInitEffects {
   hydrate$ = createEffect(() =>
     this._action$.pipe(
       ofType(fromHydrate.hydrateAction),

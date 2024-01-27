@@ -3,16 +3,16 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { FormDialogComponent } from '../../shared/components/form-dialog/form-dialog.component';
-import { TestDialogComponent } from './test-dialog/test-dialog.component';
-import { TestFacade } from '../facade/test.facade';
+import FormDialogComponent from '../../shared/components/form-dialog/form-dialog.component';
+import TestDialogComponent from './test-dialog/test-dialog.component';
+import TestFacade from '../facade/test.facade';
 
 @Component({
   template: '',
   providers: [TestFacade],
   host: { dialog: 'TestDialogComponent' },
 })
-export class TestDialogEntryComponent {
+export default class TestDialogEntryComponent {
   private _dialogRef: MatDialogRef<FormDialogComponent, any>;
   private _subscription: Subscription;
 

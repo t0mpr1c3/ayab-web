@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ApiService } from '../../shared/services/api.service';
+import ApiService from '../../shared/services/api.service';
 import { LoginCredentials } from '../../../../../../shared/src/models/credentials.model';
-import { LoginResponse } from '../../../../../../shared/src/models/login-response.model';
+import LoginResponse from '../../../../../../shared/src/models/login-response.model';
 
 @Injectable({ providedIn: 'root' })
-export class AuthApiService {
+export default class AuthApiService {
   constructor(private _apiService: ApiService) {}
 
   public login(credentials: LoginCredentials): Observable<LoginResponse> {

@@ -12,7 +12,7 @@ import { TSetting } from '../../../../../../../shared/src/models/settings.model'
   templateUrl: 'colors-input.component.html',
   styleUrls: ['colors-input.component.css'],
 })
-export class ColorsInputComponent {
+export default class ColorsInputComponent {
   @Input({ required: true }) control: FormControl<TSetting>;
   @Input() disabled: boolean = false;
 }

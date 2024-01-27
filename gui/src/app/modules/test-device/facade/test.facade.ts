@@ -8,7 +8,7 @@ import * as fromTest from '../actions/test.actions';
  * @title Test facade
  */
 @Injectable()
-export class TestFacade {
+export default class TestFacade {
   constructor(private _store: Store<fromRoot.State>) {}
 
   public startTesting(): void {

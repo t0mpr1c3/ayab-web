@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import * as fromAuthApi from '../actions/auth-api.actions';
 import * as fromAuth from '../actions/auth.actions';
-import { User } from '../../../../../../shared/src/models/user.model';
+import User from '../../../../../../shared/src/models/user.model';
 import { MachineEnum } from '../../../../../../shared/src/models/machine-enum.model';
 
 export const featureKey = 'status';

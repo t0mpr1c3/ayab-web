@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RegistrationDialogEntryComponent } from './components/registration-dialog-entry.component';
+import RegistrationDialogEntryComponent from './components/registration-dialog-entry.component';
 
 const routes: Routes = [
   {
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RegistrationRoutingModule {}
+export default class RegistrationRoutingModule {}

@@ -5,12 +5,12 @@ import { exhaustMap, map, tap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as fromUser from '../actions/settings.actions';
 
-import { UserApiService } from '../services/user-api.service';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
-import { CustomSnackbarComponent } from '../../shared/components/custom-snackbar/custom-snackbar.component';
+import UserApiService from '../services/user-api.service';
+import LocalStorageService from '../../shared/services/local-storage.service';
+import CustomSnackbarComponent from '../../shared/components/custom-snackbar/custom-snackbar.component';
 
 @Injectable({ providedIn: 'root' })
-export class SettingsEffects {
+export default class SettingsEffects {
   constructor(
     private _actions$: Actions,
     private _localStorageService: LocalStorageService,

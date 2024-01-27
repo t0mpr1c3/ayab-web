@@ -1,5 +1,6 @@
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { SettingTemplateDirective } from './settings-template.directive';
+
+import SettingTemplateDirective from './settings-template.directive';
 
 /** 
  * @title Settings list component
@@ -11,7 +12,7 @@ import { SettingTemplateDirective } from './settings-template.directive';
       <ng-container *ngTemplateOutlet="settingTemplate; context: { $implicit: setting }"></ng-container>
     </div>`
 })
-export class SettingsListComponent<T extends object> {
+export default class SettingsListComponent<T extends object> {
   @Input() data!: T[];
   @ContentChild(SettingTemplateDirective, { read: TemplateRef }) settingTemplate!: TemplateRef<any>;
 }

@@ -16,7 +16,7 @@ import {
   templateUrl: 'generic-button.component.html',
   styleUrls: ['generic-button.component.css'],
 })
-export class GenericButtonComponent {
+export default class GenericButtonComponent {
   @Input({ transform: booleanAttribute }) disabled: boolean = false;
   @Input({ required: true }) name: string;
   
