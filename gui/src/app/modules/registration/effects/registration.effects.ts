@@ -43,7 +43,7 @@ export class RegistrationEffects {
       exhaustMap(credentials =>
         this._userApiService.register(credentials)
       ),
-      tap(res => this._localStorageService.maybeSetToken(res.access_token)), // side effect
+      tap(res => this._localStorageService.token = res.access_token), // side effect
       map(res => fromReg.confirmRegistrationAction({
         message: res.statusMessage,
         success: res.statusCode >= 200 && res.statusCode < 300

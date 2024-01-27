@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as fromImage from '../actions/image.actions';
 
-import SceneHelper from '../helpers/scene.helper';
 import TransformsHelper from '../helpers/transforms.helper';
 import { Scale } from '../../toolbar/models/scale.model';
 import { SerializedImageData } from '../model/serialized-image-data.model';
@@ -41,42 +40,42 @@ export const reducer = createReducer(
 
   on(fromImage.invertImageAction, state => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.invertImage ),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.invertImage ),
   })),
 
   on(fromImage.stretchImageAction, (state, { scale: scale }) => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.stretchImage( scale )),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.stretchImage( scale )),
   })),
 
   on(fromImage.repeatImageAction, (state, { scale: scale }) => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.repeatImage( scale )),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.repeatImage( scale )),
   })),
 
   on(fromImage.reflectImageAction, (state, { mirrors: mirrors }) => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.reflectImage( mirrors )),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.reflectImage( mirrors )),
   })),
 
   on(fromImage.hFlipImageAction, state => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.hFlipImage ),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.hFlipImage ),
   })),
 
   on(fromImage.vFlipImageAction, state => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.vFlipImage ),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.vFlipImage ),
   })),
 
   on(fromImage.rotateImageLeftAction, state => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.rotateImageLeft ),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.rotateImageLeft ),
   })),
 
   on(fromImage.rotateImageRightAction, state => ({ 
     ...state,
-    data: SceneHelper.transform( state.data!, TransformsHelper.rotateImageRight ),
+    data: TransformsHelper.transform( state.data!, TransformsHelper.rotateImageRight ),
   })),
 );
 

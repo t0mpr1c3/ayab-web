@@ -41,7 +41,7 @@ export class SettingsFormComponent implements OnInit {
 
   ngOnInit(): void {
     // Get user settings
-    this._user = this._localStorageService.getUser()!;
+    this._user = this._localStorageService.user!;
     this._userSettings = this._user.settings;
 
     // Create form controls

@@ -16,6 +16,7 @@ import {
 import { InjectionToken, isDevMode } from '@angular/core';
 
 import { environment } from '../environments/environment';
+import { hydrationMetaReducer } from "../modules/hydration/reducers/hydration.reducer";
 
 /**
  * The compose function is one of our most handy tools. In basic terms, 
@@ -133,7 +134,10 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
  * the root meta-reducer. To add more meta-reducers, provide an array of meta-reducers
  * that will be composed to form the root meta-reducer.
  */
-export const metaReducers: MetaReducer<State>[] = isDevMode() ? [logger] : [];
+export const metaReducers: MetaReducer<State>[] =
+  isDevMode() ? 
+    [/*logger,*/ hydrationMetaReducer] : // don't need logger withe Redux DevTools
+    [hydrationMetaReducer];
 
 /**
  * A selector function is a map function factory. We pass it parameters and 

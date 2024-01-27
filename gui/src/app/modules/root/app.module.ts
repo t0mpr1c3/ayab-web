@@ -25,6 +25,7 @@ import { RegistrationEffects } from '../registration/effects/registration.effect
 import { ApiService } from '../shared/services/api.service';
 import { AuthApiService } from '../auth/services/auth-api.service';
 import { CancelService } from '../shared/services/cancel.service';
+import { HydrationEffects } from '../hydration/effects/hydration.effects';
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { UserApiService } from '../settings/services/user-api.service';
 import { AppComponent } from './app.component';
@@ -79,7 +80,8 @@ import { AppComponent } from './app.component';
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
     EffectsModule.forRoot([
-      AuthEffects, 
+      AuthEffects,
+      HydrationEffects,
       ImageEffects,
       KnitEffects, 
       OptionsEffects, 

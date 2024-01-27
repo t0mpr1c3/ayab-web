@@ -45,9 +45,9 @@ export class AuthEffects {
   public boot$ = createEffect(() =>
     this._actions$.pipe(
       ofType(fromAuth.bootAction),
-      map(() => (this._localStorageService.isLoggedOut() ? 
+      map(() => (this._localStorageService.isLoggedOut ? 
         fromAuth.isLoggedOutAction() : 
-        fromAuth.isLoggedInAction({ user: this._localStorageService.getUser()! })
+        fromAuth.isLoggedInAction({ user: this._localStorageService.user! })
       )),
     )
   );
@@ -81,8 +81,8 @@ export class AuthEffects {
       map(action => action.credentials),
       exhaustMap((credentials: LoginCredentials) =>
         this._authApiService.login(credentials).pipe(  
-          tap(loginResponse => this._localStorageService.setUser(loginResponse.user)),
-          tap(loginResponse => this._localStorageService.setToken(loginResponse.access_token)),
+          tap(loginResponse => this._localStorageService.user = loginResponse.user),
+          tap(loginResponse => this._localStorageService.token = loginResponse.access_token),
           map(loginResponse => fromAuthApi.loginSuccessAction({ user: loginResponse.user })),          
           tap(() => document.getElementById('myAyabMenuButton')?.blur()),
           catchError(error => of(fromAuthApi.loginFailureAction({ error })))

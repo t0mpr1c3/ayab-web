@@ -1,6 +1,8 @@
 import { Scale } from "../../toolbar/models/scale.model";
 import { Mirrors } from "../model/mirrors.model";
+import { SerializedImageData } from "../model/serialized-image-data.model";
 
+// All methods in this class are pure
 export default class TransformsHelper {
   static flatten3d(arr: Uint8ClampedArray[][], length: number, width: number, height: number): ImageData {
     let data = new Uint8ClampedArray(length);
@@ -161,5 +163,23 @@ export default class TransformsHelper {
       res.set(data[y]!, j);
     }
     return new ImageData(res, img.width, img.height);
+  }
+  
+  static deserialize(image: SerializedImageData): ImageData {
+    let view = new Uint8ClampedArray(image.data);
+    return new ImageData(view, image.width, image.height);
+  }
+  
+  static serialize(image: ImageData): SerializedImageData {
+    return {
+      data: Array.from(image.data),
+      width: image.width, 
+      height: image.height
+    }
+  }
+
+  // FIXME use cache
+  static transform(data: SerializedImageData, fn: (i: ImageData) => ImageData): SerializedImageData {
+    return TransformsHelper.serialize( fn ( TransformsHelper.deserialize( data )));  
   }
 }

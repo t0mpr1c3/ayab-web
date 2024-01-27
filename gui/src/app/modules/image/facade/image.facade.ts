@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
 import * as fromImage from '../actions/image.actions';
 
-import SceneHelper from '../helpers/scene.helper';
+import TransformsHelper from '../helpers/transforms.helper';
 import { Scale } from '../../toolbar/models/scale.model';
 import { Mirrors } from '../model/mirrors.model';
 
@@ -32,7 +32,7 @@ export class ImageFacade {
 
   public loadImage(data: ImageData): void {
     this._store.dispatch(fromImage.loadImageAction({ 
-      data: SceneHelper.serialize( data ),
+      data: TransformsHelper.serialize( data ),
     }));
   }
 

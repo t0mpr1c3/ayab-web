@@ -56,7 +56,7 @@ export class ApiService {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
-    const token = this._localStorageService.getToken();
+    const token = this._localStorageService.token;
     if (!!token) {
       headersConfig.Authorization = 'Bearer ' + token;
     }

@@ -5,7 +5,7 @@ import * as fromRoot from '../../../reducers';
 import * as fromImage from '../../image/actions/image.actions';
 import * as fromLayout from '../../core/actions/layout.actions';
 
-import SceneHelper from '../../image/helpers/scene.helper';
+import TransformsHelper from '../../image/helpers/transforms.helper';
 
 /**
  * @title Toolbar facade
@@ -20,7 +20,7 @@ export class ToolbarFacade {
 
   public imageLoaded(data: ImageData): void {
     this._store.dispatch(fromImage.loadImageAction({ 
-      data: SceneHelper.serialize( data ),
+      data: TransformsHelper.serialize( data ),
     }));
   }
 

@@ -88,7 +88,7 @@ export class OptionsPanelComponent implements OnInit, AfterViewInit {
   // resets options to defaults on logout
   public reset(isLoggedIn: boolean): void {
     let s = isLoggedIn ? 
-      this._localStorageService.getUser()!.settings as any :
+      this._localStorageService.user!.settings as any :
       defaultSettings as any;
     this.formControls.mode!.setValue(s.mode);
     this.formControls.infRepeat!.setValue(s.infRepeat);

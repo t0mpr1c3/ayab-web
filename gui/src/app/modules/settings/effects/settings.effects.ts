@@ -23,14 +23,14 @@ export class SettingsEffects {
       ofType(fromUser.updateSettingsAction),
       map(action => action.settings),
       tap(settings => {
-        let user = this._localStorageService.getUser()!;
+        let user = this._localStorageService.user!;
         user.settings = settings;
-        this._localStorageService.setUser(user);
+        this._localStorageService.user = user;
       }),
       exhaustMap(settings =>
         this._userApiService.update(settings)
       ),
-      tap(res => this._localStorageService.maybeSetToken(res.access_token)),
+      tap(res => this._localStorageService.token = res.access_token),
       tap(() => this._snackBar.openFromComponent(
         CustomSnackbarComponent,
         {

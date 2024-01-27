@@ -16,6 +16,9 @@ export class ImageEffects {
     private _store: Store,
   ) {}
   
+  // Do all the impure stuff associated with image transforms:
+  // - cache imageData after transform
+  // - redraw canvas
   public onTransformImage$ = createEffect(() =>
     this._actions$.pipe(
       ofType(
